@@ -1,0 +1,226 @@
+.home-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: "Segoe UI", sans-serif;
+  color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background-color: rgba(20, 20, 20, 0.95);
+  padding: 20px 15px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+}
+
+.sidebar.close {
+  width: 80px;
+}
+
+.logo-details {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo_name {
+  font-size: 20px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.sidebar.close .logo_name {
+  opacity: 0;
+  width: 0;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  margin: 10px 0;
+}
+
+.nav-links li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  color: #aaa;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links li a:hover {
+  color: white;
+  background-color: rgba(102, 126, 234, 0.2);
+}
+
+.nav-links li a i {
+  font-size: 20px;
+}
+
+.link_name {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.close .link_name {
+  opacity: 0;
+  width: 0;
+}
+
+/* NAVBAR */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0;
+  z-index: 100;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.close ~ .navbar .nav-content {
+  margin-left: 80px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  margin-right: 20px;
+}
+
+.sidebar.close ~ .navbar .menu-btn {
+  display: block;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  margin-left: 40px;
+}
+
+.nav-menu li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-menu li a:hover {
+  color: #667eea;
+}
+
+.nav-menu li a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  transition: width 0.3s ease;
+}
+
+.nav-menu li a:hover::after {
+  width: 100%;
+}
+
+.btn-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-profile i {
+  font-size: 18px;
+}
+
+/* MAIN CONTENT */
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
+  margin-top: 60px;
+}
+
+.sidebar.close ~ .home-content {
+  margin-left: 80px;
+}
+
+.home-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.home-subtitle {
+  font-size: 20px;
+  opacity: 0.9;
+  margin: 0;
+  text-align: center;
+}
+
+/* DESKTOP OPTIMIZATION */
+.sidebar {
+  position: fixed;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* Hide toggle button on desktop */
+.menu-btn {
+  display: none;
+}

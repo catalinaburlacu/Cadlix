@@ -1,0 +1,241 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #0f0f0f;
+  color: white;
+}
+
+.profile-page {
+  padding: 40px;
+  position: relative;
+}
+
+.btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-back:hover {
+  background-color: #555;
+}
+
+/* HEADER */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.left-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.username-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.online-badge {
+  background: #2ecc71;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.group {
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.group-badge {
+  background: linear-gradient(90deg, #ff00cc, #cc66ff);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-left: 10px;
+  font-size: 13px;
+}
+
+/* BUTTONS */
+.btn {
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.gradient-pink {
+  background: linear-gradient(90deg, #ff00cc, #ff66cc);
+}
+
+.gradient-blue {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+}
+
+/* STATS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.stat-card {
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.stat-card.highlight {
+  background: #f4d03f;
+  color: black;
+}
+
+.stat-card h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  margin-top: 40px;
+  background: #1a1a1a;
+  border-radius: 20px;
+  overflow: hidden;
+  gap: 0;
+}
+
+.tab {
+  padding: 18px 25px;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  color: #aaa;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab.active {
+  background: linear-gradient(90deg, #ff00cc, #cc66ff);
+  color: white;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.search {
+  flex: 1;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: #2a2a2a;
+  color: white;
+}
+
+select {
+  padding: 12px;
+  border-radius: 20px;
+  border: none;
+  background: #2a2a2a;
+  color: white;
+}
+
+/* ANIME LIST */
+.anime-list {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.anime-item {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.anime-info {
+  flex: 1;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.rating {
+  background: #ff9f43;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: black;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+.tag {
+  background: #333;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.tag.green {
+  background: #2ecc71;
+  color: black;
+}
+
+.anime-actions button {
+  background: #2a2a2a;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
