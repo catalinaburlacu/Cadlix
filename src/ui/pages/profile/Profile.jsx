@@ -158,7 +158,13 @@ export default function Profile() {
             <div className="profile-header-info">
               <div className="username-row">
                 <h1 className="username">{user.username}</h1>
-                <span className="group-badge">{user.group || 'Member'}</span>
+                <button 
+                  className="plan-badge"
+                  onClick={() => navigate('/subscriptions')}
+                  title="Click to upgrade or manage your plan"
+                >
+                  {user.plan || 'Genin 🥷'}
+                </button>
               </div>
               <p className="user-email">{user.email}</p>
             </div>

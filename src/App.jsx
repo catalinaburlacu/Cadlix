@@ -2,7 +2,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import Home from "./ui/pages/home/Home";
 import Profile from "./ui/pages/profile/Profile"; 
-import Login from "./ui/pages/login/Login";  
+import Login from "./ui/pages/login/Login";
+import Subscriptions from "./ui/pages/subscriptions/Subscriptions";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
 function App() {
@@ -22,6 +23,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/subscriptions" 
+        element={
+          <ProtectedRoute>
+            <Subscriptions />
           </ProtectedRoute>
         } 
       />

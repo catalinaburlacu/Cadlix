@@ -125,6 +125,30 @@
   flex-shrink: 0;
 }
 
+.plan-badge {
+  background: linear-gradient(135deg, #9201cb, #f715ab);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(247, 21, 171, 0.3);
+}
+
+.plan-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(247, 21, 171, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.plan-badge:active {
+  transform: translateY(0);
+}
+
 .user-email {
   margin: 0;
   color: var(--color-text-muted);
