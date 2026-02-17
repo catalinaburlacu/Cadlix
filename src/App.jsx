@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import Home from "./ui/pages/home/Home";
-import Profile from "./ui/pages/profile/Profile"; 
+import Explore from "./ui/pages/explore/Explore";
+import Profile from "./ui/pages/profile/Profile";
 import Login from "./ui/pages/login/Login";
 import Subscriptions from "./ui/pages/subscriptions/Subscriptions";
 import Payment from "./ui/pages/payment/Payment";
@@ -11,32 +12,40 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route 
-        path="/home" 
+      <Route
+        path="/home"
         element={
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/profile" 
+      <Route
+        path="/explore"
+        element={
+          <ProtectedRoute>
+            <Explore />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
         element={
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/subscriptions" 
+      <Route
+        path="/subscriptions"
         element={
           <ProtectedRoute>
             <Subscriptions />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/payment" 
+      <Route
+        path="/payment"
         element={
           <ProtectedRoute>
             <Payment />

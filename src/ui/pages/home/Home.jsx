@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useNavigate, NavLink, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
@@ -30,10 +30,9 @@ export default function Home() {
     }
   };
 
-  // Navigation items with active route checking
   const mainNavItems = [
     { id: 'dashboard', label: 'Dashboard', icon: 'bx-grid-alt', path: '/home' },
-    { id: 'explore', label: 'Explore', icon: 'bx-compass', path: '#explore' },
+    { id: 'explore', label: 'Explore', icon: 'bx-compass', path: '/explore' },
     { id: 'favorites', label: 'Favorites', icon: 'bx-heart', path: '#favorites' },
     { id: 'history', label: 'History', icon: 'bx-history', path: '#history' },
   ];
@@ -56,28 +55,30 @@ export default function Home() {
     return location.pathname === path;
   };
 
+  const handleNavClick = (path) => {
+    if (path.startsWith('#')) return;
+    navigate(path);
+  };
+
   return (
     <div className="home-page">
-      {/* Backdrop Overlay */}
-      <div 
+      <div
         className={`sidebar-backdrop ${sidebarOpen ? 'visible' : ''}`}
         onClick={() => setSidebarOpen(false)}
         aria-hidden={!sidebarOpen}
       />
 
-      {/* SIDEBAR */}
-      <aside 
+      <aside
         className={`sidebar ${sidebarOpen ? 'open' : 'collapsed'}`}
         aria-label="Main navigation"
         aria-expanded={sidebarOpen}
       >
-        {/* Logo Section */}
         <div className="sidebar-brand">
           <div className="brand-icon">
             <i className="bx bxs-videos"></i>
           </div>
           <span className="brand-text">Cadlix</span>
-          <button 
+          <button
             className="sidebar-toggle-btn"
             onClick={() => setSidebarOpen(false)}
             aria-label="Collapse sidebar"
@@ -86,12 +87,11 @@ export default function Home() {
           </button>
         </div>
 
-        {/* User Profile Section */}
         {user && (
           <div className="sidebar-user">
             <div className="user-avatar">
-              <img 
-                src={user.avatar || 'https://via.placeholder.com/40'} 
+              <img
+                src={user.avatar || 'https://via.placeholder.com/40'}
                 alt={user.username}
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/40';
@@ -106,16 +106,21 @@ export default function Home() {
           </div>
         )}
 
-        {/* Main Navigation */}
         <nav className="sidebar-nav">
           <div className="nav-section">
             <span className="nav-section-title">Menu</span>
             <ul className="nav-list" role="menubar">
               {mainNavItems.map((item) => (
                 <li key={item.id} role="none">
-                  <a 
+                  <a
                     href={item.path}
                     role="menuitem"
+                    onClick={(e) => {
+                      if (!item.path.startsWith('#')) {
+                        e.preventDefault();
+                        handleNavClick(item.path);
+                      }
+                    }}
                     className={`nav-item ${isActiveRoute(item.path) ? 'active' : ''}`}
                     tabIndex={sidebarOpen ? 0 : -1}
                   >
@@ -137,7 +142,7 @@ export default function Home() {
             <ul className="nav-list" role="menubar">
               {settingsNavItems.map((item) => (
                 <li key={item.id} role="none">
-                  <a 
+                  <a
                     href={item.path}
                     role="menuitem"
                     className="nav-item"
@@ -154,9 +159,8 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* Footer Actions */}
         <div className="sidebar-footer">
-          <button 
+          <button
             className="footer-action"
             onClick={() => navigate('/profile')}
             tabIndex={sidebarOpen ? 0 : -1}
@@ -166,8 +170,8 @@ export default function Home() {
             </div>
             <span className="nav-label">My Profile</span>
           </button>
-          
-          <button 
+
+          <button
             className="footer-action logout"
             onClick={handleLogout}
             disabled={isLoggingOut}
@@ -181,13 +185,11 @@ export default function Home() {
         </div>
       </aside>
 
-      {/* MAIN CONTENT */}
       <main className={`main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-        {/* NAVBAR */}
         <header className="navbar">
           <div className="navbar-content">
             <div className="navbar-left">
-              <button 
+              <button
                 className="menu-btn"
                 onClick={toggleSidebar}
                 aria-label={sidebarOpen ? "Close menu" : "Open menu"}
@@ -210,7 +212,7 @@ export default function Home() {
             </div>
 
             <div className="navbar-right">
-              <Button 
+              <Button
                 variant="secondary"
                 size="small"
                 onClick={() => navigate('/profile')}
@@ -223,7 +225,6 @@ export default function Home() {
           </div>
         </header>
 
-        {/* PAGE CONTENT */}
         <div className="page-content">
           <section className="hero-section">
             <h1 className="hero-title">Welcome to Cadlix!</h1>
@@ -243,13 +244,12 @@ export default function Home() {
           <section className="content-section">
             <h2 className="section-title">Recently Added</h2>
             <div className="content-grid">
-              {/* Placeholder cards */}
               {[1, 2, 3, 4].map((item) => (
                 <div key={item} className="content-card">
                   <div className="content-card-image" />
                   <div className="content-card-info">
                     <h3 className="content-card-title">Anime Title {item}</h3>
-                    <p className="content-card-meta">Action • Adventure</p>
+                    <p className="content-card-meta">Action | Adventure</p>
                   </div>
                 </div>
               ))}

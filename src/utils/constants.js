@@ -13,6 +13,7 @@ export const APP_CONFIG = {
 export const ROUTES = {
   LOGIN: '/login',
   HOME: '/home',
+  EXPLORE: '/explore',
   PROFILE: '/profile',
   ROOT: '/',
 };
