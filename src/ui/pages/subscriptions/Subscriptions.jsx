@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../../context/useUser.js";
 import "./Subscriptions.css";
 
 export default function Subscriptions() {
   const navigate = useNavigate();
+  const { updateUser } = useUser();
 
   return (
     <div className="subscriptions-container">
@@ -13,27 +15,27 @@ export default function Subscriptions() {
       />
 
       <div className="subscriptions-header">
-        <button 
+        <button
           className="back-btn"
           onClick={() => navigate('/profile')}
-          title="Înapoi la profil"
+          title="Inapoi la profil"
         >
           <i className="material-icons">arrow_back</i>
-          Înapoi
+          Inapoi
         </button>
       </div>
 
-      <h1 className="demo-title">Alege-ți Nivelul Tău</h1>
+      <h1 className="demo-title">Alege-ti Nivelul Tau</h1>
 
       <div className="pricing-table">
         {/* Genin - Free */}
         <div className="pricing-option genin">
-          <h1>Genin 🥷</h1>
-          <p className="subtitle">Nivel de începător</p>
+          <h1>Genin</h1>
+          <p className="subtitle">Nivel de incepator</p>
           <hr />
           <p>
-            Acces la funcțiile de bază pentru a-ți începe călătoria. Perfect
-            pentru cei care explorează.
+            Acces la functiile de baza pentru a-ti incepe calatoria. Perfect
+            pentru cei care exploreaza.
           </p>
           <hr />
           <div className="price">
@@ -43,28 +45,36 @@ export default function Subscriptions() {
               </span>
             </div>
             <div className="back">
-              <a href="#" className="button">
+              <button
+                className="button"
+                onClick={() => {
+                  try {
+                    updateUser({ plan: "Genin" });
+                  } catch (e) {}
+                  navigate("/profile");
+                }}
+              >
                 Get Started
-              </a>
+              </button>
             </div>
           </div>
           <div className="features">
             <ul className="features-list">
-              <li>✓ Acces limitat</li>
-              <li>✓ Suport comunitar</li>
-              <li>✗ Statistici avansate</li>
+              <li>Acces limitat</li>
+              <li>Suport comunitar</li>
+              <li>Fara statistici avansate</li>
             </ul>
           </div>
         </div>
 
         {/* Chunin - Medium */}
         <div className="pricing-option chunin">
-          <h1>Chunin ⚔️</h1>
+          <h1>Chunin</h1>
           <p className="subtitle">Nivel mediu</p>
           <hr />
           <p>
-            Acces la funcțiile avansate și mai multă flexibilitate. Ideal pentru
-            profesioniști în dezvoltare.
+            Acces la functiile avansate si mai multa flexibilitate. Ideal pentru
+            profesionisti in dezvoltare.
           </p>
           <hr />
           <div className="price">
@@ -74,28 +84,31 @@ export default function Subscriptions() {
               </span>
             </div>
             <div className="back">
-              <a href="#" className="button">
+              <button
+                className="button"
+                onClick={() => navigate('/payment', { state: { plan: 'Chunin', price: 399 } })}
+              >
                 Upgrade Now
-              </a>
+              </button>
             </div>
           </div>
           <div className="features">
             <ul className="features-list">
-              <li>✓ Acces complet</li>
-              <li>✓ Suport prioritar</li>
-              <li>✓ Statistici avansate</li>
+              <li>Acces complet</li>
+              <li>Suport prioritar</li>
+              <li>Statistici avansate</li>
             </ul>
           </div>
         </div>
 
         {/* Hokage - Premium */}
         <div className="pricing-option hokage">
-          <h1>Hokage 👑</h1>
+          <h1>Hokage</h1>
           <p className="subtitle">Nivel suprem</p>
           <hr />
           <p>
-            Putere maximă cu toate funcțiile și prioritatea supremă. Pentru cei
-            care vor rezultate explosive.
+            Putere maxima cu toate functiile si prioritatea suprema. Pentru cei
+            care vor rezultate explozive.
           </p>
           <hr />
           <div className="price">
@@ -105,16 +118,19 @@ export default function Subscriptions() {
               </span>
             </div>
             <div className="back">
-              <a href="#" className="button">
+              <button
+                className="button"
+                onClick={() => navigate('/payment', { state: { plan: 'Hokage', price: 999 } })}
+              >
                 Become Hokage
-              </a>
+              </button>
             </div>
           </div>
           <div className="features">
             <ul className="features-list">
-              <li>✓ Acces nelimitat</li>
-              <li>✓ Suport VIP 24/7</li>
-              <li>✓ Caracteristici exclusive</li>
+              <li>Acces nelimitat</li>
+              <li>Suport VIP 24/7</li>
+              <li>Caracteristici exclusive</li>
             </ul>
           </div>
         </div>

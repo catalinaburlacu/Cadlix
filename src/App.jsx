@@ -4,6 +4,7 @@ import Home from "./ui/pages/home/Home";
 import Profile from "./ui/pages/profile/Profile"; 
 import Login from "./ui/pages/login/Login";
 import Subscriptions from "./ui/pages/subscriptions/Subscriptions";
+import Payment from "./ui/pages/payment/Payment";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
 function App() {
@@ -33,6 +34,14 @@ function App() {
             <Subscriptions />
           </ProtectedRoute>
         } 
+      />
+      <Route 
+        path="/payment" 
+        element={
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        }
       />
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="*" element={<Navigate to="/login" />} />
