@@ -1,138 +1,222 @@
-/* Login Page - Scoped styles that don't affect body */
+/* Login Page - Matching other pages style */
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-primary) 100%);
+  padding: 24px;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-primary);
 }
 
-.login-container {
+.main {
   width: 100%;
-  max-width: 420px;
-  animation: fadeInUp 0.5s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.login-card {
-  background-color: var(--color-bg-card);
+  max-width: 400px;
+  height: 580px;
+  background: var(--color-bg-card);
   border: 2px solid var(--color-accent-purple);
   border-radius: 16px;
-  padding: 32px;
+  overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
 }
 
-/* Form Toggle */
-.form-toggle {
-  display: flex;
-  gap: 8px;
-  background-color: var(--color-bg-secondary);
-  padding: 4px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-}
-
-.toggle-btn {
-  flex: 1;
-  padding: 12px 16px;
-  background: transparent;
-  border: none;
-  color: var(--color-text-muted);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.25s ease;
-}
-
-.toggle-btn:hover {
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-hover);
-}
-
-.toggle-btn.active {
-  background-color: var(--color-accent-purple);
-  color: white;
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
-}
-
-/* Form Container */
-.form-container {
+#chk {
   display: none;
 }
 
-.form-container.active {
-  display: block;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.form-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin: 0 0 8px 0;
-  text-align: center;
-}
-
-.form-subtitle {
-  font-size: 0.9375rem;
-  color: var(--color-text-muted);
-  margin: 0 0 24px 0;
-  text-align: center;
-}
-
-.form-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.form-submit {
+/* Signup Section */
+.signup {
+  position: relative;
   width: 100%;
+  height: 100%;
+  padding: 40px 32px;
 }
 
-.form-footer {
-  text-align: center;
-  margin: 20px 0 0 0;
-  color: var(--color-text-muted);
-  font-size: 0.9375rem;
-}
-
-.form-link {
-  background: none;
-  border: none;
-  color: var(--color-accent-teal);
-  font-weight: 600;
+.signup label,
+.login label {
+  color: var(--color-text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
   cursor: pointer;
-  padding: 0;
-  font-size: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  transition: all 0.5s ease-in-out;
+  background: linear-gradient(135deg, #fff, var(--color-accent-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.form-link:hover {
-  color: #40E0D0;
+.signup input,
+.login input {
+  width: 100%;
+  height: 48px;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-bg-primary);
+  border-radius: 12px;
+  padding: 0 16px;
+  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.signup input::placeholder,
+.login input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.signup input:focus,
+.login input:focus {
+  border-color: var(--color-accent-purple);
+}
+
+.signup button,
+.login button {
+  width: 100%;
+  height: 48px;
+  margin-top: 16px;
+  color: white;
+  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink));
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+}
+
+.signup button:hover,
+.login button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(138, 43, 226, 0.4);
+}
+
+.signup button:active,
+.login button:active {
+  transform: translateY(0);
+}
+
+/* Social Login */
+.social-login {
+  margin-top: 24px;
+}
+
+.social-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-bg-primary);
+}
+
+.social-divider span {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-bg-primary);
+  border-radius: 10px;
+  color: var(--color-text-primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+  border-color: var(--color-accent-purple);
+  background: var(--color-bg-hover);
+}
+
+.social-btn i {
+  font-size: 1.25rem;
+}
+
+.social-btn.google:hover {
+  border-color: #DB4437;
+  color: #DB4437;
+}
+
+.social-btn.facebook:hover {
+  border-color: #1877F2;
+  color: #1877F2;
+}
+
+.social-btn.apple:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+/* Login Section - Slides up to reveal signup */
+.login {
+  height: 520px;
+  background: var(--color-bg-card);
+  border-top: 2px solid var(--color-accent-purple);
+  border-radius: 16px 16px 0 0;
+  transform: translateY(-130px);
+  transition: transform 0.8s ease-in-out;
+  padding: 40px 32px;
+}
+
+.login label {
+  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: scale(0.6);
+}
+
+/* Toggle Animation - Both forms stay visible */
+#chk:checked ~ .login {
+  transform: translateY(-100%);
+}
+
+#chk:checked ~ .login label {
+  transform: scale(1);
+}
+
+#chk:checked ~ .signup label {
+  transform: scale(0.6);
+}
+
+/* Forms positioning - prevent overlap */
+.signup {
+  position: relative;
+  z-index: 1;
+}
+
+.login {
+  position: relative;
+  z-index: 2;
 }
 
 /* Responsive */
@@ -142,19 +226,49 @@
     background: var(--color-bg-dark);
   }
   
-  .login-card {
-    padding: 24px 20px;
-    border: none;
-    box-shadow: none;
-    background: transparent;
+  .main {
+    max-width: 100%;
+    border-radius: 16px;
+    height: 560px;
   }
   
-  .form-title {
-    font-size: 1.5rem;
+  .signup,
+  .login {
+    padding: 32px 24px;
   }
   
-  .toggle-btn {
-    padding: 10px 12px;
-    font-size: 0.875rem;
+  .signup label,
+  .login label {
+    font-size: 1.75rem;
+    margin-bottom: 24px;
+  }
+  
+  .login {
+    height: 480px;
+  }
+
+  #chk:checked ~ .login {
+    transform: translateY(-100%);
+  }
+
+  .social-buttons {
+    flex-wrap: wrap;
+  }
+
+  .social-btn span {
+    display: none;
+  }
+
+  .social-btn {
+    padding: 12px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .signup label,
+  .login label,
+  .login {
+    transition: none;
   }
 }

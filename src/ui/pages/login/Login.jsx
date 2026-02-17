@@ -2,78 +2,43 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
-import { useFormValidation, validators } from "../../../hooks/useFormValidation.js";
-import Input from "../../../components/common/Input.jsx";
-import Button from "../../../components/common/Button.jsx";
 import { sanitizeInput } from "../../../utils/security.js";
 import "./Login.css";
-
-// Validation rules for login form
-const loginValidationRules = {
-  email: [
-    validators.required('Email is required'),
-    validators.email('Please enter a valid email address'),
-  ],
-  password: [
-    validators.required('Password is required'),
-    validators.minLength(6, 'Password must be at least 6 characters'),
-  ],
-};
-
-// Validation rules for signup form
-const signupValidationRules = {
-  username: [
-    validators.required('Username is required'),
-    validators.minLength(3, 'Username must be at least 3 characters'),
-    validators.maxLength(30, 'Username must be no more than 30 characters'),
-  ],
-  email: [
-    validators.required('Email is required'),
-    validators.email('Please enter a valid email address'),
-  ],
-  phone: [
-    validators.required('Phone number is required'),
-    validators.pattern(/^\d{10,15}$/, 'Please enter a valid phone number'),
-  ],
-  password: [
-    validators.required('Password is required'),
-    validators.minLength(8, 'Password must be at least 8 characters'),
-  ],
-};
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useUser();
   const toast = useToast();
-  const [activeForm, setActiveForm] = useState('login');
+  const [isSignup, setIsSignup] = useState(false);
 
-  // Login form state
-  const loginForm = useFormValidation(
-    { email: '', password: '' },
-    loginValidationRules
-  );
+  // Form states
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [signupData, setSignupData] = useState({ txt: '', email: '', password: '' });
 
-  // Signup form state
-  const signupForm = useFormValidation(
-    { username: '', email: '', phone: '', password: '' },
-    signupValidationRules
-  );
+  const handleLoginChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  };
+
+  const handleSignupChange = (e) => {
+    setSignupData({ ...signupData, [e.target.name]: e.target.value });
+  };
+
+  const handleSocialLogin = (provider) => {
+    toast.info(`${provider} login coming soon!`);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     
-    if (!loginForm.validateAll()) {
-      toast.error('Please fix the errors in the form');
+    if (!loginData.email || !loginData.password) {
+      toast.error('Please fill in all fields');
       return;
     }
 
     try {
       // Sanitize inputs
-      const sanitizedData = {
-        email: sanitizeInput(loginForm.values.email),
-        password: loginForm.values.password, // Don't sanitize passwords
-      };
+      const sanitizedEmail = sanitizeInput(loginData.email);
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -81,9 +46,9 @@ export default function Login() {
       // Create complete user object
       const userData = {
         id: Date.now().toString(),
-        username: sanitizedData.email.split('@')[0],
-        email: sanitizedData.email,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedData.email}`,
+        username: sanitizedEmail.split('@')[0],
+        email: sanitizedEmail,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedEmail}`,
         group: 'Member',
         status: 'Online',
         stats: {
@@ -113,18 +78,16 @@ export default function Login() {
   const handleSignup = async (e) => {
     e.preventDefault();
     
-    if (!signupForm.validateAll()) {
-      toast.error('Please fix the errors in the form');
+    if (!signupData.txt || !signupData.email || !signupData.password) {
+      toast.error('Please fill in all fields');
       return;
     }
 
     try {
       // Sanitize inputs
       const sanitizedData = {
-        username: sanitizeInput(signupForm.values.username),
-        email: sanitizeInput(signupForm.values.email),
-        phone: sanitizeInput(signupForm.values.phone),
-        password: signupForm.values.password,
+        username: sanitizeInput(signupData.txt),
+        email: sanitizeInput(signupData.email),
       };
 
       // Simulate API call
@@ -135,7 +98,6 @@ export default function Login() {
         id: Date.now().toString(),
         username: sanitizedData.username,
         email: sanitizedData.email,
-        phone: sanitizedData.phone,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedData.username}`,
         group: 'Member',
         status: 'Online',
@@ -160,198 +122,105 @@ export default function Login() {
     }
   };
 
-  const switchForm = (form) => {
-    setActiveForm(form);
-    // Reset forms when switching
-    if (form === 'login') {
-      signupForm.reset();
-    } else {
-      loginForm.reset();
-    }
-  };
+  const SocialButtons = () => (
+    <div className="social-login">
+      <div className="social-divider">
+        <span>or continue with</span>
+      </div>
+      <div className="social-buttons">
+        <button 
+          type="button" 
+          className="social-btn google"
+          onClick={() => handleSocialLogin('Google')}
+        >
+          <i className="bx bxl-google"></i>
+          <span>Google</span>
+        </button>
+        <button 
+          type="button" 
+          className="social-btn facebook"
+          onClick={() => handleSocialLogin('Facebook')}
+        >
+          <i className="bx bxl-facebook"></i>
+          <span>Facebook</span>
+        </button>
+        <button 
+          type="button" 
+          className="social-btn apple"
+          onClick={() => handleSocialLogin('Apple')}
+        >
+          <i className="bx bxl-apple"></i>
+          <span>Apple</span>
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="login-page">
-      <div className="login-container">
-        <div className="login-card">
-          {/* Toggle Switch */}
-          <div className="form-toggle" role="tablist" aria-label="Login or Signup">
-            <button
-              role="tab"
-              aria-selected={activeForm === 'login'}
-              className={`toggle-btn ${activeForm === 'login' ? 'active' : ''}`}
-              onClick={() => switchForm('login')}
-            >
-              Login
-            </button>
-            <button
-              role="tab"
-              aria-selected={activeForm === 'signup'}
-              className={`toggle-btn ${activeForm === 'signup' ? 'active' : ''}`}
-              onClick={() => switchForm('signup')}
-            >
-              Sign Up
-            </button>
-          </div>
+      <div className="main">
+        <input 
+          type="checkbox" 
+          id="chk" 
+          aria-hidden="true"
+          checked={isSignup}
+          onChange={(e) => setIsSignup(e.target.checked)}
+        />
 
-          {/* Login Form */}
-          <div 
-            className={`form-container ${activeForm === 'login' ? 'active' : ''}`}
-            role="tabpanel"
-            aria-hidden={activeForm !== 'login'}
-          >
-            <form onSubmit={handleLogin} noValidate>
-              <h2 className="form-title">Welcome Back</h2>
-              <p className="form-subtitle">Enter your credentials to access your account</p>
-              
-              <div className="form-fields">
-                <Input
-                  type="email"
-                  name="email"
-                  label="Email Address"
-                  placeholder="Enter your email"
-                  value={loginForm.values.email}
-                  onChange={loginForm.handleChange}
-                  onBlur={loginForm.handleBlur}
-                  error={loginForm.errors.email}
-                  touched={loginForm.touched.email}
-                  required
-                  autoComplete="email"
-                  icon="✉"
-                />
-                
-                <Input
-                  type="password"
-                  name="password"
-                  label="Password"
-                  placeholder="Enter your password"
-                  value={loginForm.values.password}
-                  onChange={loginForm.handleChange}
-                  onBlur={loginForm.handleBlur}
-                  error={loginForm.errors.password}
-                  touched={loginForm.touched.password}
-                  required
-                  autoComplete="current-password"
-                  icon="🔒"
-                />
-              </div>
+        <div className="signup">
+          <form onSubmit={handleSignup}>
+            <label htmlFor="chk" aria-hidden="true">Sign up</label>
+            <input 
+              type="text" 
+              name="txt" 
+              placeholder="User name" 
+              required
+              value={signupData.txt}
+              onChange={handleSignupChange}
+            />
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Email" 
+              required
+              value={signupData.email}
+              onChange={handleSignupChange}
+            />
+            <input 
+              type="password" 
+              name="password" 
+              placeholder="Password" 
+              required
+              value={signupData.password}
+              onChange={handleSignupChange}
+            />
+            <button type="submit">Sign up</button>
+            <SocialButtons />
+          </form>
+        </div>
 
-              <Button 
-                type="submit" 
-                variant="primary" 
-                size="large"
-                className="form-submit"
-              >
-                Login
-              </Button>
-
-              <p className="form-footer">
-                Don't have an account?{' '}
-                <button 
-                  type="button" 
-                  className="form-link"
-                  onClick={() => switchForm('signup')}
-                >
-                  Sign up
-                </button>
-              </p>
-            </form>
-          </div>
-
-          {/* Signup Form */}
-          <div 
-            className={`form-container ${activeForm === 'signup' ? 'active' : ''}`}
-            role="tabpanel"
-            aria-hidden={activeForm !== 'signup'}
-          >
-            <form onSubmit={handleSignup} noValidate>
-              <h2 className="form-title">Create Account</h2>
-              <p className="form-subtitle">Fill in your details to get started</p>
-              
-              <div className="form-fields">
-                <Input
-                  type="text"
-                  name="username"
-                  label="Username"
-                  placeholder="Choose a username"
-                  value={signupForm.values.username}
-                  onChange={signupForm.handleChange}
-                  onBlur={signupForm.handleBlur}
-                  error={signupForm.errors.username}
-                  touched={signupForm.touched.username}
-                  required
-                  autoComplete="username"
-                  icon="👤"
-                />
-                
-                <Input
-                  type="email"
-                  name="email"
-                  label="Email Address"
-                  placeholder="Enter your email"
-                  value={signupForm.values.email}
-                  onChange={signupForm.handleChange}
-                  onBlur={signupForm.handleBlur}
-                  error={signupForm.errors.email}
-                  touched={signupForm.touched.email}
-                  required
-                  autoComplete="email"
-                  icon="✉"
-                />
-                
-                <Input
-                  type="tel"
-                  name="phone"
-                  label="Phone Number"
-                  placeholder="Enter your phone number"
-                  value={signupForm.values.phone}
-                  onChange={signupForm.handleChange}
-                  onBlur={signupForm.handleBlur}
-                  error={signupForm.errors.phone}
-                  touched={signupForm.touched.phone}
-                  required
-                  autoComplete="tel"
-                  icon="📱"
-                />
-                
-                <Input
-                  type="password"
-                  name="password"
-                  label="Password"
-                  placeholder="Create a password"
-                  value={signupForm.values.password}
-                  onChange={signupForm.handleChange}
-                  onBlur={signupForm.handleBlur}
-                  error={signupForm.errors.password}
-                  touched={signupForm.touched.password}
-                  required
-                  autoComplete="new-password"
-                  icon="🔒"
-                  helperText="Must be at least 8 characters"
-                />
-              </div>
-
-              <Button 
-                type="submit" 
-                variant="primary" 
-                size="large"
-                className="form-submit"
-              >
-                Create Account
-              </Button>
-
-              <p className="form-footer">
-                Already have an account?{' '}
-                <button 
-                  type="button" 
-                  className="form-link"
-                  onClick={() => switchForm('login')}
-                >
-                  Login
-                </button>
-              </p>
-            </form>
-          </div>
+        <div className="login">
+          <form onSubmit={handleLogin}>
+            <label htmlFor="chk" aria-hidden="true">Login</label>
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Email" 
+              required
+              value={loginData.email}
+              onChange={handleLoginChange}
+            />
+            <input 
+              type="password" 
+              name="password" 
+              placeholder="Password" 
+              required
+              value={loginData.password}
+              onChange={handleLoginChange}
+            />
+            <button type="submit">Login</button>
+            <SocialButtons />
+          </form>
         </div>
       </div>
     </div>
