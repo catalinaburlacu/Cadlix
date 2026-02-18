@@ -114,6 +114,23 @@
   box-shadow:0 0 0 3px rgba(146, 1, 203, 0.15);
 }
 
+.form .input-field--error{
+  border-color:#e53935;
+  box-shadow:0 0 0 3px rgba(229,57,53,0.14);
+}
+
+.field-error{
+  color:#d32f2f;
+  font-size:12px;
+  margin-top:-2px;
+}
+
+.field-info{
+  color:#0d47a1;
+  font-size:12px;
+  margin-top:-2px;
+}
+
 .form .split{
   display:flex;
   flex-direction:row;
@@ -148,6 +165,11 @@
   color:var(--pink-magenta);
   border-color:var(--pink-magenta);
   background:#ffffff;
+}
+
+.form .checkout-btn:disabled{
+  opacity:0.7;
+  cursor:not-allowed;
 }
 
 .paid-wrapper{
