@@ -34,7 +34,7 @@ export default function Home() {
     { id: 'dashboard', label: 'Dashboard', icon: 'bx-grid-alt', path: '/home' },
     { id: 'explore', label: 'Explore', icon: 'bx-compass', path: '/explore' },
     { id: 'favorites', label: 'Favorites', icon: 'bx-heart', path: '#favorites' },
-    { id: 'history', label: 'History', icon: 'bx-history', path: '#history' },
+    { id: 'history', label: 'History', icon: 'bx-history', path: '/history' },
   ];
 
   const settingsNavItems = [

@@ -15,6 +15,7 @@ export const ROUTES = {
   HOME: '/home',
   EXPLORE: '/explore',
   PROFILE: '/profile',
+  HISTORY: '/history',
   ROOT: '/',
 };
 
@@ -151,4 +152,42 @@ export const DEFAULT_USER_DATA = {
     addedToList: 67,
     daysOnSite: 30,
   },
+  watchHistory: [
+    {
+      id: 'h-1',
+      title: 'Jujutsu Kaisen',
+      category: 'Anime',
+      series: 'Season 2',
+      episode: 'Episode 14',
+      watchedAt: '2026-02-17T21:42:00Z',
+      progress: '18:27',
+    },
+    {
+      id: 'h-2',
+      title: 'Dune: Part Two',
+      category: 'Movie',
+      series: '-',
+      episode: '-',
+      watchedAt: '2026-02-16T20:05:00Z',
+      progress: '01:58:11',
+    },
+    {
+      id: 'h-3',
+      title: 'Stranger Things',
+      category: 'Series',
+      series: 'Season 4',
+      episode: 'Episode 5',
+      watchedAt: '2026-02-15T19:30:00Z',
+      progress: '42:10',
+    },
+    {
+      id: 'h-4',
+      title: 'Attack on Titan',
+      category: 'Anime',
+      series: 'Final Season',
+      episode: 'Episode 3',
+      watchedAt: '2026-02-14T22:18:00Z',
+      progress: '24:00',
+    },
+  ],
 };

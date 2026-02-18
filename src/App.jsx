@@ -6,6 +6,7 @@ import Profile from "./ui/pages/profile/Profile";
 import Login from "./ui/pages/login/Login";
 import Subscriptions from "./ui/pages/subscriptions/Subscriptions";
 import Payment from "./ui/pages/payment/Payment";
+import History from "./ui/pages/history/History.jsx";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
 function App() {
@@ -49,6 +50,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Payment />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <ProtectedRoute>
+            <History />
           </ProtectedRoute>
         }
       />

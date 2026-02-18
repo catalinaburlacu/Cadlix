@@ -1,0 +1,110 @@
+.history-page .history-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.history-heading {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.history-intro {
+  background: rgba(30, 27, 81, 0.6);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.history-intro h2 {
+  margin: 0 0 8px;
+  color: var(--color-text-primary);
+}
+
+.history-intro p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.history-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.history-card {
+  background: rgba(30, 27, 81, 0.5);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.history-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.history-main h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.history-type {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.history-type--anime {
+  background: rgba(52, 237, 243, 0.2);
+  color: #34edf3;
+}
+
+.history-type--movie {
+  background: rgba(247, 21, 171, 0.2);
+  color: #f715ab;
+}
+
+.history-type--series {
+  background: rgba(146, 1, 203, 0.2);
+  color: #d8a6ef;
+}
+
+.history-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 12px;
+}
+
+.history-meta p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.history-empty {
+  background: rgba(30, 27, 81, 0.5);
+  border: 1px dashed rgba(138, 43, 226, 0.4);
+  border-radius: 14px;
+  padding: 28px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.history-empty i {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .history-meta {
+    grid-template-columns: 1fr;
+  }
+}
