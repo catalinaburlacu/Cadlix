@@ -155,6 +155,98 @@
   font-size: 0.9375rem;
 }
 
+.user-extra {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  max-width: 520px;
+}
+
+.profile-edit-panel {
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-accent-purple);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.edit-title {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+}
+
+.edit-section-title {
+  margin: 20px 0 12px;
+  font-size: 1rem;
+  color: var(--color-accent-teal);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edit-field-full {
+  grid-column: 1 / -1;
+}
+
+.edit-field label {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.edit-field input,
+.edit-field select,
+.edit-field textarea {
+  background-color: var(--color-bg-secondary);
+  border: 2px solid var(--color-bg-primary);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  padding: 10px 12px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+}
+
+.edit-field input:focus,
+.edit-field select:focus,
+.edit-field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-purple);
+}
+
+.edit-hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.edit-avatar-preview {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-accent-purple);
+}
+
+.edit-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
 /* Stats Section - Optimized */
 .stats-section {
   margin-bottom: 32px;
@@ -446,6 +538,10 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+  }
+
+  .edit-grid {
+    grid-template-columns: 1fr;
   }
   
   .avatar {

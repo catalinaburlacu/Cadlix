@@ -31,7 +31,9 @@ export default function Payment() {
       setProcessing(false);
       try {
         updateUser({ plan: cleanPlan });
-      } catch (e) {}
+      } catch (error) {
+        console.error("Failed to update user plan:", error);
+      }
       setPaid(true);
     }, 1200);
   }

@@ -44,7 +44,9 @@ export default function Subscriptions() {
                 onClick={() => {
                   try {
                     updateUser({ plan: "Genin" });
-                  } catch (e) {}
+                  } catch (error) {
+                    console.error("Failed to update user plan:", error);
+                  }
                   navigate("/profile");
                 }}
               >
