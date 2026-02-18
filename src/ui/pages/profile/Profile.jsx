@@ -5,6 +5,7 @@ import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
 import Input from "../../../components/common/Input.jsx";
 import { SkeletonAvatar, SkeletonStats } from "../../../components/common/Skeleton.jsx";
+import { ANIME_GENRES, ANIME_TYPES, SORT_OPTIONS } from "../../../utils/constants.js";
 import PropTypes from 'prop-types';
 import "./Profile.css";
 
@@ -163,7 +164,7 @@ export default function Profile() {
                   onClick={() => navigate('/subscriptions')}
                   title="Click to upgrade or manage your plan"
                 >
-                  {user.plan || 'Genin 🥷'}
+                  {user.plan || 'Genin'}
                 </button>
               </div>
               <p className="user-email">{user.email}</p>
@@ -229,25 +230,27 @@ export default function Profile() {
           
           <div className="filter-selects">
             <select className="filter-select" aria-label="Filter by type">
-              <option value="">All Types</option>
-              <option value="tv">TV Series</option>
-              <option value="movie">Movie</option>
-              <option value="ova">OVA</option>
+              {ANIME_TYPES.map((type) => (
+                <option key={type.value || 'all-types'} value={type.value}>
+                  {type.label}
+                </option>
+              ))}
             </select>
             
             <select className="filter-select" aria-label="Filter by genre">
-              <option value="">All Genres</option>
-              <option value="action">Action</option>
-              <option value="adventure">Adventure</option>
-              <option value="comedy">Comedy</option>
-              <option value="drama">Drama</option>
+              {ANIME_GENRES.map((genre) => (
+                <option key={genre.value || 'all-genres'} value={genre.value}>
+                  {genre.label}
+                </option>
+              ))}
             </select>
             
             <select className="filter-select" aria-label="Sort by">
-              <option value="">Sort By</option>
-              <option value="title">Title</option>
-              <option value="score">Score</option>
-              <option value="date">Date Added</option>
+              {SORT_OPTIONS.map((option) => (
+                <option key={option.value || 'sort-by'} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -276,3 +279,4 @@ export default function Profile() {
     </div>
   );
 }
+

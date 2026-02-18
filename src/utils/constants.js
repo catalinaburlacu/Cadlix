@@ -45,6 +45,7 @@ export const CONTENT_TABS = [
 // Anime Types
 export const ANIME_TYPES = [
   { value: '', label: 'All Types' },
+  { value: 'anime', label: 'Anime' },
   { value: 'tv', label: 'TV Series' },
   { value: 'movie', label: 'Movie' },
   { value: 'ova', label: 'OVA' },
@@ -55,19 +56,30 @@ export const ANIME_TYPES = [
 // Anime Genres
 export const ANIME_GENRES = [
   { value: '', label: 'All Genres' },
-  { value: 'action', label: 'Action' },
-  { value: 'adventure', label: 'Adventure' },
-  { value: 'comedy', label: 'Comedy' },
+  { value: 'martial-arts', label: 'Martial Arts' },
+  { value: 'military', label: 'Military' },
+  { value: 'harem', label: 'Harem' },
+  { value: 'detective', label: 'Detective' },
   { value: 'drama', label: 'Drama' },
-  { value: 'fantasy', label: 'Fantasy' },
-  { value: 'horror', label: 'Horror' },
+  { value: 'games', label: 'Games' },
+  { value: 'historical', label: 'Historical' },
+  { value: 'comedy', label: 'Comedy' },
+  { value: 'magic', label: 'Magic' },
   { value: 'mystery', label: 'Mystery' },
-  { value: 'romance', label: 'Romance' },
-  { value: 'sci-fi', label: 'Sci-Fi' },
   { value: 'slice-of-life', label: 'Slice of Life' },
-  { value: 'sports', label: 'Sports' },
+  { value: 'adventure', label: 'Adventure' },
+  { value: 'psychological', label: 'Psychological' },
+  { value: 'romance', label: 'Romance' },
   { value: 'supernatural', label: 'Supernatural' },
+  { value: 'sports', label: 'Sports' },
+  { value: 'super-power', label: 'Super Power' },
   { value: 'thriller', label: 'Thriller' },
+  { value: 'horror', label: 'Horror' },
+  { value: 'sci-fi', label: 'Sci-Fi' },
+  { value: 'fantasy', label: 'Fantasy' },
+  { value: 'school', label: 'School' },
+  { value: 'action', label: 'Action' },
+  { value: 'ecchi', label: 'Ecchi' },
 ];
 
 // Sort Options

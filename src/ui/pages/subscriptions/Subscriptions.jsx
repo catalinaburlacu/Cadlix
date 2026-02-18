@@ -25,23 +25,17 @@ export default function Subscriptions() {
         </button>
       </div>
 
-      <h1 className="demo-title">Alege-ti Nivelul Tau</h1>
+      <h1 className="demo-title">Choose Your Plan</h1>
 
       <div className="pricing-table">
-        {/* Genin - Free */}
         <div className="pricing-option genin">
           <h1>Genin</h1>
-          <p className="subtitle">Nivel de incepator</p>
-          <hr />
-          <p>
-            Acces la functiile de baza pentru a-ti incepe calatoria. Perfect
-            pentru cei care exploreaza.
-          </p>
+          <p className="subtitle">Plan GRATIS</p>
           <hr />
           <div className="price">
             <div className="front">
               <span className="price">
-                Gratis <b>$0</b>
+                FREE <b>$0</b>
               </span>
             </div>
             <div className="back">
@@ -59,23 +53,23 @@ export default function Subscriptions() {
             </div>
           </div>
           <div className="features">
+            <h3 className="features-title">Ce include:</h3>
             <ul className="features-list">
-              <li>Acces limitat</li>
-              <li>Suport comunitar</li>
-              <li>Fara statistici avansate</li>
+              <li>Acces la o parte din catalog (filme/anime selectate)</li>
+              <li>Calitate video 480p - 720p</li>
+              <li>Reclame inainte si in timpul vizionarii</li>
+              <li>1 dispozitiv conectat</li>
+              <li>Subtitrari standard (RO/EN)</li>
+              <li>Fara descarcare offline</li>
+              <li>Fara episoade noi imediat la lansare</li>
+              <li>Fara skip intro automat</li>
             </ul>
           </div>
         </div>
 
-        {/* Chunin - Medium */}
         <div className="pricing-option chunin">
           <h1>Chunin</h1>
-          <p className="subtitle">Nivel mediu</p>
-          <hr />
-          <p>
-            Acces la functiile avansate si mai multa flexibilitate. Ideal pentru
-            profesionisti in dezvoltare.
-          </p>
+          <p className="subtitle">Plan MEDIU</p>
           <hr />
           <div className="price">
             <div className="front">
@@ -93,23 +87,25 @@ export default function Subscriptions() {
             </div>
           </div>
           <div className="features">
+            <h3 className="features-title">Ce include:</h3>
             <ul className="features-list">
-              <li>Acces complet</li>
-              <li>Suport prioritar</li>
-              <li>Statistici avansate</li>
+              <li>Acces complet la catalog (filme, seriale, anime)</li>
+              <li>Calitate Full HD (1080p)</li>
+              <li>Reclame reduse sau eliminate</li>
+              <li>2 dispozitive simultan</li>
+              <li>Episoade noi disponibile rapid dupa lansare</li>
+              <li>Skip intro</li>
+              <li>Creare liste personalizate</li>
+              <li>Istoric de vizionare salvat</li>
+              <li>Fara 4K</li>
+              <li>Fara continut exclusiv</li>
             </ul>
           </div>
         </div>
 
-        {/* Hokage - Premium */}
         <div className="pricing-option hokage">
           <h1>Hokage</h1>
-          <p className="subtitle">Nivel suprem</p>
-          <hr />
-          <p>
-            Putere maxima cu toate functiile si prioritatea suprema. Pentru cei
-            care vor rezultate explozive.
-          </p>
+          <p className="subtitle">Plan PREMIUM</p>
           <hr />
           <div className="price">
             <div className="front">
@@ -127,10 +123,19 @@ export default function Subscriptions() {
             </div>
           </div>
           <div className="features">
+            <h3 className="features-title">Ce include:</h3>
             <ul className="features-list">
-              <li>Acces nelimitat</li>
-              <li>Suport VIP 24/7</li>
-              <li>Caracteristici exclusive</li>
+              <li>Tot ce e in Plus</li>
+              <li>4K Ultra HD</li>
+              <li>Fara reclame</li>
+              <li>4 dispozitive simultan</li>
+              <li>Descarcare offline</li>
+              <li>Acces anticipat la episoade (early access)</li>
+              <li>Continut exclusiv (filme/anime doar pentru premium)</li>
+              <li>Profiluri multiple (ex: Familie, Kids, Anime)</li>
+              <li>Avataruri personalizate (anime-style)</li>
+              <li>Badges speciale pe profil</li>
+              <li>Suport prioritar</li>
             </ul>
           </div>
         </div>

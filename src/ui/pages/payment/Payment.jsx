@@ -40,7 +40,10 @@ export default function Payment() {
     return (
       <div className="payment-page">
         <div className="payment-header">
-          <button className="back-btn" onClick={() => navigate("/profile")}>Inapoi</button>
+          <button className="payment-back-btn" onClick={() => navigate("/profile")}>
+            <i className="bx bx-arrow-back payment-back-icon" aria-hidden="true"></i>
+            <span className="payment-back-label">Back</span>
+          </button>
         </div>
 
         <div className="paid-wrapper">
@@ -78,7 +81,10 @@ export default function Payment() {
   return (
     <div className="payment-page">
       <div className="payment-header">
-        <button className="back-btn" onClick={() => navigate("/profile")}>Inapoi</button>
+        <button className="payment-back-btn" onClick={() => navigate("/profile")}>
+          <i className="bx bx-arrow-back payment-back-icon" aria-hidden="true"></i>
+          <span className="payment-back-label">Back</span>
+        </button>
       </div>
 
       <section className="add-card page">

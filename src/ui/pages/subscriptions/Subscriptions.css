@@ -264,6 +264,13 @@ hr {
   border-radius: 5px;
 }
 
+.features-title {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--dark-navy);
+  font-weight: 700;
+}
+
 .features-list {
   list-style: none;
   padding: 0;
@@ -274,6 +281,7 @@ hr {
   padding: 8px 0;
   color: #555;
   font-size: 0.9rem;
+  line-height: 1.35;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -294,6 +302,13 @@ hr {
 .pricing-option.hokage .features-list li {
   color: var(--pink-magenta);
   font-weight: 600;
+}
+
+.plan-note {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.35;
 }
 
 /* Responsive */
