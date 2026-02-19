@@ -1,69 +1,71 @@
+import { Suspense, lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import './styles/modern-base.css'
 import './App.css'
-import Home from "./ui/pages/home/Home";
-import Explore from "./ui/pages/explore/Explore";
-import Profile from "./ui/pages/profile/Profile";
-import Login from "./ui/pages/login/Login";
-import Subscriptions from "./ui/pages/subscriptions/Subscriptions";
-import Payment from "./ui/pages/payment/Payment";
-import History from "./ui/pages/history/History.jsx";
-import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
+
+// Lazy load all page components for code splitting
+const Login = lazy(() => import('@pages/login/Login'))
+const Home = lazy(() => import('@pages/home/Home'))
+const Explore = lazy(() => import('@pages/explore/Explore'))
+const Profile = lazy(() => import('@pages/profile/Profile'))
+const Subscriptions = lazy(() => import('@pages/subscriptions/Subscriptions'))
+const Payment = lazy(() => import('@pages/payment/Payment'))
+const History = lazy(() => import('@pages/history/History'))
+
+// Eager load critical components
+import ProtectedRoute from '@components/common/ProtectedRoute'
+import PageLoader from '@components/common/PageLoader'
+import OfflineFallback from '@components/common/OfflineFallback'
+
+// Route configuration for better maintainability
+const routes = {
+  public: [
+    { path: '/login', element: Login }
+  ],
+  protected: [
+    { path: '/home', element: Home },
+    { path: '/explore', element: Explore },
+    { path: '/profile', element: Profile },
+    { path: '/subscriptions', element: Subscriptions },
+    { path: '/payment', element: Payment },
+    { path: '/history', element: History }
+  ]
+}
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/home"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/explore"
-        element={
-          <ProtectedRoute>
-            <Explore />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/subscriptions"
-        element={
-          <ProtectedRoute>
-            <Subscriptions />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/payment"
-        element={
-          <ProtectedRoute>
-            <Payment />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/history"
-        element={
-          <ProtectedRoute>
-            <History />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/" element={<Navigate to="/login" />} />
-      <Route path="*" element={<Navigate to="/login" />} />
-    </Routes>
+    <div className="app">
+      {/* Skip to main content link for accessibility */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Public routes */}
+          {routes.public.map(({ path, element: Component }) => (
+            <Route key={path} path={path} element={<Component />} />
+          ))}
+
+          {/* Protected routes */}
+          {routes.protected.map(({ path, element: Component }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <ProtectedRoute>
+                  <Component />
+                </ProtectedRoute>
+              }
+            />
+          ))}
+
+          {/* Redirects */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Suspense>
+    </div>
   )
 }
 

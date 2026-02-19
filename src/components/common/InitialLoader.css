@@ -1,0 +1,187 @@
+/* Initial Loader - Shown before app hydration */
+.initial-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0A0F3D 0%, #151B4D 50%, #1E1B51 100%);
+  z-index: 9999;
+  animation: initialFadeIn 0.3s ease-out;
+}
+
+.initial-loader__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.initial-loader__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: brandPulse 2s ease-in-out infinite;
+}
+
+.initial-loader__logo {
+  width: 48px;
+  height: 48px;
+  color: #8A2BE2;
+}
+
+.initial-loader__logo svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.5));
+}
+
+.initial-loader__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #8A2BE2 0%, #FF1493 50%, #00CED1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+}
+
+/* Spinner Animation */
+.initial-loader__spinner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.initial-loader__spinner-ring {
+  position: absolute;
+  inset: 0;
+  border: 3px solid transparent;
+  border-top-color: #8A2BE2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.initial-loader__spinner-ring--second {
+  width: 80%;
+  height: 80%;
+  margin: 10%;
+  border-top-color: #FF1493;
+  animation-duration: 1.5s;
+  animation-direction: reverse;
+}
+
+.initial-loader__spinner-ring--third {
+  width: 60%;
+  height: 60%;
+  margin: 20%;
+  border-top-color: #00CED1;
+  animation-duration: 2s;
+}
+
+.initial-loader__text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+  animation: textPulse 1.5s ease-in-out infinite;
+}
+
+/* Progress bar at bottom */
+.initial-loader__progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(138, 43, 226, 0.2);
+  overflow: hidden;
+}
+
+.initial-loader__progress-bar {
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, #8A2BE2, #FF1493, #00CED1);
+  animation: progressSlide 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+/* Animations */
+@keyframes initialFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes brandPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes progressSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .initial-loader__brand,
+  .initial-loader__spinner-ring,
+  .initial-loader__text,
+  .initial-loader__progress-bar {
+    animation: none;
+  }
+  
+  .initial-loader__progress-bar {
+    width: 100%;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 480px) {
+  .initial-loader__content {
+    gap: 1.5rem;
+  }
+  
+  .initial-loader__logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .initial-loader__spinner {
+    width: 50px;
+    height: 50px;
+  }
+}

@@ -1,0 +1,116 @@
+.offline-fallback {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-primary) 100%);
+  padding: var(--space-6);
+}
+
+.offline-fallback__container {
+  max-width: 32rem;
+  text-align: center;
+  animation: slideUp 0.5s ease-out;
+}
+
+.offline-fallback__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-6);
+  color: var(--color-accent-purple);
+  opacity: 0.8;
+}
+
+.offline-fallback__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.offline-fallback__title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.offline-fallback__description {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+  line-height: var(--leading-relaxed);
+}
+
+.offline-fallback__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  margin-bottom: var(--space-10);
+}
+
+.offline-fallback__actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.offline-fallback__tips {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid var(--color-bg-secondary);
+}
+
+.offline-fallback__tips-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.offline-fallback__tips-list {
+  text-align: left;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
+.offline-fallback__tips-list li {
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-6);
+  position: relative;
+}
+
+.offline-fallback__tips-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent-teal);
+  font-weight: var(--font-bold);
+}
+
+.offline-fallback__tips-list li:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .offline-fallback__actions {
+    flex-direction: column;
+  }
+  
+  .offline-fallback__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

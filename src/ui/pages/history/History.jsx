@@ -1,9 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import "../home/Home.css";
 import "./History.css";
+
+const SIDEBAR_STORAGE_KEY = 'cadlix_sidebar_state';
 
 function formatWatchDate(value) {
   if (!value) return "Unknown time";
@@ -17,8 +19,26 @@ export default function History() {
   const location = useLocation();
   const { user, logout } = useUser();
   const toast = useToast();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  
+  // Initialize sidebar state from localStorage, default to closed
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    try {
+      const savedState = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+      return savedState ? JSON.parse(savedState) : false;
+    } catch {
+      return false;
+    }
+  });
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // Persist sidebar state to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(sidebarOpen));
+    } catch (error) {
+      console.error('Failed to save sidebar state:', error);
+    }
+  }, [sidebarOpen]);
 
   const mainNavItems = [
     { id: "dashboard", label: "Dashboard", icon: "bx-grid-alt", path: "/home" },
@@ -91,10 +111,17 @@ export default function History() {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`} aria-label="Main navigation" aria-expanded={sidebarOpen}>
         <div className="sidebar-brand">
-          <div className="brand-icon">
-            <i className="bx bxs-videos"></i>
-          </div>
-          <span className="brand-text">Cadlix</span>
+          <button 
+            className="sidebar-brand-link"
+            onClick={() => navigate('/home')}
+            aria-label="Go to home page"
+            title="Go to home"
+          >
+            <div className="brand-icon">
+              <i className="bx bxs-videos"></i>
+            </div>
+            <span className="brand-text">Cadlix</span>
+          </button>
           <button className="sidebar-toggle-btn" onClick={() => setSidebarOpen(false)} aria-label="Collapse sidebar">
             <i className="bx bx-chevron-left"></i>
           </button>

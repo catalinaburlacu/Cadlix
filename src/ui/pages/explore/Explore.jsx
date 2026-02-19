@@ -5,6 +5,8 @@ import { useToast } from "../../../hooks/useToast.js";
 import "../home/Home.css";
 import "./Explore.css";
 
+const SIDEBAR_STORAGE_KEY = 'cadlix_sidebar_state';
+
 const exploreCategories = [
   {
     id: "anime",
@@ -142,11 +144,29 @@ export default function Explore() {
   const location = useLocation();
   const { user, logout } = useUser();
   const toast = useToast();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  
+  // Initialize sidebar state from localStorage, default to closed
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    try {
+      const savedState = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+      return savedState ? JSON.parse(savedState) : false;
+    } catch {
+      return false;
+    }
+  });
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(() =>
     Object.fromEntries(carouselRows.map((row) => [row.id, 0]))
   );
+
+  // Persist sidebar state to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(sidebarOpen));
+    } catch (error) {
+      console.error('Failed to save sidebar state:', error);
+    }
+  }, [sidebarOpen]);
 
   const toggleSidebar = useCallback(() => {
     setSidebarOpen((prev) => !prev);
@@ -252,10 +272,17 @@ export default function Explore() {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`} aria-label="Main navigation" aria-expanded={sidebarOpen}>
         <div className="sidebar-brand">
-          <div className="brand-icon">
-            <i className="bx bxs-videos"></i>
-          </div>
-          <span className="brand-text">Cadlix</span>
+          <button 
+            className="sidebar-brand-link"
+            onClick={() => navigate('/home')}
+            aria-label="Go to home page"
+            title="Go to home"
+          >
+            <div className="brand-icon">
+              <i className="bx bxs-videos"></i>
+            </div>
+            <span className="brand-text">Cadlix</span>
+          </button>
           <button className="sidebar-toggle-btn" onClick={() => setSidebarOpen(false)} aria-label="Collapse sidebar">
             <i className="bx bx-chevron-left"></i>
           </button>

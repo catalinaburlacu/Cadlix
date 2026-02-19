@@ -1,17 +1,37 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
 import "./Home.css";
 
+const SIDEBAR_STORAGE_KEY = 'cadlix_sidebar_state';
+
 export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useUser();
   const toast = useToast();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  
+  // Initialize sidebar state from localStorage, default to closed
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    try {
+      const savedState = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+      return savedState ? JSON.parse(savedState) : false;
+    } catch {
+      return false;
+    }
+  });
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // Persist sidebar state to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(sidebarOpen));
+    } catch (error) {
+      console.error('Failed to save sidebar state:', error);
+    }
+  }, [sidebarOpen]);
 
   const toggleSidebar = useCallback(() => {
     setSidebarOpen(prev => !prev);
@@ -74,10 +94,17 @@ export default function Home() {
         aria-expanded={sidebarOpen}
       >
         <div className="sidebar-brand">
-          <div className="brand-icon">
-            <i className="bx bxs-videos"></i>
-          </div>
-          <span className="brand-text">Cadlix</span>
+          <button 
+            className="sidebar-brand-link"
+            onClick={() => navigate('/home')}
+            aria-label="Go to home page"
+            title="Go to home"
+          >
+            <div className="brand-icon">
+              <i className="bx bxs-videos"></i>
+            </div>
+            <span className="brand-text">Cadlix</span>
+          </button>
           <button
             className="sidebar-toggle-btn"
             onClick={() => setSidebarOpen(false)}

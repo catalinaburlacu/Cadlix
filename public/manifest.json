@@ -1,0 +1,119 @@
+{
+  "name": "Cadlix - Anime & Streaming Platform",
+  "short_name": "Cadlix",
+  "description": "Your ultimate destination for anime, movies, and series streaming. Track your watch history, manage favorites, and discover new content.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0F3D",
+  "theme_color": "#8A2BE2",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["entertainment", "streaming", "video"],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Cadlix Home Screen"
+    },
+    {
+      "src": "/screenshots/explore-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Explore Categories"
+    },
+    {
+      "src": "/screenshots/home-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Cadlix Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "description": "Go to your dashboard",
+      "url": "/home",
+      "icons": [{ "src": "/icons/shortcut-home.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Explore",
+      "short_name": "Explore",
+      "description": "Discover new anime and movies",
+      "url": "/explore",
+      "icons": [{ "src": "/icons/shortcut-explore.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Profile",
+      "short_name": "Profile",
+      "description": "View your profile and stats",
+      "url": "/profile",
+      "icons": [{ "src": "/icons/shortcut-profile.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  }
+}
