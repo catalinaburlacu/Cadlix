@@ -1,0 +1,268 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700");
+
+:root{
+  --dark-navy: #070f34;
+  --ceford-blue: #0313a6;
+  --purple: #9201cb;
+  --pink-magenta: #f715ab;
+  --cyan: #34edf3;
+}
+
+.payment-page{
+  min-height:100vh;
+  background: linear-gradient(135deg, var(--dark-navy), var(--ceford-blue));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:28px;
+  color:#fff;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.payment-header{
+  width:100%;
+  max-width:520px;
+  margin-bottom:20px;
+  display:flex;
+  justify-content:flex-start;
+}
+
+.payment-back-btn{
+  position: relative;
+  min-width: 144px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background:rgba(255, 255, 255, 0.1);
+  color:var(--cyan);
+  border:2px solid var(--cyan);
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  transition:all 0.3s ease;
+}
+
+.payment-back-label{
+  text-align: center;
+  width: 100%;
+}
+
+.payment-back-icon{
+  position: absolute;
+  left: 14px;
+  font-size: 18px;
+}
+
+.payment-back-btn:hover{
+  background:var(--cyan);
+  color:var(--dark-navy);
+}
+
+.add-card.page{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+}
+
+.form{
+  background:#ffffff;
+  box-shadow:0 15px 50px rgba(0, 0, 0, 0.25);
+  width:100%;
+  max-width:520px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:24px;
+  position:relative;
+  border-radius:16px;
+}
+
+.form .label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  height:fit-content;
+}
+
+.form .label .title{
+  font-size:13px;
+  color:var(--dark-navy);
+  font-weight:700;
+}
+
+.form .input-field{
+  width:100%;
+  height:50px;
+  text-indent:15px;
+  border-radius:10px;
+  outline:none;
+  background-color:#f8f9ff;
+  border:1px solid #d8ddf7;
+  transition:all 0.3s;
+  caret-color:var(--purple);
+  color:var(--dark-navy);
+}
+
+.form .input-field:hover{
+  border-color:rgba(146, 1, 203, 0.5);
+}
+
+.form .input-field:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(146, 1, 203, 0.15);
+}
+
+.form .input-field--error{
+  border-color:#e53935;
+  box-shadow:0 0 0 3px rgba(229,57,53,0.14);
+}
+
+.field-error{
+  color:#d32f2f;
+  font-size:12px;
+  margin-top:-2px;
+}
+
+.field-info{
+  color:#0d47a1;
+  font-size:12px;
+  margin-top:-2px;
+}
+
+.form .split{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  width:100%;
+  gap:15px;
+}
+
+.form .split label{
+  width:100%;
+}
+
+.form .checkout-btn{
+  margin-top:10px;
+  width:100%;
+  padding:15px 0;
+  border-radius:10px;
+  font-weight:700;
+  transition:all 0.3s ease;
+  cursor:pointer;
+  font-size:18px;
+  border:2px solid transparent;
+  color:#fff;
+  background:var(--pink-magenta);
+}
+
+.form .checkout-btn:active{
+  transform:scale(0.98);
+}
+
+.form .checkout-btn:hover{
+  color:var(--pink-magenta);
+  border-color:var(--pink-magenta);
+  background:#ffffff;
+}
+
+.form .checkout-btn:disabled{
+  opacity:0.7;
+  cursor:not-allowed;
+}
+
+.paid-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:24px;
+  margin-top:20px;
+}
+
+.container{
+  background-color:#ffffff;
+  display:flex;
+  width:460px;
+  height:120px;
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.left-side{
+  background-color:var(--cyan);
+  width:130px;
+  height:120px;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-shrink:0;
+  overflow:hidden;
+}
+
+.right-side{
+  width:calc(100% - 130px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  white-space:nowrap;
+  background:#fff;
+}
+
+.arrow{width:20px;height:20px;margin-right:20px}
+.new{font-size:18px;color:var(--dark-navy);font-weight:700;margin-left:20px}
+.card{width:70px;height:46px;background-color:#c7ffbc;border-radius:6px;position:absolute;display:flex;z-index:10;flex-direction:column;align-items:center;box-shadow:9px 9px 9px -2px rgba(77,200,143,0.72)}
+.card-line{width:65px;height:13px;background-color:#80ea69;border-radius:2px;margin-top:7px}
+.buttons{width:8px;height:8px;background-color:#379e1f;box-shadow:0 -10px 0 0 #26850e,0 10px 0 0 #56be3e;border-radius:50%;margin-top:5px;transform:rotate(90deg);margin:10px 0 0 -30px}
+.post{width:63px;height:75px;background-color:#dddde0;position:absolute;z-index:11;bottom:10px;top:120px;border-radius:6px;overflow:hidden}
+.post-line{width:47px;height:9px;background-color:#545354;position:absolute;border-radius:0px 0px 3px 3px;right:8px;top:8px}
+.post-line:before{content:"";position:absolute;width:47px;height:9px;background-color:#757375;top:-8px}
+.screen{width:47px;height:23px;background-color:#ffffff;position:absolute;top:22px;right:8px;border-radius:3px}
+.numbers{width:12px;height:12px;background-color:#838183;box-shadow:0 -18px 0 0 #838183,0 18px 0 0 #838183;border-radius:2px;position:absolute;transform:rotate(90deg);left:25px;top:52px}
+.numbers-line2{width:12px;height:12px;background-color:#aaa9ab;box-shadow:0 -18px 0 0 #aaa9ab,0 18px 0 0 #aaa9ab;border-radius:2px;position:absolute;transform:rotate(90deg);left:25px;top:68px}
+.dollar{position:absolute;font-size:16px;width:100%;left:0;top:0;color:#4b953b;text-align:center}
+.paid-message{color:#fff;text-align:center;max-width:520px}
+.paid-message h2{font-size:28px;margin-bottom:6px;color:var(--cyan)}
+.paid-message p{opacity:0.95}
+.primary-btn{margin-top:14px;padding:12px 18px;border-radius:8px;background:var(--cyan);border:2px solid transparent;color:var(--dark-navy);font-weight:700;cursor:pointer;transition:all 0.3s ease}
+.primary-btn:hover{background:transparent;border-color:var(--cyan);color:var(--cyan)}
+
+.container.paid{
+  animation:paidReveal 900ms ease-out 1 both;
+}
+
+.container.paid .card{
+  animation:cardDrop 700ms ease-out 1 both;
+}
+
+.container.paid .post{
+  animation:postRise 750ms 120ms ease-out 1 both;
+}
+
+@keyframes paidReveal{
+  0%{opacity:0; transform:translateY(20px) scale(0.97)}
+  100%{opacity:1; transform:translateY(0) scale(1)}
+}
+
+@keyframes cardDrop{
+  0%{transform:translateY(-25px); opacity:0}
+  100%{transform:translateY(0); opacity:1}
+}
+
+@keyframes postRise{
+  0%{top:120px}
+  100%{top:35px}
+}
+
+@media only screen and (max-width:560px){
+  .payment-page{padding:16px}
+  .form{padding:18px;border-radius:12px}
+  .container{width:100%}
+  .new{font-size:16px}
+  .arrow{margin-right:12px}
+  .payment-header{max-width:100%}
+  .payment-back-btn{width:auto}
+}

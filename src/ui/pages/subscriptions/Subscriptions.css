@@ -1,0 +1,383 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,300italic,400italic,600,700,600italic,700italic");
+
+/* Color Palette */
+:root {
+  --dark-navy: #070f34;
+  --ceford-blue: #0313a6;
+  --purple: #9201cb;
+  --pink-magenta: #f715ab;
+  --cyan: #34edf3;
+  --light-bg: #f8f9ff;
+}
+
+.subscriptions-container {
+  font-family: "Josefin Sans", sans-serif;
+  line-height: 1;
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--dark-navy) 0%, var(--ceford-blue) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subscriptions-header {
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 30px;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #34edf3;
+  border: 2px solid #34edf3;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background: #34edf3;
+  color: #070f34;
+  transform: translateX(-4px);
+}
+
+.back-btn i {
+  font-size: 20px;
+}
+
+.demo-title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: var(--cyan);
+  text-shadow: 0 2px 10px rgba(52, 237, 243, 0.3);
+  font-weight: 700;
+  width: 100%;
+}
+
+/* Pricing table */
+.pricing-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.pricing-option {
+  width: 280px;
+  background: white;
+  padding: 2%;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pricing-option:nth-child(even) {
+  margin: 0;
+}
+
+.pricing-option:hover {
+  cursor: pointer;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.pricing-option:hover i,
+.pricing-option:hover h1,
+.pricing-option:hover span,
+.pricing-option:hover b {
+  transition: color 0.3s ease-in-out;
+}
+
+.pricing-option:hover .front {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pricing-option:hover .back {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.pricing-option:hover .back a.button {
+  transform: translateY(0px) !important;
+}
+
+/* Specific theme colors for each tier */
+.pricing-option.genin {
+  border-top: 5px solid var(--cyan);
+}
+
+.pricing-option.genin:hover i,
+.pricing-option.genin:hover h1,
+.pricing-option.genin:hover span,
+.pricing-option.genin:hover b {
+  color: var(--cyan);
+}
+
+.pricing-option.genin .button {
+  background: var(--cyan);
+}
+
+.pricing-option.genin .button:hover {
+  background: #2fc9d0;
+}
+
+.pricing-option.chunin {
+  border-top: 5px solid var(--purple);
+}
+
+.pricing-option.chunin:hover i,
+.pricing-option.chunin:hover h1,
+.pricing-option.chunin:hover span,
+.pricing-option.chunin:hover b {
+  color: var(--purple);
+}
+
+.pricing-option.chunin .button {
+  background: var(--purple);
+}
+
+.pricing-option.chunin .button:hover {
+  background: #7a0ea6;
+}
+
+.pricing-option.hokage {
+  border-top: 5px solid var(--pink-magenta);
+  transform: scale(1.05);
+}
+
+.pricing-option.hokage:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 15px 50px rgba(247, 21, 171, 0.3);
+}
+
+.pricing-option.hokage:hover i,
+.pricing-option.hokage:hover h1,
+.pricing-option.hokage:hover span,
+.pricing-option.hokage:hover b {
+  color: var(--pink-magenta);
+}
+
+.pricing-option.hokage .button {
+  background: var(--pink-magenta);
+}
+
+.pricing-option.hokage .button:hover {
+  background: #d400a0;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  margin: 15px 0;
+}
+
+.pricing-option h1 {
+  margin: 15px 0 5px 0;
+  color: var(--dark-navy);
+  transition: all 0.3s ease-in-out;
+  font-size: 1.8rem;
+}
+
+.pricing-option .subtitle {
+  color: var(--ceford-blue);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 5px 0 15px 0;
+}
+
+.pricing-option p {
+  color: #666;
+  padding: 0 10px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.price {
+  position: relative;
+  margin: 20px 0;
+}
+
+.price .front {
+  transition: all 0.3s ease-in-out;
+}
+
+.price .front span.price {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  margin-top: 20px;
+  display: block;
+  font-weight: 700;
+  position: relative;
+  color: var(--dark-navy);
+}
+
+.price .front span.price b {
+  position: absolute;
+  font-size: 1rem;
+  margin-left: 2px;
+  font-weight: 600;
+}
+
+.price .back {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.price .back a.button {
+  padding: 15px 25px;
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+  text-transform: uppercase;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Features List */
+.features {
+  margin-top: 20px;
+  text-align: left;
+  padding: 15px 10px;
+  background: var(--light-bg);
+  border-radius: 5px;
+}
+
+.features-title {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--dark-navy);
+  font-weight: 700;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  padding: 8px 0;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.features-list li:last-child {
+  border-bottom: none;
+}
+
+.pricing-option.genin .features-list li {
+  color: var(--dark-navy);
+  font-weight: 500;
+}
+
+.pricing-option.chunin .features-list li {
+  color: var(--dark-navy);
+  font-weight: 500;
+}
+
+.pricing-option.hokage .features-list li {
+  color: var(--pink-magenta);
+  font-weight: 600;
+}
+
+.plan-note {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.35;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+  .pricing-option {
+    width: 280px;
+  }
+
+  .pricing-option.hokage {
+    width: 280px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .demo-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .pricing-table {
+    flex-direction: column;
+  }
+
+  .pricing-option {
+    width: 100%;
+    max-width: 350px;
+    padding: 5%;
+  }
+
+  .pricing-option.hokage {
+    transform: scale(1);
+  }
+
+  .pricing-option.hokage:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .subscriptions-container {
+    padding: 15px;
+  }
+
+  .demo-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+  }
+
+  .pricing-table {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .pricing-option {
+    width: 100%;
+    max-width: 100%;
+    padding: 5%;
+  }
+
+  .pricing-option h1 {
+    font-size: 1.3rem;
+  }
+
+  .price .front span.price {
+    font-size: 1.8rem;
+  }
+
+  .back-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

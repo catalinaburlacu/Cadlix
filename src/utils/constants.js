@@ -13,7 +13,9 @@ export const APP_CONFIG = {
 export const ROUTES = {
   LOGIN: '/login',
   HOME: '/home',
+  EXPLORE: '/explore',
   PROFILE: '/profile',
+  HISTORY: '/history',
   ROOT: '/',
 };
 
@@ -44,6 +46,7 @@ export const CONTENT_TABS = [
 // Anime Types
 export const ANIME_TYPES = [
   { value: '', label: 'All Types' },
+  { value: 'anime', label: 'Anime' },
   { value: 'tv', label: 'TV Series' },
   { value: 'movie', label: 'Movie' },
   { value: 'ova', label: 'OVA' },
@@ -54,19 +57,30 @@ export const ANIME_TYPES = [
 // Anime Genres
 export const ANIME_GENRES = [
   { value: '', label: 'All Genres' },
-  { value: 'action', label: 'Action' },
-  { value: 'adventure', label: 'Adventure' },
-  { value: 'comedy', label: 'Comedy' },
+  { value: 'martial-arts', label: 'Martial Arts' },
+  { value: 'military', label: 'Military' },
+  { value: 'harem', label: 'Harem' },
+  { value: 'detective', label: 'Detective' },
   { value: 'drama', label: 'Drama' },
-  { value: 'fantasy', label: 'Fantasy' },
-  { value: 'horror', label: 'Horror' },
+  { value: 'games', label: 'Games' },
+  { value: 'historical', label: 'Historical' },
+  { value: 'comedy', label: 'Comedy' },
+  { value: 'magic', label: 'Magic' },
   { value: 'mystery', label: 'Mystery' },
-  { value: 'romance', label: 'Romance' },
-  { value: 'sci-fi', label: 'Sci-Fi' },
   { value: 'slice-of-life', label: 'Slice of Life' },
-  { value: 'sports', label: 'Sports' },
+  { value: 'adventure', label: 'Adventure' },
+  { value: 'psychological', label: 'Psychological' },
+  { value: 'romance', label: 'Romance' },
   { value: 'supernatural', label: 'Supernatural' },
+  { value: 'sports', label: 'Sports' },
+  { value: 'super-power', label: 'Super Power' },
   { value: 'thriller', label: 'Thriller' },
+  { value: 'horror', label: 'Horror' },
+  { value: 'sci-fi', label: 'Sci-Fi' },
+  { value: 'fantasy', label: 'Fantasy' },
+  { value: 'school', label: 'School' },
+  { value: 'action', label: 'Action' },
+  { value: 'ecchi', label: 'Ecchi' },
 ];
 
 // Sort Options
@@ -138,4 +152,42 @@ export const DEFAULT_USER_DATA = {
     addedToList: 67,
     daysOnSite: 30,
   },
+  watchHistory: [
+    {
+      id: 'h-1',
+      title: 'Jujutsu Kaisen',
+      category: 'Anime',
+      series: 'Season 2',
+      episode: 'Episode 14',
+      watchedAt: '2026-02-17T21:42:00Z',
+      progress: '18:27',
+    },
+    {
+      id: 'h-2',
+      title: 'Dune: Part Two',
+      category: 'Movie',
+      series: '-',
+      episode: '-',
+      watchedAt: '2026-02-16T20:05:00Z',
+      progress: '01:58:11',
+    },
+    {
+      id: 'h-3',
+      title: 'Stranger Things',
+      category: 'Series',
+      series: 'Season 4',
+      episode: 'Episode 5',
+      watchedAt: '2026-02-15T19:30:00Z',
+      progress: '42:10',
+    },
+    {
+      id: 'h-4',
+      title: 'Attack on Titan',
+      category: 'Anime',
+      series: 'Final Season',
+      episode: 'Episode 3',
+      watchedAt: '2026-02-14T22:18:00Z',
+      progress: '24:00',
+    },
+  ],
 };
