@@ -18,7 +18,15 @@
     -webkit-text-size-adjust: 100%;
     -moz-tab-size: 4;
     tab-size: 4;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -80,44 +88,42 @@
 /* Layer 2: Base Styles & Design Tokens */
 @layer base {
   :root {
-    /* Color System - Modern Dark Theme */
-    --color-bg-dark: #0A0F3D;
-    --color-bg-primary: #151B4D;
-    --color-bg-secondary: #21295F;
-    --color-bg-card: #1E1B51;
-    --color-bg-hover: #2C2971;
-    
-    /* Accent Colors */
-    --color-accent-purple: #8A2BE2;
-    --color-accent-purple-light: #9F4AE8;
-    --color-accent-pink: #FF1493;
-    --color-accent-teal: #00CED1;
-    --color-accent-blue: #4682B4;
-    
+    /* Color System - Dark Blue Theme */
+    --color-bg-dark: #0d1b2a;
+    --color-bg-primary: #1b2838;
+    --color-bg-secondary: #243447;
+    --color-bg-card: #1e2d3d;
+    --color-bg-hover: #2a3f54;
+
+    /* Accent Colors - Red based */
+    --color-accent-red: #e63946;
+    --color-accent-red-dark: #c1121f;
+    --color-accent-red-light: #ff6b6b;
+
     /* Text Colors with proper contrast */
     --color-text-primary: #ffffff;
     --color-text-secondary: rgba(255, 255, 255, 0.87);
     --color-text-muted: rgba(255, 255, 255, 0.6);
     --color-text-disabled: rgba(255, 255, 255, 0.38);
-    
+
     /* Semantic Colors */
-    --color-success: #4CAF50;
-    --color-warning: #FF9800;
-    --color-error: #F44336;
-    --color-info: #2196F3;
-    
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-error: #e63946;
+    --color-info: #2196f3;
+
     /* Spacing Scale (8px base) */
-    --space-1: 0.25rem;  /* 4px */
-    --space-2: 0.5rem;   /* 8px */
-    --space-3: 0.75rem;  /* 12px */
-    --space-4: 1rem;     /* 16px */
-    --space-5: 1.25rem;  /* 20px */
-    --space-6: 1.5rem;   /* 24px */
-    --space-8: 2rem;     /* 32px */
-    --space-10: 2.5rem;  /* 40px */
-    --space-12: 3rem;    /* 48px */
-    --space-16: 4rem;    /* 64px */
-    
+    --space-1: 0.25rem; /* 4px */
+    --space-2: 0.5rem; /* 8px */
+    --space-3: 0.75rem; /* 12px */
+    --space-4: 1rem; /* 16px */
+    --space-5: 1.25rem; /* 20px */
+    --space-6: 1.5rem; /* 24px */
+    --space-8: 2rem; /* 32px */
+    --space-10: 2.5rem; /* 40px */
+    --space-12: 3rem; /* 48px */
+    --space-16: 4rem; /* 64px */
+
     /* Typography Scale with Fluid Type */
     --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
     --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
@@ -127,13 +133,13 @@
     --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
     --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);
     --text-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3rem);
-    
+
     /* Font Weights */
     --font-normal: 400;
     --font-medium: 500;
     --font-semibold: 600;
     --font-bold: 700;
-    
+
     /* Line Heights */
     --leading-none: 1;
     --leading-tight: 1.25;
@@ -141,7 +147,7 @@
     --leading-normal: 1.5;
     --leading-relaxed: 1.625;
     --leading-loose: 2;
-    
+
     /* Border Radius */
     --radius-sm: 0.25rem;
     --radius-md: 0.5rem;
@@ -149,22 +155,19 @@
     --radius-xl: 1rem;
     --radius-2xl: 1.5rem;
     --radius-full: 9999px;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    --shadow-glow-purple: 0 4px 20px rgba(138, 43, 226, 0.4);
-    --shadow-glow-pink: 0 4px 20px rgba(255, 20, 147, 0.4);
-    --shadow-glow-teal: 0 4px 20px rgba(0, 206, 209, 0.4);
-    
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+
     /* Transitions */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    
+
     /* Z-Index Scale */
     --z-dropdown: 100;
     --z-sticky: 200;
@@ -174,16 +177,16 @@
     --z-popover: 600;
     --z-tooltip: 700;
     --z-toast: 800;
-    
+
     /* Container Query Breakpoints */
-    --cq-sm: 20rem;   /* 320px */
-    --cq-md: 48rem;   /* 768px */
-    --cq-lg: 64rem;   /* 1024px */
-    --cq-xl: 80rem;   /* 1280px */
-    --cq-2xl: 96rem;  /* 1536px */
-    
+    --cq-sm: 20rem; /* 320px */
+    --cq-md: 48rem; /* 768px */
+    --cq-lg: 64rem; /* 1024px */
+    --cq-xl: 80rem; /* 1280px */
+    --cq-2xl: 96rem; /* 1536px */
+
     /* Focus Ring */
-    --focus-ring: 0 0 0 3px rgba(0, 206, 209, 0.5);
+    --focus-ring: 0 0 0 3px rgba(230, 57, 70, 0.4);
     --focus-ring-offset: 2px;
   }
 
@@ -203,7 +206,7 @@
 
   /* Selection styling */
   ::selection {
-    background-color: var(--color-accent-purple);
+    background-color: var(--color-accent-red);
     color: var(--color-text-primary);
   }
 }
@@ -215,23 +218,26 @@
     container-type: inline-size;
     container-name: card;
     background-color: var(--color-bg-card);
-    border: 1px solid var(--color-accent-purple);
+    border: 1px solid var(--color-bg-secondary);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+    transition:
+      border-color var(--transition-base),
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
   }
 
   .card:hover {
-    border-color: var(--color-accent-pink);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-glow-purple);
+    border-color: var(--color-accent-red);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
   }
 
   @container card (max-width: 20rem) {
     .card-title {
       font-size: var(--text-lg);
     }
-    
+
     .card-content {
       padding: var(--space-4);
     }
@@ -241,7 +247,7 @@
     .card-title {
       font-size: var(--text-2xl);
     }
-    
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -259,47 +265,30 @@
     border-radius: var(--radius-lg);
     transition: all var(--transition-base);
     position: relative;
-    overflow: hidden;
     isolation: isolate;
   }
 
-  .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
-    transform: translateX(-100%);
-    transition: transform var(--transition-slow);
-    z-index: -1;
-  }
-
-  .btn:hover::before {
-    transform: translateX(100%);
-  }
-
   .btn--primary {
-    background-color: var(--color-accent-purple);
+    background-color: var(--color-accent-red);
     color: var(--color-text-primary);
-    border: 2px solid var(--color-accent-purple);
+    border: 2px solid var(--color-accent-red);
   }
 
   .btn--primary:hover {
-    background-color: var(--color-accent-purple-light);
-    border-color: var(--color-accent-purple-light);
-    box-shadow: var(--shadow-glow-purple);
+    background-color: var(--color-accent-red-dark);
+    border-color: var(--color-accent-red-dark);
     transform: translateY(-2px);
   }
 
   .btn--secondary {
     background-color: transparent;
-    color: var(--color-accent-teal);
-    border: 2px solid var(--color-accent-teal);
+    color: var(--color-text-secondary);
+    border: 2px solid var(--color-bg-secondary);
   }
 
   .btn--secondary:hover {
-    background-color: var(--color-accent-teal);
-    color: var(--color-bg-dark);
-    box-shadow: var(--shadow-glow-teal);
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
   }
 
   .btn--ghost {
@@ -309,7 +298,7 @@
   }
 
   .btn--ghost:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--color-bg-hover);
     color: var(--color-text-primary);
   }
 
@@ -337,13 +326,15 @@
     color: var(--color-text-primary);
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-base);
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
   }
 
   .input:focus {
     outline: none;
-    border-color: var(--color-accent-teal);
-    box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.2);
+    border-color: var(--color-accent-red);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
   }
 
   .input::placeholder {
@@ -444,7 +435,7 @@
     transform: translateX(-50%);
     z-index: var(--z-tooltip);
     padding: var(--space-3) var(--space-6);
-    background: var(--color-accent-purple);
+    background: var(--color-accent-red);
     color: var(--color-text-primary);
     border-radius: var(--radius-lg);
     font-weight: var(--font-semibold);
@@ -457,10 +448,7 @@
 
   /* Text Utilities */
   .text-gradient {
-    background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-accent-red);
   }
 
   /* Performance Utilities */
@@ -487,8 +475,12 @@
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes slideUp {
@@ -546,19 +538,19 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: var(--color-accent-purple);
+    background-color: var(--color-bg-secondary);
     border-radius: var(--radius-full);
     border: 2px solid var(--color-bg-dark);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-accent-pink);
+    background-color: var(--color-accent-red);
   }
 
   /* Firefox scrollbar */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-accent-purple) var(--color-bg-dark);
+    scrollbar-color: var(--color-bg-secondary) var(--color-bg-dark);
   }
 
   /* Hide scrollbar but keep functionality */

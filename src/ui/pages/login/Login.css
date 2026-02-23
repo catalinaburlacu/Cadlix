@@ -14,7 +14,7 @@
   max-width: 400px;
   height: 580px;
   background: var(--color-bg-card);
-  border: 2px solid var(--color-accent-purple);
+  border: 2px solid var(--color-accent-red);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
@@ -43,10 +43,7 @@
   margin-bottom: 24px;
   cursor: pointer;
   transition: all 0.5s ease-in-out;
-  background: linear-gradient(135deg, #fff, var(--color-accent-teal));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-accent-red);
 }
 
 .signup input,
@@ -72,7 +69,7 @@
 
 .signup input:focus,
 .login input:focus {
-  border-color: var(--color-accent-purple);
+  border-color: var(--color-accent-red);
 }
 
 .signup button,
@@ -81,20 +78,20 @@
   height: 48px;
   margin-top: 16px;
   color: white;
-  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink));
+  background: var(--color-accent-red);
   font-size: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
 }
 
 .signup button:hover,
 .login button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 6px 16px rgba(230, 57, 70, 0.4);
 }
 
 .signup button:active,
@@ -116,7 +113,7 @@
 
 .social-divider::before,
 .social-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
   background: var(--color-bg-primary);
@@ -153,7 +150,7 @@
 }
 
 .social-btn:hover {
-  border-color: var(--color-accent-purple);
+  border-color: var(--color-accent-red);
   background: var(--color-bg-hover);
 }
 
@@ -162,13 +159,13 @@
 }
 
 .social-btn.google:hover {
-  border-color: #DB4437;
-  color: #DB4437;
+  border-color: #db4437;
+  color: #db4437;
 }
 
 .social-btn.facebook:hover {
-  border-color: #1877F2;
-  color: #1877F2;
+  border-color: #1877f2;
+  color: #1877f2;
 }
 
 .social-btn.apple:hover {
@@ -180,7 +177,7 @@
 .login {
   height: 480px;
   background: var(--color-bg-card);
-  border-top: 2px solid var(--color-accent-purple);
+  border-top: 2px solid var(--color-accent-red);
   border-radius: 16px 16px 0 0;
   transform: translateY(-110px);
   transition: transform 0.8s ease-in-out;
@@ -188,7 +185,7 @@
 }
 
 .login label {
-  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink));
+  background: var(--color-accent-red);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -225,13 +222,13 @@
     padding: 16px;
     background: var(--color-bg-dark);
   }
-  
+
   .main {
     max-width: 100%;
     border-radius: 16px;
     height: 560px;
   }
-  
+
   .signup,
   .login {
     padding: 24px;
@@ -242,7 +239,7 @@
     font-size: 1.75rem;
     margin-bottom: 20px;
   }
-  
+
   .login {
     height: 480px;
   }

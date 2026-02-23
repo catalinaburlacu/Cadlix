@@ -31,42 +31,39 @@
 
 /* Variants */
 .btn--primary {
-  background-color: var(--color-accent-purple);
+  background-color: var(--color-accent-red);
   color: white;
-  border-color: var(--color-accent-purple);
+  border-color: var(--color-accent-red);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background-color: #9a4be8;
-  border-color: #9a4be8;
+  background-color: var(--color-accent-red-dark);
+  border-color: var(--color-accent-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
 }
 
 .btn--secondary {
   background-color: transparent;
-  color: var(--color-accent-purple);
-  border-color: var(--color-accent-purple);
+  color: var(--color-text-secondary);
+  border-color: var(--color-bg-secondary);
 }
 
 .btn--secondary:hover:not(:disabled) {
-  background-color: var(--color-accent-purple);
+  background-color: var(--color-bg-secondary);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
 }
 
 .btn--danger {
-  background-color: var(--color-accent-pink);
+  background-color: var(--color-accent-red);
   color: white;
-  border-color: var(--color-accent-pink);
+  border-color: var(--color-accent-red);
 }
 
 .btn--danger:hover:not(:disabled) {
-  background-color: #ff2a9d;
-  border-color: #ff2a9d;
+  background-color: var(--color-accent-red-dark);
+  border-color: var(--color-accent-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 20, 147, 0.4);
 }
 
 .btn--ghost {
@@ -81,16 +78,15 @@
 }
 
 .btn--accent {
-  background-color: var(--color-accent-teal);
-  color: var(--color-bg-dark);
-  border-color: var(--color-accent-teal);
+  background-color: var(--color-accent-red);
+  color: white;
+  border-color: var(--color-accent-red);
 }
 
 .btn--accent:hover:not(:disabled) {
-  background-color: #00e0e3;
-  border-color: #00e0e3;
+  background-color: var(--color-accent-red-dark);
+  border-color: var(--color-accent-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 206, 209, 0.4);
 }
 
 /* Disabled state */
@@ -129,6 +125,6 @@
 
 /* Focus styles for accessibility */
 .btn:focus-visible {
-  outline: 2px solid var(--color-accent-teal);
+  outline: 2px solid var(--color-accent-red);
   outline-offset: 2px;
 }

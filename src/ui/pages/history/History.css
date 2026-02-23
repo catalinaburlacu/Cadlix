@@ -11,8 +11,8 @@
 }
 
 .history-intro {
-  background: rgba(30, 27, 81, 0.6);
-  border: 1px solid rgba(138, 43, 226, 0.3);
+  background: rgba(30, 45, 61, 0.6);
+  border: 1px solid rgba(230, 57, 70, 0.3);
   border-radius: 16px;
   padding: 20px;
 }
@@ -34,8 +34,8 @@
 }
 
 .history-card {
-  background: rgba(30, 27, 81, 0.5);
-  border: 1px solid rgba(138, 43, 226, 0.3);
+  background: rgba(30, 45, 61, 0.5);
+  border: 1px solid rgba(230, 57, 70, 0.3);
   border-radius: 14px;
   padding: 16px;
 }
@@ -62,18 +62,18 @@
 }
 
 .history-type--anime {
-  background: rgba(52, 237, 243, 0.2);
-  color: #34edf3;
+  background: rgba(230, 57, 70, 0.2);
+  color: #e63946;
 }
 
 .history-type--movie {
-  background: rgba(247, 21, 171, 0.2);
-  color: #f715ab;
+  background: rgba(230, 57, 70, 0.2);
+  color: #e63946;
 }
 
 .history-type--series {
-  background: rgba(146, 1, 203, 0.2);
-  color: #d8a6ef;
+  background: rgba(230, 57, 70, 0.2);
+  color: #e63946;
 }
 
 .history-meta {
@@ -89,8 +89,8 @@
 }
 
 .history-empty {
-  background: rgba(30, 27, 81, 0.5);
-  border: 1px dashed rgba(138, 43, 226, 0.4);
+  background: rgba(30, 45, 61, 0.5);
+  border: 1px dashed rgba(230, 57, 70, 0.4);
   border-radius: 14px;
   padding: 28px;
   text-align: center;

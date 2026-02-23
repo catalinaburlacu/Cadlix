@@ -18,7 +18,7 @@
   width: 80px;
   height: 80px;
   margin: 0 auto var(--space-6);
-  color: var(--color-accent-purple);
+  color: var(--color-accent-red);
   opacity: 0.8;
 }
 
@@ -82,10 +82,10 @@
 }
 
 .offline-fallback__tips-list li::before {
-  content: '•';
+  content: "•";
   position: absolute;
   left: 0;
-  color: var(--color-accent-teal);
+  color: var(--color-accent-red);
   font-weight: var(--font-bold);
 }
 
@@ -108,7 +108,7 @@
   .offline-fallback__actions {
     flex-direction: column;
   }
-  
+
   .offline-fallback__actions .btn {
     width: 100%;
     justify-content: center;

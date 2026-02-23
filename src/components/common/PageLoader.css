@@ -27,7 +27,7 @@
 .page-loader__logo-icon {
   width: 64px;
   height: 64px;
-  color: var(--color-accent-purple);
+  color: var(--color-accent-red);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -49,10 +49,7 @@
 .page-loader__logo-text {
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
-  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-accent-red);
   letter-spacing: 0.05em;
 }
 
@@ -67,7 +64,7 @@
 .page-loader__progress-bar {
   height: 100%;
   width: 30%;
-  background: linear-gradient(90deg, var(--color-accent-purple), var(--color-accent-pink));
+  background: var(--color-accent-red);
   border-radius: var(--radius-full);
   animation: progressSlide 1.5s ease-in-out infinite;
 }
@@ -88,7 +85,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -126,7 +124,7 @@
   .page-loader__progress-bar {
     animation: none;
   }
-  
+
   .page-loader__progress-bar {
     width: 100%;
   }

@@ -18,24 +18,34 @@ body,
 }
 
 :root {
-  /* Dark Backgrounds */
-  --color-bg-dark: #0A0F3D;
-  --color-bg-primary: #151B4D;
-  --color-bg-secondary: #21295F;
-  --color-bg-card: #1E1B51;
-  --color-bg-hover: #2C2971;
-  
+  /* Dark Blue Backgrounds */
+  --color-bg-dark: #0d1b2a;
+  --color-bg-primary: #1b2838;
+  --color-bg-secondary: #243447;
+  --color-bg-card: #1e2d3d;
+  --color-bg-hover: #2a3f54;
+
   /* Accent Colors */
-  --color-accent-purple: #8A2BE2;
-  --color-accent-pink: #FF1493;
-  --color-accent-teal: #00CED1;
-  --color-accent-blue: #4682B4;
-  
+  --color-accent-red: #e63946;
+  --color-accent-red-dark: #c1121f;
+  --color-accent-red-light: #ff6b6b;
+
+  --color-accent-blue: #64b5f6;
+  --color-accent-blue-dark: #42a5f5;
+
+  --color-accent-amber: #ffb74d;
+  --color-accent-amber-dark: #ffa726;
+
+  /* Legacy accent aliases */
+  --color-accent-purple: #64b5f6;
+  --color-accent-pink: #e63946;
+  --color-accent-teal: #64b5f6;
+
   /* Text Colors */
   --color-text-primary: #ffffff;
   --color-text-secondary: rgba(255, 255, 255, 0.87);
   --color-text-muted: rgba(255, 255, 255, 0.6);
-  
+
   /* Apply Colors */
   color: var(--color-text-secondary);
   background-color: var(--color-bg-dark);
@@ -43,57 +53,69 @@ body,
 
 a {
   font-weight: 500;
-  color: var(--color-accent-teal);
+  color: var(--color-accent-red);
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #40E0D0;
+  color: var(--color-accent-red-light);
 }
 
 button {
   border-radius: 8px;
-  border: 2px solid var(--color-accent-purple);
+  border: 2px solid var(--color-accent-red);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: transparent;
-  color: var(--color-accent-purple);
+  color: var(--color-accent-red);
   cursor: pointer;
   transition: all 0.25s;
 }
 
 button:hover {
-  background-color: var(--color-accent-purple);
+  background-color: var(--color-accent-red);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
 }
 
 button:focus,
 button:focus-visible {
-  outline: 2px solid var(--color-accent-teal);
+  outline: 2px solid var(--color-accent-red);
   outline-offset: 2px;
 }
 
 /* Accent Button Variants */
-button.accent-pink {
-  border-color: var(--color-accent-pink);
-  color: var(--color-accent-pink);
+button.accent-pink,
+button.accent-red {
+  border-color: var(--color-accent-red);
+  color: var(--color-accent-red);
 }
 
-button.accent-pink:hover {
-  background-color: var(--color-accent-pink);
-  box-shadow: 0 4px 12px rgba(255, 20, 147, 0.4);
+button.accent-pink:hover,
+button.accent-red:hover {
+  background-color: var(--color-accent-red);
 }
 
-button.accent-teal {
-  border-color: var(--color-accent-teal);
-  color: var(--color-accent-teal);
+button.accent-teal,
+button.accent-blue {
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
 }
 
-button.accent-teal:hover {
-  background-color: var(--color-accent-teal);
-  box-shadow: 0 4px 12px rgba(0, 206, 209, 0.4);
+button.accent-teal:hover,
+button.accent-blue:hover {
+  background-color: var(--color-accent-blue);
+  color: var(--color-bg-dark);
+}
+
+button.accent-amber {
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+}
+
+button.accent-amber:hover {
+  background-color: var(--color-accent-amber);
+  color: var(--color-bg-dark);
 }
