@@ -21,22 +21,6 @@ export default function Skeleton({ type = 'text', width, height, className = '',
 }
 
 /**
- * Skeleton Card component
- */
-export function SkeletonCard() {
-  return (
-    <div className="skeleton-card" aria-hidden="true">
-      <Skeleton type="image" height="200px" />
-      <div className="skeleton-card__content">
-        <Skeleton type="text" width="80%" />
-        <Skeleton type="text" width="60%" />
-        <Skeleton type="text" width="40%" />
-      </div>
-    </div>
-  );
-}
-
-/**
  * Skeleton Avatar component
  */
 export function SkeletonAvatar({ size = 'medium' }) {

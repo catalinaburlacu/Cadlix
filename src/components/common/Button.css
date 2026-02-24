@@ -54,18 +54,6 @@
   transform: translateY(-2px);
 }
 
-.btn--danger {
-  background-color: var(--color-accent-primary);
-  color: white;
-  border-color: var(--color-accent-primary);
-}
-
-.btn--danger:hover:not(:disabled) {
-  background-color: var(--color-accent-primary-dark);
-  border-color: var(--color-accent-primary-dark);
-  transform: translateY(-2px);
-}
-
 .btn--ghost {
   background-color: transparent;
   color: var(--color-text-secondary);
@@ -75,18 +63,6 @@
 .btn--ghost:hover:not(:disabled) {
   background-color: var(--color-bg-hover);
   color: var(--color-text-primary);
-}
-
-.btn--accent {
-  background-color: var(--color-accent-primary);
-  color: white;
-  border-color: var(--color-accent-primary);
-}
-
-.btn--accent:hover:not(:disabled) {
-  background-color: var(--color-accent-primary-dark);
-  border-color: var(--color-accent-primary-dark);
-  transform: translateY(-2px);
 }
 
 /* Disabled state */
