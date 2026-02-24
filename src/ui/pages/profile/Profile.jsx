@@ -1,22 +1,14 @@
 import React, { useState, useMemo, memo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
 import Input from "../../../components/common/Input.jsx";
 import { SkeletonAvatar, SkeletonStats } from "../../../components/common/Skeleton.jsx";
-import { ANIME_GENRES, ANIME_TYPES, SORT_OPTIONS } from "../../../utils/constants.js";
+import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS, CONTENT_TABS } from "../../../utils/constants.js";
+import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
 import PropTypes from 'prop-types';
 import "./Profile.css";
-
-// Tab configuration - defined outside component to prevent recreation
-const TABS = [
-  { id: "watching", label: "Watching" },
-  { id: "planned", label: "Planned" },
-  { id: "completed", label: "Completed" },
-  { id: "dropped", label: "Dropped" },
-  { id: "favorites", label: "Favorites" }
-];
 
 // Memoized StatCard to prevent unnecessary re-renders
 const StatCard = memo(function StatCard({ value, label, icon, highlight }) {
@@ -40,11 +32,10 @@ StatCard.propTypes = {
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, logout, updateUser } = useUser();
+  const { user, updateUser } = useUser();
   const toast = useToast();
   const [activeTab, setActiveTab] = useState("watching");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
@@ -72,7 +63,7 @@ export default function Profile() {
     if (!user) return [];
     return [
       { value: user.stats?.rating || '0', label: 'Rating', icon: 'bx-star', highlight: true },
-      { value: user.stats?.animeWatched || 0, label: 'Anime Watched', icon: 'bx-tv' },
+      { value: user.stats?.titlesWatched || 0, label: 'Titles Watched', icon: 'bx-tv' },
       { value: user.stats?.comments || 0, label: 'Comments', icon: 'bx-comment' },
       { value: user.stats?.likesGiven || 0, label: 'Likes Given', icon: 'bx-heart' },
       { value: user.stats?.likesReceived || 0, label: 'Likes Received', icon: 'bx-like' },
@@ -86,20 +77,6 @@ export default function Profile() {
   const handleTabChange = React.useCallback((tabId) => {
     setActiveTab(tabId);
   }, []);
-
-  // Handle logout
-  const handleLogout = React.useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      logout();
-      toast.success('Logged out successfully');
-      navigate('/login');
-    } catch {
-      toast.error('Logout failed');
-      setIsLoading(false);
-    }
-  }, [logout, navigate, toast]);
 
   const handleToggleEditor = React.useCallback(() => {
     if (!isEditOpen) {
@@ -239,63 +216,50 @@ export default function Profile() {
     ]
   );
 
+  const profileNav = (
+    <nav className="nav-menu" aria-label="Profile navigation">
+      <ul className="nav-menu-list">
+        <li>
+          <NavLink to="/profile" className={({ isActive }) => `nav-menu-link${isActive ? " active" : ""}`}>
+            Profile
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/subscriptions" className={({ isActive }) => `nav-menu-link${isActive ? " active" : ""}`}>
+            Subscriptions
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
+  );
+
   // Show loading state while user data loads
   if (!user) {
     return (
-      <div className="profile-page">
-        <div className="profile-container">
-          <div className="profile-header skeleton-profile-header">
-            <div className="profile-header-left">
-              <SkeletonAvatar size="large" />
-              <div className="profile-header-info">
-                <div className="skeleton-text skeleton-text--title" />
-                <div className="skeleton-text skeleton-text--subtitle" />
+      <SidebarLayout navbarContent={profileNav}>
+        <div className="profile-page">
+          <div className="profile-container">
+            <div className="profile-header skeleton-profile-header">
+              <div className="profile-header-left">
+                <SkeletonAvatar size="large" />
+                <div className="profile-header-info">
+                  <div className="skeleton-text skeleton-text--title" />
+                  <div className="skeleton-text skeleton-text--subtitle" />
+                </div>
               </div>
             </div>
+            <SkeletonStats count={8} />
           </div>
-          <SkeletonStats count={8} />
         </div>
-      </div>
+      </SidebarLayout>
     );
   }
 
   return (
-    <div className="profile-page">
-      <div className="profile-container">
-        {/* Navigation Bar */}
-        <nav className="profile-nav" aria-label="Profile navigation">
-          <Button 
-            variant="ghost" 
-            size="small"
-            onClick={() => navigate('/home')}
-            className="back-btn"
-          >
-            <i className="bx bx-arrow-back" aria-hidden="true"></i>
-            Back to Home
-          </Button>
-          
-          <div className="profile-nav-actions">
-            <Button 
-              variant="secondary" 
-              size="small"
-              onClick={() => toast.info('Settings coming soon!')}
-            >
-              <i className="bx bx-cog" aria-hidden="true"></i>
-              Settings
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="small"
-              onClick={handleLogout}
-              isLoading={isLoading}
-            >
-              <i className="bx bx-log-out" aria-hidden="true"></i>
-              Logout
-            </Button>
-          </div>
-        </nav>
-
-        {/* Profile Header */}
+    <SidebarLayout navbarContent={profileNav}>
+      <div className="profile-page">
+        <div className="profile-container">
+          {/* Profile Header */}
         <header className="profile-header">
           <div className="profile-header-left">
             <div className="avatar-container">
@@ -323,7 +287,7 @@ export default function Profile() {
                   onClick={() => navigate('/subscriptions')}
                   title="Click to upgrade or manage your plan"
                 >
-                  {user.plan || 'Genin'}
+                  {user.plan || 'Basic'}
                 </button>
               </div>
               <p className="user-email">{user.email}</p>
@@ -547,7 +511,7 @@ export default function Profile() {
         {/* Tabs */}
         <nav className="tabs-container" aria-label="Content tabs">
           <div className="tabs" role="tablist">
-            {TABS.map((tab) => (
+            {CONTENT_TABS.map((tab) => (
               <button
                 key={tab.id}
                 role="tab"
@@ -573,13 +537,13 @@ export default function Profile() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="search-input"
-              aria-label="Search anime list"
+              aria-label="Search your list"
             />
           </div>
           
           <div className="filter-selects">
             <select className="filter-select" aria-label="Filter by type">
-              {ANIME_TYPES.map((type) => (
+              {CONTENT_TYPES.map((type) => (
                 <option key={type.value || 'all-types'} value={type.value}>
                   {type.label}
                 </option>
@@ -587,7 +551,7 @@ export default function Profile() {
             </select>
             
             <select className="filter-select" aria-label="Filter by genre">
-              {ANIME_GENRES.map((genre) => (
+              {CONTENT_GENRES.map((genre) => (
                 <option key={genre.value || 'all-genres'} value={genre.value}>
                   {genre.label}
                 </option>
@@ -611,21 +575,22 @@ export default function Profile() {
           id={`panel-${activeTab}`}
           aria-labelledby={`tab-${activeTab}`}
         >
-          <div className="anime-list">
+          <div className="content-list">
             <div className="empty-state">
               <i className="bx bx-inbox empty-icon" aria-hidden="true"></i>
               <p className="empty-message">
-                No entries found in {TABS.find(t => t.id === activeTab)?.label.toLowerCase()}
+                No entries found in {CONTENT_TABS.find(t => t.id === activeTab)?.label.toLowerCase()}
               </p>
               <Button variant="secondary" size="small">
                 <i className="bx bx-plus" aria-hidden="true"></i>
-                Add Anime
+                Add Title
               </Button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </SidebarLayout>
   );
 }
 

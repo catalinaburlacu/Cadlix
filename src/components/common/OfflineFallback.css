@@ -18,7 +18,7 @@
   width: 80px;
   height: 80px;
   margin: 0 auto var(--space-6);
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
   opacity: 0.8;
 }
 
@@ -85,7 +85,7 @@
   content: "•";
   position: absolute;
   left: 0;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
   font-weight: var(--font-bold);
 }
 

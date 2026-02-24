@@ -5,6 +5,32 @@ import { useToast } from "../../../hooks/useToast.js";
 import { sanitizeInput } from "../../../utils/security.js";
 import "./Login.css";
 
+const SOCIAL_PROVIDERS = ["Google", "Facebook", "Apple"];
+const SOCIAL_ICONS = { Google: "bxl-google", Facebook: "bxl-facebook", Apple: "bxl-apple" };
+
+function SocialButtons({ onSocialLogin }) {
+  return (
+    <div className="social-login">
+      <div className="social-divider">
+        <span>or continue with</span>
+      </div>
+      <div className="social-buttons">
+        {SOCIAL_PROVIDERS.map((provider) => (
+          <button
+            key={provider}
+            type="button"
+            className={`social-btn ${provider.toLowerCase()}`}
+            onClick={() => onSocialLogin(provider)}
+          >
+            <i className={`bx ${SOCIAL_ICONS[provider]}`}></i>
+            <span>{provider}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,7 +79,7 @@ export default function Login() {
         status: 'Online',
         stats: {
           rating: '0',
-          animeWatched: 0,
+          titlesWatched: 0,
           comments: 0,
           likesGiven: 0,
           likesReceived: 0,
@@ -103,7 +129,7 @@ export default function Login() {
         status: 'Online',
         stats: {
           rating: '0',
-          animeWatched: 0,
+          titlesWatched: 0,
           comments: 0,
           likesGiven: 0,
           likesReceived: 0,
@@ -121,40 +147,6 @@ export default function Login() {
       console.error('Signup error:', error);
     }
   };
-
-  const SocialButtons = () => (
-    <div className="social-login">
-      <div className="social-divider">
-        <span>or continue with</span>
-      </div>
-      <div className="social-buttons">
-        <button 
-          type="button" 
-          className="social-btn google"
-          onClick={() => handleSocialLogin('Google')}
-        >
-          <i className="bx bxl-google"></i>
-          <span>Google</span>
-        </button>
-        <button 
-          type="button" 
-          className="social-btn facebook"
-          onClick={() => handleSocialLogin('Facebook')}
-        >
-          <i className="bx bxl-facebook"></i>
-          <span>Facebook</span>
-        </button>
-        <button 
-          type="button" 
-          className="social-btn apple"
-          onClick={() => handleSocialLogin('Apple')}
-        >
-          <i className="bx bxl-apple"></i>
-          <span>Apple</span>
-        </button>
-      </div>
-    </div>
-  );
 
   return (
     <div className="login-page">
@@ -195,31 +187,31 @@ export default function Login() {
               onChange={handleSignupChange}
             />
             <button type="submit">Sign up</button>
-            <SocialButtons />
+            <SocialButtons onSocialLogin={handleSocialLogin} />
           </form>
         </div>
 
         <div className="login">
           <form onSubmit={handleLogin}>
             <label htmlFor="chk" aria-hidden="true">Login</label>
-            <input 
-              type="email" 
-              name="email" 
-              placeholder="Email" 
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
               required
               value={loginData.email}
               onChange={handleLoginChange}
             />
-            <input 
-              type="password" 
-              name="password" 
-              placeholder="Password" 
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
               required
               value={loginData.password}
               onChange={handleLoginChange}
             />
             <button type="submit">Login</button>
-            <SocialButtons />
+            <SocialButtons onSocialLogin={handleSocialLogin} />
           </form>
         </div>
       </div>

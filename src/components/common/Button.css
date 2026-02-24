@@ -31,14 +31,14 @@
 
 /* Variants */
 .btn--primary {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background-color: var(--color-accent-red-dark);
-  border-color: var(--color-accent-red-dark);
+  background-color: var(--color-accent-primary-dark);
+  border-color: var(--color-accent-primary-dark);
   transform: translateY(-2px);
 }
 
@@ -55,14 +55,14 @@
 }
 
 .btn--danger {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .btn--danger:hover:not(:disabled) {
-  background-color: var(--color-accent-red-dark);
-  border-color: var(--color-accent-red-dark);
+  background-color: var(--color-accent-primary-dark);
+  border-color: var(--color-accent-primary-dark);
   transform: translateY(-2px);
 }
 
@@ -78,14 +78,14 @@
 }
 
 .btn--accent {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .btn--accent:hover:not(:disabled) {
-  background-color: var(--color-accent-red-dark);
-  border-color: var(--color-accent-red-dark);
+  background-color: var(--color-accent-primary-dark);
+  border-color: var(--color-accent-primary-dark);
   transform: translateY(-2px);
 }
 
@@ -125,6 +125,6 @@
 
 /* Focus styles for accessibility */
 .btn:focus-visible {
-  outline: 2px solid var(--color-accent-red);
+  outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
 }

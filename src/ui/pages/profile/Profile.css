@@ -37,7 +37,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 32px;
@@ -62,7 +62,7 @@
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--color-accent-red);
+  border: 3px solid var(--color-accent-primary);
   /* Optimize image rendering */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
@@ -80,19 +80,19 @@
 }
 
 .status-online {
-  background-color: #2ecc71;
+  background-color: var(--color-status-online);
 }
 
 .status-offline {
-  background-color: #95a5a6;
+  background-color: var(--color-status-offline);
 }
 
 .status-away {
-  background-color: #f39c12;
+  background-color: var(--color-status-away);
 }
 
 .status-busy {
-  background-color: #e74c3c;
+  background-color: var(--color-status-busy);
 }
 
 .profile-header-info {
@@ -116,7 +116,7 @@
 }
 
 .group-badge {
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   color: white;
   padding: 6px 14px;
   border-radius: 20px;
@@ -126,7 +126,7 @@
 }
 
 .plan-badge {
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   color: white;
   padding: 8px 16px;
   border-radius: 25px;
@@ -163,7 +163,7 @@
 
 .profile-edit-panel {
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 32px;
@@ -178,7 +178,7 @@
 .edit-section-title {
   margin: 20px 0 12px;
   font-size: 1rem;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
 }
 
 .edit-form {
@@ -223,7 +223,7 @@
 .edit-field select:focus,
 .edit-field textarea:focus {
   outline: none;
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .edit-hint {
@@ -236,7 +236,7 @@
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
 }
 
 .edit-actions {
@@ -259,7 +259,7 @@
 
 .stat-card {
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -277,11 +277,11 @@
 
 .stat-card:hover {
   transform: translateY(-2px);
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .stat-card.highlight {
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   border-color: transparent;
 }
 
@@ -295,7 +295,7 @@
 
 .stat-icon {
   font-size: 1.5rem;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
 }
 
 .stat-card.highlight .stat-icon {
@@ -329,7 +329,7 @@
 .tabs {
   display: flex;
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 12px;
   overflow: hidden;
   flex-wrap: wrap;
@@ -358,7 +358,7 @@
 }
 
 .tab.active {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
 }
 
@@ -412,21 +412,21 @@
 
 .filter-select:hover,
 .filter-select:focus {
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
   outline: none;
 }
 
 /* Content Panel - Optimized */
 .content-panel {
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 16px;
   padding: 32px;
   min-height: 300px;
   contain: layout;
 }
 
-.anime-list {
+.content-list {
   display: flex;
   flex-direction: column;
   gap: 16px;

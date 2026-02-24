@@ -27,7 +27,7 @@
 .page-loader__logo-icon {
   width: 64px;
   height: 64px;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -49,7 +49,7 @@
 .page-loader__logo-text {
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
   letter-spacing: 0.05em;
 }
 
@@ -64,7 +64,7 @@
 .page-loader__progress-bar {
   height: 100%;
   width: 30%;
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   border-radius: var(--radius-full);
   animation: progressSlide 1.5s ease-in-out infinite;
 }

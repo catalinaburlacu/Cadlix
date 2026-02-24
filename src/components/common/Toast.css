@@ -31,7 +31,7 @@
 }
 
 .toast--error {
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .toast--warning {
@@ -39,7 +39,7 @@
 }
 
 .toast--info {
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .toast-icon {
@@ -59,7 +59,7 @@
 }
 
 .toast--error .toast-icon {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .toast--info .toast-icon {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
 }
 

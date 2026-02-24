@@ -26,20 +26,17 @@ body,
   --color-bg-hover: #2a3f54;
 
   /* Accent Colors */
-  --color-accent-red: #e63946;
-  --color-accent-red-dark: #c1121f;
-  --color-accent-red-light: #ff6b6b;
+  --color-accent-primary: #6366f1;
+  --color-accent-primary-dark: #4f46e5;
+  --color-accent-primary-light: #818cf8;
 
   --color-accent-blue: #64b5f6;
-  --color-accent-blue-dark: #42a5f5;
 
-  --color-accent-amber: #ffb74d;
-  --color-accent-amber-dark: #ffa726;
-
-  /* Legacy accent aliases */
-  --color-accent-purple: #64b5f6;
-  --color-accent-pink: #e63946;
-  --color-accent-teal: #64b5f6;
+  /* Semantic Status Colors */
+  --color-status-online: #2ecc71;
+  --color-status-offline: #95a5a6;
+  --color-status-away: #f39c12;
+  --color-status-busy: #e74c3c;
 
   /* Text Colors */
   --color-text-primary: #ffffff;
@@ -53,69 +50,34 @@ body,
 
 a {
   font-weight: 500;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
   text-decoration: inherit;
 }
 
 a:hover {
-  color: var(--color-accent-red-light);
+  color: var(--color-accent-primary-light);
 }
 
 button {
   border-radius: 8px;
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: transparent;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
   cursor: pointer;
   transition: all 0.25s;
 }
 
 button:hover {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   color: white;
   transform: translateY(-2px);
 }
 
-button:focus,
 button:focus-visible {
-  outline: 2px solid var(--color-accent-red);
+  outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
-}
-
-/* Accent Button Variants */
-button.accent-pink,
-button.accent-red {
-  border-color: var(--color-accent-red);
-  color: var(--color-accent-red);
-}
-
-button.accent-pink:hover,
-button.accent-red:hover {
-  background-color: var(--color-accent-red);
-}
-
-button.accent-teal,
-button.accent-blue {
-  border-color: var(--color-accent-blue);
-  color: var(--color-accent-blue);
-}
-
-button.accent-teal:hover,
-button.accent-blue:hover {
-  background-color: var(--color-accent-blue);
-  color: var(--color-bg-dark);
-}
-
-button.accent-amber {
-  border-color: var(--color-accent-amber);
-  color: var(--color-accent-amber);
-}
-
-button.accent-amber:hover {
-  background-color: var(--color-accent-amber);
-  color: var(--color-bg-dark);
 }

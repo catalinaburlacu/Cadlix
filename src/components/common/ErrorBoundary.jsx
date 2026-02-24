@@ -70,7 +70,6 @@ class ErrorBoundary extends React.Component {
 
 ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,
-  fallback: PropTypes.node,
 };
 
 export default ErrorBoundary;

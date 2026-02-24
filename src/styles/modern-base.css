@@ -95,10 +95,10 @@
     --color-bg-card: #1e2d3d;
     --color-bg-hover: #2a3f54;
 
-    /* Accent Colors - Red based */
-    --color-accent-red: #e63946;
-    --color-accent-red-dark: #c1121f;
-    --color-accent-red-light: #ff6b6b;
+    /* Accent Colors - Indigo */
+    --color-accent-primary: #6366f1;
+    --color-accent-primary-dark: #4f46e5;
+    --color-accent-primary-light: #818cf8;
 
     /* Text Colors with proper contrast */
     --color-text-primary: #ffffff;
@@ -186,7 +186,7 @@
     --cq-2xl: 96rem; /* 1536px */
 
     /* Focus Ring */
-    --focus-ring: 0 0 0 3px rgba(230, 57, 70, 0.4);
+    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 40%, transparent);
     --focus-ring-offset: 2px;
   }
 
@@ -206,7 +206,7 @@
 
   /* Selection styling */
   ::selection {
-    background-color: var(--color-accent-red);
+    background-color: var(--color-accent-primary);
     color: var(--color-text-primary);
   }
 }
@@ -228,7 +228,7 @@
   }
 
   .card:hover {
-    border-color: var(--color-accent-red);
+    border-color: var(--color-accent-primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
   }
@@ -269,14 +269,14 @@
   }
 
   .btn--primary {
-    background-color: var(--color-accent-red);
+    background-color: var(--color-accent-primary);
     color: var(--color-text-primary);
-    border: 2px solid var(--color-accent-red);
+    border: 2px solid var(--color-accent-primary);
   }
 
   .btn--primary:hover {
-    background-color: var(--color-accent-red-dark);
-    border-color: var(--color-accent-red-dark);
+    background-color: var(--color-accent-primary-dark);
+    border-color: var(--color-accent-primary-dark);
     transform: translateY(-2px);
   }
 
@@ -333,8 +333,8 @@
 
   .input:focus {
     outline: none;
-    border-color: var(--color-accent-red);
-    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 20%, transparent);
   }
 
   .input::placeholder {
@@ -435,7 +435,7 @@
     transform: translateX(-50%);
     z-index: var(--z-tooltip);
     padding: var(--space-3) var(--space-6);
-    background: var(--color-accent-red);
+    background: var(--color-accent-primary);
     color: var(--color-text-primary);
     border-radius: var(--radius-lg);
     font-weight: var(--font-semibold);
@@ -448,7 +448,7 @@
 
   /* Text Utilities */
   .text-gradient {
-    color: var(--color-accent-red);
+    color: var(--color-accent-primary);
   }
 
   /* Performance Utilities */
@@ -544,7 +544,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-accent-red);
+    background-color: var(--color-accent-primary);
   }
 
   /* Firefox scrollbar */

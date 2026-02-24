@@ -14,7 +14,7 @@
   max-width: 400px;
   height: 580px;
   background: var(--color-bg-card);
-  border: 2px solid var(--color-accent-red);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
@@ -43,7 +43,7 @@
   margin-bottom: 24px;
   cursor: pointer;
   transition: all 0.5s ease-in-out;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
 }
 
 .signup input,
@@ -69,7 +69,7 @@
 
 .signup input:focus,
 .login input:focus {
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
 }
 
 .signup button,
@@ -78,20 +78,20 @@
   height: 48px;
   margin-top: 16px;
   color: white;
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   font-size: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
 }
 
 .signup button:hover,
 .login button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(230, 57, 70, 0.4);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--color-accent-primary) 40%, transparent);
 }
 
 .signup button:active,
@@ -150,7 +150,7 @@
 }
 
 .social-btn:hover {
-  border-color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
   background: var(--color-bg-hover);
 }
 
@@ -169,15 +169,15 @@
 }
 
 .social-btn.apple:hover {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
 }
 
 /* Login Section - Slides up to reveal signup */
 .login {
   height: 480px;
   background: var(--color-bg-card);
-  border-top: 2px solid var(--color-accent-red);
+  border-top: 2px solid var(--color-accent-primary);
   border-radius: 16px 16px 0 0;
   transform: translateY(-110px);
   transition: transform 0.8s ease-in-out;
@@ -185,7 +185,7 @@
 }
 
 .login label {
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

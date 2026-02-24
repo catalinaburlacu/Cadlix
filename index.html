@@ -1,120 +1,96 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    
-    <!-- Security Meta Tags -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    
-    <!-- SEO Meta Tags -->
-    <title>Cadlix - Stream Anime, Movies & Series</title>
-    <meta name="description" content="Cadlix is your ultimate streaming platform for anime, movies, and series. Track your watch history, manage favorites, and discover new content." />
-    <meta name="keywords" content="anime streaming, movie streaming, series tracker, watch history, anime collection, cadlix" />
-    <meta name="author" content="Cadlix Team" />
-    <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    
-    <!-- Theme Color for Mobile Browsers -->
-    <meta name="theme-color" content="#8A2BE2" />
-    <meta name="msapplication-TileColor" content="#8A2BE2" />
-    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
-    
-    <!-- Mobile Web App Capable -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Cadlix" />
-    <meta name="application-name" content="Cadlix" />
-    
-    <!-- Format Detection -->
-    <meta name="format-detection" content="telephone=no" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://cadlix.app/" />
-    <meta property="og:title" content="Cadlix - Stream Anime, Movies & Series" />
-    <meta property="og:description" content="Your ultimate streaming platform for anime, movies, and series. Track your watch history and discover new content." />
-    <meta property="og:image" content="https://cadlix.app/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Cadlix" />
-    <meta property="og:locale" content="en_US" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://cadlix.app/" />
-    <meta property="twitter:title" content="Cadlix - Stream Anime, Movies & Series" />
-    <meta property="twitter:description" content="Your ultimate streaming platform for anime, movies, and series. Track your watch history and discover new content." />
-    <meta property="twitter:image" content="https://cadlix.app/og-image.jpg" />
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="alternate icon" type="image/png" href="/icons/icon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png" />
-    <link rel="mask-icon" href="/vite.svg" color="#8A2BE2" />
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json" />
-    
-    <!-- Preconnect to External Resources -->
-    <link rel="preconnect" href="https://api.dicebear.com" crossorigin />
-    <link rel="dns-prefetch" href="https://api.dicebear.com" />
-    
-    <!-- Preload Critical Resources -->
-    <link rel="preload" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" as="style" />
-    <link rel="preload" href="/src/main.jsx" as="script" type="module" />
-    
-    <!-- Styles -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    
-    <!-- Critical CSS Inline for Faster First Paint -->
-    <style>
-      /* Critical CSS - Minimal styles for initial render */
-      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-      html{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
-      body{min-height:100vh;min-height:100dvh;background:#0A0F3D;color:rgba(255,255,255,.87)}
-      #root{width:100%;height:100%}
-      .initial-loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0A0F3D 0%,#151B4D 50%,#1E1B51 100%);z-index:9999}
-      .initial-loader__content{display:flex;flex-direction:column;align-items:center;gap:2rem}
-      .initial-loader__brand{display:flex;align-items:center;gap:1rem}
-      .initial-loader__logo{width:48px;height:48px;color:#8A2BE2}
-      .initial-loader__title{font-size:clamp(2rem,5vw,3rem);font-weight:700;background:linear-gradient(135deg,#8A2BE2 0%,#FF1493 50%,#00CED1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-      .initial-loader__spinner{position:relative;width:60px;height:60px}
-      .initial-loader__spinner-ring{position:absolute;inset:0;border:3px solid transparent;border-top-color:#8A2BE2;border-radius:50%;animation:spin 1s linear infinite}
-      @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-      .initial-loader__text{color:rgba(255,255,255,.6)}
-      .initial-loader__progress-container{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(138,43,226,.2);overflow:hidden}
-      .initial-loader__progress-bar{height:100%;width:30%;background:linear-gradient(90deg,#8A2BE2,#FF1493,#00CED1);animation:progressSlide 2s ease-in-out infinite}
-      @keyframes progressSlide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
-    </style>
-  </head>
-  <body>
-    <div id="root">
-      <!-- Fallback initial loader (shown before JS loads) -->
-      <div class="initial-loader">
-        <div class="initial-loader__content">
-          <div class="initial-loader__brand">
-            <div class="initial-loader__logo">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <span class="initial-loader__title">Cadlix</span>
-          </div>
-          <div class="initial-loader__spinner">
-            <div class="initial-loader__spinner-ring"></div>
-          </div>
-          <p class="initial-loader__text">Loading your experience...</p>
-        </div>
-        <div class="initial-loader__progress-container">
-          <div class="initial-loader__progress-bar"></div>
-        </div>
-      </div>
-    </div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <title>Cadlix - Stream Anime, Movies & Series</title>
+  <meta name="description"
+    content="Cadlix is your ultimate streaming platform for anime, movies, and series. Track your watch history, manage favorites, and discover new content." />
+  <meta name="keywords"
+    content="anime streaming, movie streaming, series tracker, watch history, anime collection, cadlix" />
+  <meta name="author" content="Cadlix Team" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+
+  <meta name="theme-color" content="#e63946" />
+  <meta name="msapplication-TileColor" content="#e63946" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Cadlix" />
+  <meta name="application-name" content="Cadlix" />
+
+  <meta name="format-detection" content="telephone=no" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cadlix.app/" />
+  <meta property="og:title" content="Cadlix - Stream Anime, Movies & Series" />
+  <meta property="og:description"
+    content="Your ultimate streaming platform for anime, movies, and series. Track your watch history and discover new content." />
+  <meta property="og:image" content="https://cadlix.app/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Cadlix" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://cadlix.app/" />
+  <meta property="twitter:title" content="Cadlix - Stream Anime, Movies & Series" />
+  <meta property="twitter:description"
+    content="Your ultimate streaming platform for anime, movies, and series. Track your watch history and discover new content." />
+  <meta property="twitter:image" content="https://cadlix.app/og-image.jpg" />
+
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="alternate icon" type="image/png" href="/icons/icon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png" />
+  <link rel="mask-icon" href="/vite.svg" color="#e63946" />
+
+  <link rel="manifest" href="/manifest.json" />
+
+  <link rel="preconnect" href="https://api.dicebear.com" crossorigin />
+  <link rel="dns-prefetch" href="https://unpkg.com" />
+
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #0D1B2A;
+      color: rgba(255, 255, 255, .87)
+    }
+
+    #root {
+      width: 100%;
+      height: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #0d1b2a;
+  background: var(--color-bg-dark);
   z-index: 9999;
   animation: initialFadeIn 0.3s ease-out;
 }
@@ -28,7 +28,7 @@
 .initial-loader__logo {
   width: 48px;
   height: 48px;
-  color: #e63946;
+  color: var(--color-accent-primary);
 }
 
 .initial-loader__logo svg {
@@ -39,7 +39,7 @@
 .initial-loader__title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  color: #e63946;
+  color: var(--color-accent-primary);
   letter-spacing: 0.1em;
 }
 
@@ -54,7 +54,7 @@
   position: absolute;
   inset: 0;
   border: 3px solid transparent;
-  border-top-color: #e63946;
+  border-top-color: var(--color-accent-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -63,7 +63,7 @@
   width: 80%;
   height: 80%;
   margin: 10%;
-  border-top-color: #c1121f;
+  border-top-color: var(--color-accent-primary-dark);
   animation-duration: 1.5s;
   animation-direction: reverse;
 }
@@ -72,35 +72,11 @@
   width: 60%;
   height: 60%;
   margin: 20%;
-  border-top-color: #ff6b6b;
+  border-top-color: var(--color-accent-primary-light);
   animation-duration: 2s;
 }
 
-.initial-loader__spinner-ring {
-  position: absolute;
-  inset: 0;
-  border: 3px solid transparent;
-  border-top-color: #8a2be2;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
 
-.initial-loader__spinner-ring--second {
-  width: 80%;
-  height: 80%;
-  margin: 10%;
-  border-top-color: #ff1493;
-  animation-duration: 1.5s;
-  animation-direction: reverse;
-}
-
-.initial-loader__spinner-ring--third {
-  width: 60%;
-  height: 60%;
-  margin: 20%;
-  border-top-color: #00ced1;
-  animation-duration: 2s;
-}
 
 .initial-loader__text {
   font-size: 1rem;
@@ -116,24 +92,18 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(230, 57, 70, 0.2);
+  background: color-mix(in srgb, var(--color-accent-primary) 20%, transparent);
   overflow: hidden;
 }
 
 .initial-loader__progress-bar {
   height: 100%;
   width: 30%;
-  background: #e63946;
+  background: var(--color-accent-primary);
   animation: progressSlide 2s ease-in-out infinite;
 }
 
-.initial-loader__progress-bar {
-  height: 100%;
-  width: 30%;
-  background: linear-gradient(90deg, #8a2be2, #ff1493, #00ced1);
-  animation: progressSlide 2s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
-}
+
 
 /* Animations */
 @keyframes initialFadeIn {

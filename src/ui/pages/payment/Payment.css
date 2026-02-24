@@ -1,10 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700");
 
-:root {
-  --dark-navy: #0d1b2a;
-  --purple: #e63946;
-}
-
 .payment-page {
   min-height: 100vh;
   background: var(--color-bg-dark);
@@ -12,7 +7,7 @@
   flex-direction: column;
   align-items: center;
   padding: 28px;
-  color: #fff;
+  color: var(--color-text-primary);
   font-family: "Josefin Sans", sans-serif;
 }
 
@@ -31,8 +26,8 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.1);
-  color: var(--color-accent-red);
-  border: 2px solid var(--color-accent-red);
+  color: var(--color-accent-primary);
+  border: 2px solid var(--color-accent-primary);
   padding: 10px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -52,8 +47,8 @@
 }
 
 .payment-back-btn:hover {
-  background: var(--color-accent-red);
-  color: var(--dark-navy);
+  background: var(--color-accent-primary);
+  color: var(--color-bg-dark);
 }
 
 .add-card.page {
@@ -85,7 +80,7 @@
 
 .form .label .title {
   font-size: 13px;
-  color: var(--dark-navy);
+  color: var(--color-bg-dark);
   font-weight: 700;
 }
 
@@ -98,17 +93,17 @@
   background-color: #f8f9ff;
   border: 1px solid #d8ddf7;
   transition: all 0.3s;
-  caret-color: var(--purple);
-  color: var(--dark-navy);
+  caret-color: var(--color-accent-primary);
+  color: var(--color-bg-dark);
 }
 
 .form .input-field:hover {
-  border-color: rgba(230, 57, 70, 0.5);
+  border-color: color-mix(in srgb, var(--color-accent-primary) 50%, transparent);
 }
 
 .form .input-field:focus {
-  border-color: var(--purple);
-  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
 }
 
 .form .input-field--error {
@@ -151,7 +146,7 @@
   font-size: 18px;
   border: 2px solid transparent;
   color: #fff;
-  background: var(--pink-magenta);
+  background: var(--color-accent-primary);
 }
 
 .form .checkout-btn:active {
@@ -159,8 +154,8 @@
 }
 
 .form .checkout-btn:hover {
-  color: var(--pink-magenta);
-  border-color: var(--pink-magenta);
+  color: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
   background: #ffffff;
 }
 
@@ -189,7 +184,7 @@
 }
 
 .left-side {
-  background-color: var(--color-accent-red);
+  background-color: var(--color-accent-primary);
   width: 130px;
   height: 120px;
   position: relative;
@@ -216,7 +211,7 @@
 }
 .new {
   font-size: 18px;
-  color: var(--dark-navy);
+  color: var(--color-bg-dark);
   font-weight: 700;
   margin-left: 20px;
 }
@@ -324,14 +319,14 @@
   text-align: center;
 }
 .paid-message {
-  color: #fff;
+  color: var(--color-text-primary);
   text-align: center;
   max-width: 520px;
 }
 .paid-message h2 {
   font-size: 28px;
   margin-bottom: 6px;
-  color: var(--color-accent-red);
+  color: var(--color-accent-primary);
 }
 .paid-message p {
   opacity: 0.95;
@@ -340,17 +335,17 @@
   margin-top: 14px;
   padding: 12px 18px;
   border-radius: 8px;
-  background: var(--color-accent-red);
+  background: var(--color-accent-primary);
   border: 2px solid transparent;
-  color: var(--dark-navy);
+  color: var(--color-bg-dark);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .primary-btn:hover {
   background: transparent;
-  border-color: var(--color-accent-red);
-  color: var(--color-accent-red);
+  border-color: var(--color-accent-primary);
+  color: var(--color-accent-primary);
 }
 
 .container.paid {

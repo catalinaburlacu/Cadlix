@@ -1,4 +1,3 @@
-import './App.css'
 import './styles/modern-base.css'
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -8,7 +7,6 @@ import { ToastProvider } from './components/common/Toast'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import { registerSW } from 'virtual:pwa-register'
 import App from './App'
-import InitialLoader from './components/common/InitialLoader'
 
 // Register PWA service worker with auto-update
 const updateSW = registerSW({
@@ -38,18 +36,6 @@ preconnectDomains.forEach(domain => {
   document.head.appendChild(link)
 })
 
-// Add DNS prefetch hints
-const dnsPrefetchDomains = [
-  'https://api.dicebear.com'
-]
-
-dnsPrefetchDomains.forEach(domain => {
-  const link = document.createElement('link')
-  link.rel = 'dns-prefetch'
-  link.href = domain
-  document.head.appendChild(link)
-})
-
 // Create root with concurrent features
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -57,7 +43,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <UserProvider>
           <ToastProvider>
-            <Suspense fallback={<InitialLoader />}>
+            <Suspense fallback={null}>
               <App />
             </Suspense>
           </ToastProvider>
