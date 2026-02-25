@@ -34,10 +34,29 @@
 }
 
 .history-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  align-items: start;
+  gap: 14px;
   background: rgba(30, 27, 81, 0.5);
   border: 1px solid rgba(138, 43, 226, 0.3);
   border-radius: 14px;
   padding: 16px;
+  cursor: pointer;
+  color: inherit;
+  text-align: left;
+  font-family: inherit;
+}
+
+.history-thumb {
+  width: 240px;
+  height: 160px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.history-info {
+  min-width: 0;
 }
 
 .history-main {
@@ -104,6 +123,14 @@
 }
 
 @media (max-width: 768px) {
+  .history-card {
+    grid-template-columns: 1fr;
+  }
+
+  .history-thumb {
+    width: 100%;
+  }
+
   .history-meta {
     grid-template-columns: 1fr;
   }

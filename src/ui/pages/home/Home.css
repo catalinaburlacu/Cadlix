@@ -549,6 +549,10 @@
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  color: inherit;
+  text-align: left;
+  font-family: inherit;
+  padding: 0;
 }
 
 .content-card:hover {

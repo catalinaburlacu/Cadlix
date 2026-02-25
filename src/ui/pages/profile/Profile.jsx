@@ -5,7 +5,7 @@ import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
 import Input from "../../../components/common/Input.jsx";
 import { SkeletonAvatar, SkeletonStats } from "../../../components/common/Skeleton.jsx";
-import { ANIME_GENRES, ANIME_TYPES, SORT_OPTIONS } from "../../../utils/constants.js";
+import { ANIME_GENRES, ANIME_TYPES, MOCK_MEDIA_LIBRARY, MOCK_VIDEOS, SORT_OPTIONS } from "../../../utils/constants.js";
 import PropTypes from 'prop-types';
 import "./Profile.css";
 
@@ -45,6 +45,9 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState("watching");
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedSort, setSelectedSort] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
@@ -61,11 +64,12 @@ export default function Profile() {
   const [about, setAbout] = useState("");
   const [signature, setSignature] = useState("");
   const [isAvatarProcessing, setIsAvatarProcessing] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
   const profileSettings = user?.profileSettings || {};
   const profileGender = profileSettings.gender || "not specified";
   const profileAbout = profileSettings.about || "";
-  const visibleAvatar = avatarUrl || user.avatar || "https://via.placeholder.com/120?text=Avatar";
+  const visibleAvatar = avatarUrl || user?.avatar || "https://via.placeholder.com/120?text=Avatar";
 
   // Memoized stats data to prevent recreation on every render
   const statsData = useMemo(() => {
@@ -100,6 +104,34 @@ export default function Profile() {
       setIsLoading(false);
     }
   }, [logout, navigate, toast]);
+
+  const handleDeleteProfile = React.useCallback(async () => {
+    if (isDeleteLoading) return;
+
+    const firstConfirm = window.confirm(
+      "Esti sigur ca vrei sa iti stergi profilul? Aceasta actiune este permanenta."
+    );
+    if (!firstConfirm) return;
+
+    const typedConfirmation = window.prompt(
+      "Confirmare 2/2: scrie exact STERGE pentru a continua."
+    );
+    if ((typedConfirmation || "").trim().toUpperCase() !== "STERGE") {
+      toast.error("Stergerea a fost anulata. Confirmarea nu a fost corecta.");
+      return;
+    }
+
+    setIsDeleteLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 350));
+      logout();
+      toast.success("Profilul a fost sters definitiv.");
+      navigate("/login");
+    } catch {
+      toast.error("Stergerea profilului a esuat.");
+      setIsDeleteLoading(false);
+    }
+  }, [isDeleteLoading, logout, navigate, toast]);
 
   const handleToggleEditor = React.useCallback(() => {
     if (!isEditOpen) {
@@ -239,6 +271,47 @@ export default function Profile() {
     ]
   );
 
+  const watchList = useMemo(() => user?.watchList || MOCK_MEDIA_LIBRARY, [user]);
+  const videoById = useMemo(
+    () => Object.fromEntries(MOCK_VIDEOS.map((video) => [video.id, video])),
+    []
+  );
+
+  const filteredEntries = useMemo(() => {
+    let list = [...watchList];
+
+    list = list.filter((item) => item.status === activeTab);
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter((item) => item.title.toLowerCase().includes(q));
+    }
+
+    if (selectedType) {
+      if (selectedType === "anime") {
+        list = list.filter((item) => item.category.toLowerCase() === "anime");
+      } else {
+        list = list.filter((item) => item.type === selectedType);
+      }
+    }
+
+    if (selectedGenre) {
+      list = list.filter((item) => item.genre === selectedGenre);
+    }
+
+    if (selectedSort === "title") {
+      list.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (selectedSort === "score") {
+      list.sort((a, b) => b.score - a.score);
+    } else if (selectedSort === "date") {
+      list.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+    } else if (selectedSort === "episodes") {
+      list.sort((a, b) => (a.episode || "").localeCompare(b.episode || ""));
+    }
+
+    return list;
+  }, [activeTab, searchQuery, selectedType, selectedGenre, selectedSort, watchList]);
+
   // Show loading state while user data loads
   if (!user) {
     return (
@@ -288,9 +361,20 @@ export default function Profile() {
               size="small"
               onClick={handleLogout}
               isLoading={isLoading}
+              disabled={isDeleteLoading}
             >
               <i className="bx bx-log-out" aria-hidden="true"></i>
               Logout
+            </Button>
+            <Button
+              variant="danger"
+              size="small"
+              onClick={handleDeleteProfile}
+              isLoading={isDeleteLoading}
+              disabled={isLoading}
+            >
+              <i className="bx bx-trash" aria-hidden="true"></i>
+              Delete Profile
             </Button>
           </div>
         </nav>
@@ -578,7 +662,12 @@ export default function Profile() {
           </div>
           
           <div className="filter-selects">
-            <select className="filter-select" aria-label="Filter by type">
+            <select
+              className="filter-select"
+              aria-label="Filter by type"
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+            >
               {ANIME_TYPES.map((type) => (
                 <option key={type.value || 'all-types'} value={type.value}>
                   {type.label}
@@ -586,7 +675,12 @@ export default function Profile() {
               ))}
             </select>
             
-            <select className="filter-select" aria-label="Filter by genre">
+            <select
+              className="filter-select"
+              aria-label="Filter by genre"
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+            >
               {ANIME_GENRES.map((genre) => (
                 <option key={genre.value || 'all-genres'} value={genre.value}>
                   {genre.label}
@@ -594,7 +688,12 @@ export default function Profile() {
               ))}
             </select>
             
-            <select className="filter-select" aria-label="Sort by">
+            <select
+              className="filter-select"
+              aria-label="Sort by"
+              value={selectedSort}
+              onChange={(e) => setSelectedSort(e.target.value)}
+            >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value || 'sort-by'} value={option.value}>
                   {option.label}
@@ -612,16 +711,54 @@ export default function Profile() {
           aria-labelledby={`tab-${activeTab}`}
         >
           <div className="anime-list">
-            <div className="empty-state">
-              <i className="bx bx-inbox empty-icon" aria-hidden="true"></i>
-              <p className="empty-message">
-                No entries found in {TABS.find(t => t.id === activeTab)?.label.toLowerCase()}
-              </p>
-              <Button variant="secondary" size="small">
-                <i className="bx bx-plus" aria-hidden="true"></i>
-                Add Anime
-              </Button>
-            </div>
+            {filteredEntries.length === 0 ? (
+              <div className="empty-state">
+                <i className="bx bx-inbox empty-icon" aria-hidden="true"></i>
+                <p className="empty-message">
+                  No entries found in {TABS.find(t => t.id === activeTab)?.label.toLowerCase()}
+                </p>
+                <Button variant="secondary" size="small">
+                  <i className="bx bx-plus" aria-hidden="true"></i>
+                  Add Anime
+                </Button>
+              </div>
+            ) : (
+              filteredEntries.map((entry) => (
+                <button
+                  key={entry.id}
+                  type="button"
+                  className="watch-entry"
+                  onClick={() => {
+                    if (videoById[entry.id]) navigate(`/video/${entry.id}`);
+                  }}
+                >
+                  <img
+                    className="watch-entry-thumb"
+                    src={
+                      videoById[entry.id]?.poster ||
+                      "https://placehold.co/320x180/1a1f5c/ffffff?text=Video+Preview"
+                    }
+                    alt={`${entry.title} preview`}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.src = "https://placehold.co/320x180/1a1f5c/ffffff?text=Video+Preview";
+                    }}
+                  />
+                  <div className="watch-entry-info">
+                    <div className="watch-entry-main">
+                      <h3>{entry.title}</h3>
+                      <span className="watch-entry-type">{entry.category}</span>
+                    </div>
+                    <div className="watch-entry-meta">
+                      <p><strong>Series:</strong> {entry.season || "-"}</p>
+                      <p><strong>Episode:</strong> {entry.episode || "-"}</p>
+                      <p><strong>Genre:</strong> {entry.genre}</p>
+                      <p><strong>Score:</strong> {entry.score}</p>
+                    </div>
+                  </div>
+                </button>
+              ))
+            )}
           </div>
         </div>
       </div>

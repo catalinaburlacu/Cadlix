@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
+import { MOCK_VIDEOS } from "../../../utils/constants.js";
 import "../home/Home.css";
 import "./Explore.css";
 
@@ -242,6 +243,18 @@ export default function Explore() {
     });
   };
 
+  const handleOpenVideo = useCallback(
+    (title) => {
+      const match = MOCK_VIDEOS.find((video) => video.title.toLowerCase() === title.toLowerCase());
+      if (!match) {
+        toast.info("This item has no mock video yet.");
+        return;
+      }
+      navigate(`/video/${match.id}`);
+    },
+    [navigate, toast]
+  );
+
   return (
     <div className="home-page explore-page">
       <div
@@ -373,6 +386,28 @@ export default function Explore() {
           </section>
 
           <section className="explore-carousel-section">
+            <article className="media-row">
+              <header className="media-row-header">
+                <h3>Mock Videos (click to open player)</h3>
+              </header>
+              <div className="media-row-track">
+                {MOCK_VIDEOS.map((item) => (
+                  <button
+                    key={`mock-video-${item.id}`}
+                    type="button"
+                    className="media-card"
+                    onClick={() => navigate(`/video/${item.id}`)}
+                  >
+                    <div className="media-card-image"></div>
+                    <div className="media-card-info">
+                      <h4>{item.title}</h4>
+                      <p>{item.category}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </article>
+
             <div className="explore-carousel-list">
               {carouselRows.map((row) => {
                 const start = carouselIndex[row.id] ?? 0;
@@ -386,13 +421,18 @@ export default function Explore() {
 
                     <div className="media-row-track">
                       {visibleItems.map((item, idx) => (
-                        <div key={`${row.id}-${item.title}-${start}-${idx}`} className="media-card">
+                        <button
+                          key={`${row.id}-${item.title}-${start}-${idx}`}
+                          type="button"
+                          className="media-card"
+                          onClick={() => handleOpenVideo(item.title)}
+                        >
                           <div className="media-card-image"></div>
                           <div className="media-card-info">
                             <h4>{item.title}</h4>
                             <p>{item.meta}</p>
                           </div>
-                        </div>
+                        </button>
                       ))}
                     </div>
                   </article>

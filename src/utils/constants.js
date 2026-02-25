@@ -16,6 +16,7 @@ export const ROUTES = {
   EXPLORE: '/explore',
   PROFILE: '/profile',
   HISTORY: '/history',
+  VIDEO: '/video',
   ROOT: '/',
 };
 
@@ -134,6 +135,97 @@ export const BREAKPOINTS = {
   wide: 1440,
 };
 
+// Mock media library
+export const MOCK_MEDIA_LIBRARY = [
+  { id: 'm-1', title: 'Attack on Titan', category: 'Anime', type: 'tv', genre: 'action', score: 9.1, dateAdded: '2026-02-11', status: 'watching', season: 'Final Season', episode: 'Episode 7', progress: '18:27' },
+  { id: 'm-2', title: 'Jujutsu Kaisen', category: 'Anime', type: 'tv', genre: 'supernatural', score: 8.7, dateAdded: '2026-02-10', status: 'planned', season: 'Season 2', episode: 'Episode 1', progress: '00:00' },
+  { id: 'm-3', title: 'Demon Slayer', category: 'Anime', type: 'tv', genre: 'action', score: 8.8, dateAdded: '2026-02-09', status: 'completed', season: 'Hashira Training Arc', episode: 'Episode 8', progress: '24:00' },
+  { id: 'm-4', title: 'Your Name', category: 'Anime', type: 'movie', genre: 'romance', score: 8.4, dateAdded: '2026-02-08', status: 'favorites', season: '-', episode: '-', progress: '01:46:00' },
+  { id: 'm-5', title: 'Dune: Part Two', category: 'Movie', type: 'movie', genre: 'sci-fi', score: 8.6, dateAdded: '2026-02-07', status: 'completed', season: '-', episode: '-', progress: '02:46:00' },
+  { id: 'm-6', title: 'Interstellar', category: 'Movie', type: 'movie', genre: 'drama', score: 8.9, dateAdded: '2026-02-06', status: 'favorites', season: '-', episode: '-', progress: '02:49:00' },
+  { id: 'm-7', title: 'The Batman', category: 'Movie', type: 'movie', genre: 'thriller', score: 7.9, dateAdded: '2026-02-05', status: 'dropped', season: '-', episode: '-', progress: '00:42:10' },
+  { id: 'm-8', title: 'Stranger Things', category: 'Series', type: 'tv', genre: 'mystery', score: 8.2, dateAdded: '2026-02-04', status: 'watching', season: 'Season 4', episode: 'Episode 6', progress: '41:18' },
+  { id: 'm-9', title: 'Breaking Bad', category: 'Series', type: 'tv', genre: 'thriller', score: 9.5, dateAdded: '2026-02-03', status: 'completed', season: 'Season 5', episode: 'Episode 16', progress: '47:10' },
+  { id: 'm-10', title: 'Dark', category: 'Series', type: 'tv', genre: 'sci-fi', score: 8.8, dateAdded: '2026-02-02', status: 'planned', season: 'Season 1', episode: 'Episode 1', progress: '00:00' },
+  { id: 'm-11', title: 'One Punch Man', category: 'Anime', type: 'tv', genre: 'comedy', score: 8.6, dateAdded: '2026-02-01', status: 'watching', season: 'Season 2', episode: 'Episode 4', progress: '16:40' },
+  { id: 'm-12', title: 'Money Heist', category: 'Series', type: 'tv', genre: 'adventure', score: 8.1, dateAdded: '2026-01-31', status: 'favorites', season: 'Part 4', episode: 'Episode 2', progress: '52:03' },
+];
+
+export const MOCK_VIDEOS = [
+  {
+    id: 'm-1',
+    title: 'Attack on Titan',
+    category: 'Anime',
+    type: 'tv',
+    genre: 'action',
+    series: 'Final Season',
+    episode: 'Episode 7',
+    durationSec: 1440,
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    poster: 'https://placehold.co/320x180/1a1f5c/ffffff?text=Attack+on+Titan',
+  },
+  {
+    id: 'm-2',
+    title: 'Jujutsu Kaisen',
+    category: 'Anime',
+    type: 'tv',
+    genre: 'supernatural',
+    series: 'Season 2',
+    episode: 'Episode 1',
+    durationSec: 1420,
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    poster: 'https://placehold.co/320x180/25165e/ffffff?text=Jujutsu+Kaisen',
+  },
+  {
+    id: 'm-5',
+    title: 'Dune: Part Two',
+    category: 'Movie',
+    type: 'movie',
+    genre: 'sci-fi',
+    series: '-',
+    episode: '-',
+    durationSec: 9960,
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+    poster: 'https://placehold.co/320x180/2a1a62/ffffff?text=Dune+Part+Two',
+  },
+  {
+    id: 'm-8',
+    title: 'Stranger Things',
+    category: 'Series',
+    type: 'tv',
+    genre: 'mystery',
+    series: 'Season 4',
+    episode: 'Episode 6',
+    durationSec: 3100,
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    poster: 'https://placehold.co/320x180/1d2467/ffffff?text=Stranger+Things',
+  },
+  {
+    id: 'm-9',
+    title: 'Breaking Bad',
+    category: 'Series',
+    type: 'tv',
+    genre: 'thriller',
+    series: 'Season 5',
+    episode: 'Episode 16',
+    durationSec: 2830,
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    poster: 'https://placehold.co/320x180/2e1d65/ffffff?text=Breaking+Bad',
+  },
+  {
+    id: 'm-11',
+    title: 'One Punch Man',
+    category: 'Anime',
+    type: 'tv',
+    genre: 'comedy',
+    series: 'Season 2',
+    episode: 'Episode 4',
+    durationSec: 1460,
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    poster: 'https://placehold.co/320x180/3b1f70/ffffff?text=One+Punch+Man',
+  },
+];
+
 // Default User Data
 export const DEFAULT_USER_DATA = {
   id: 1,
@@ -155,6 +247,7 @@ export const DEFAULT_USER_DATA = {
   watchHistory: [
     {
       id: 'h-1',
+      mediaId: 'm-2',
       title: 'Jujutsu Kaisen',
       category: 'Anime',
       series: 'Season 2',
@@ -164,6 +257,7 @@ export const DEFAULT_USER_DATA = {
     },
     {
       id: 'h-2',
+      mediaId: 'm-5',
       title: 'Dune: Part Two',
       category: 'Movie',
       series: '-',
@@ -173,6 +267,7 @@ export const DEFAULT_USER_DATA = {
     },
     {
       id: 'h-3',
+      mediaId: 'm-8',
       title: 'Stranger Things',
       category: 'Series',
       series: 'Season 4',
@@ -182,6 +277,7 @@ export const DEFAULT_USER_DATA = {
     },
     {
       id: 'h-4',
+      mediaId: 'm-1',
       title: 'Attack on Titan',
       category: 'Anime',
       series: 'Final Season',
@@ -190,4 +286,5 @@ export const DEFAULT_USER_DATA = {
       progress: '24:00',
     },
   ],
+  watchList: MOCK_MEDIA_LIBRARY,
 };

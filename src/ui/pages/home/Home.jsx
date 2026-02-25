@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
+import { MOCK_VIDEOS } from "../../../utils/constants.js";
 import "./Home.css";
 
 export default function Home() {
@@ -49,6 +50,8 @@ export default function Home() {
     { id: 'movies', label: 'Movies', href: '#movies' },
     { id: 'series', label: 'Series', href: '#series' },
   ];
+
+  const recentItems = [...MOCK_VIDEOS].slice(0, 8);
 
   const isActiveRoute = (path) => {
     if (path.startsWith('#')) return false;
@@ -244,14 +247,21 @@ export default function Home() {
           <section className="content-section">
             <h2 className="section-title">Recently Added</h2>
             <div className="content-grid">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="content-card">
+              {recentItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="content-card"
+                  onClick={() => navigate(`/video/${item.id}`)}
+                >
                   <div className="content-card-image" />
                   <div className="content-card-info">
-                    <h3 className="content-card-title">Anime Title {item}</h3>
-                    <p className="content-card-meta">Action | Adventure</p>
+                    <h3 className="content-card-title">{item.title}</h3>
+                    <p className="content-card-meta">
+                      {item.category} | {item.genre}
+                    </p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </section>

@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
+import { MOCK_VIDEOS } from "../../../utils/constants.js";
 import "../home/Home.css";
 import "./History.css";
 
@@ -33,6 +34,16 @@ export default function History() {
   ];
 
   const historyEntries = user?.watchHistory || [];
+  const videoById = useMemo(() => Object.fromEntries(MOCK_VIDEOS.map((video) => [video.id, video])), []);
+
+  const resolveVideoId = useCallback(
+    (entry) => {
+      if (entry.mediaId && videoById[entry.mediaId]) return entry.mediaId;
+      const matched = MOCK_VIDEOS.find((video) => video.title.toLowerCase() === entry.title.toLowerCase());
+      return matched?.id || null;
+    },
+    [videoById]
+  );
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -196,20 +207,42 @@ export default function History() {
               </div>
             ) : (
               historyEntries.map((entry) => (
-                <article key={entry.id} className="history-card">
-                  <div className="history-main">
-                    <h3>{entry.title}</h3>
-                    <span className={`history-type history-type--${entry.category.toLowerCase()}`}>
-                      {entry.category}
-                    </span>
+                <button
+                  key={entry.id}
+                  type="button"
+                  className="history-card"
+                  onClick={() => {
+                    const videoId = resolveVideoId(entry);
+                    if (videoId) navigate(`/video/${videoId}`);
+                  }}
+                >
+                  <img
+                    className="history-thumb"
+                    src={
+                      videoById[resolveVideoId(entry)]?.poster ||
+                      "https://placehold.co/320x180/1a1f5c/ffffff?text=Video+Preview"
+                    }
+                    alt={`${entry.title} preview`}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.src = "https://placehold.co/320x180/1a1f5c/ffffff?text=Video+Preview";
+                    }}
+                  />
+                  <div className="history-info">
+                    <div className="history-main">
+                      <h3>{entry.title}</h3>
+                      <span className={`history-type history-type--${entry.category.toLowerCase()}`}>
+                        {entry.category}
+                      </span>
+                    </div>
+                    <div className="history-meta">
+                      <p><strong>Series:</strong> {entry.series || "-"}</p>
+                      <p><strong>Episode:</strong> {entry.episode || "-"}</p>
+                      <p><strong>Moment:</strong> {entry.progress || "-"}</p>
+                      <p><strong>Watched At:</strong> {formatWatchDate(entry.watchedAt)}</p>
+                    </div>
                   </div>
-                  <div className="history-meta">
-                    <p><strong>Series:</strong> {entry.series || "-"}</p>
-                    <p><strong>Episode:</strong> {entry.episode || "-"}</p>
-                    <p><strong>Moment:</strong> {entry.progress || "-"}</p>
-                    <p><strong>Watched At:</strong> {formatWatchDate(entry.watchedAt)}</p>
-                  </div>
-                </article>
+                </button>
               ))
             )}
           </section>

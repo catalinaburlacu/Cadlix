@@ -7,6 +7,7 @@ import Login from "./ui/pages/login/Login";
 import Subscriptions from "./ui/pages/subscriptions/Subscriptions";
 import Payment from "./ui/pages/payment/Payment";
 import History from "./ui/pages/history/History.jsx";
+import VideoPlayer from "./ui/pages/video/VideoPlayer.jsx";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
 function App() {
@@ -58,6 +59,14 @@ function App() {
         element={
           <ProtectedRoute>
             <History />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/video/:id"
+        element={
+          <ProtectedRoute>
+            <VideoPlayer />
           </ProtectedRoute>
         }
       />
