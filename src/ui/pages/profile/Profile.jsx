@@ -9,7 +9,6 @@ import { ANIME_GENRES, ANIME_TYPES, MOCK_MEDIA_LIBRARY, MOCK_VIDEOS, SORT_OPTION
 import PropTypes from 'prop-types';
 import "./Profile.css";
 
-// Tab configuration - defined outside component to prevent recreation
 const TABS = [
   { id: "watching", label: "Watching" },
   { id: "planned", label: "Planned" },
@@ -18,7 +17,6 @@ const TABS = [
   { id: "favorites", label: "Favorites" }
 ];
 
-// Memoized StatCard to prevent unnecessary re-renders
 const StatCard = memo(function StatCard({ value, label, icon, highlight }) {
   return (
     <div className={`stat-card ${highlight ? "highlight" : ""}`}>
@@ -71,7 +69,6 @@ export default function Profile() {
   const profileAbout = profileSettings.about || "";
   const visibleAvatar = avatarUrl || user?.avatar || "https://via.placeholder.com/120?text=Avatar";
 
-  // Memoized stats data to prevent recreation on every render
   const statsData = useMemo(() => {
     if (!user) return [];
     return [
@@ -86,12 +83,10 @@ export default function Profile() {
     ];
   }, [user]);
 
-  // Memoized tab change handler
   const handleTabChange = React.useCallback((tabId) => {
     setActiveTab(tabId);
   }, []);
 
-  // Handle logout
   const handleLogout = React.useCallback(async () => {
     setIsLoading(true);
     try {
@@ -312,7 +307,6 @@ export default function Profile() {
     return list;
   }, [activeTab, searchQuery, selectedType, selectedGenre, selectedSort, watchList]);
 
-  // Show loading state while user data loads
   if (!user) {
     return (
       <div className="profile-page">
@@ -335,7 +329,8 @@ export default function Profile() {
   return (
     <div className="profile-page">
       <div className="profile-container">
-        {/* Navigation Bar */}
+        
+
         <nav className="profile-nav" aria-label="Profile navigation">
           <Button 
             variant="ghost" 
@@ -379,7 +374,8 @@ export default function Profile() {
           </div>
         </nav>
 
-        {/* Profile Header */}
+        
+
         <header className="profile-header">
           <div className="profile-header-left">
             <div className="avatar-container">
@@ -612,7 +608,8 @@ export default function Profile() {
           </section>
         )}
 
-        {/* Stats Grid */}
+        
+
         <section className="stats-section" aria-labelledby="stats-heading">
           <h2 id="stats-heading" className="sr-only">User Statistics</h2>
           <div className="stats-grid">
@@ -628,7 +625,8 @@ export default function Profile() {
           </div>
         </section>
 
-        {/* Tabs */}
+       
+
         <nav className="tabs-container" aria-label="Content tabs">
           <div className="tabs" role="tablist">
             {TABS.map((tab) => (
@@ -647,7 +645,8 @@ export default function Profile() {
           </div>
         </nav>
 
-        {/* Search and Filters */}
+        
+
         <div className="filters-bar">
           <div className="search-container">
             <i className="bx bx-search search-icon" aria-hidden="true"></i>
@@ -703,7 +702,8 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Content Panel */}
+        
+        
         <div 
           className="content-panel"
           role="tabpanel"
