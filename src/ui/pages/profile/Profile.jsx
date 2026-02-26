@@ -110,6 +110,7 @@ export default function Profile() {
         return;
       }
 
+      
       setAvatarFileName(file.name);
       setIsAvatarProcessing(true);
 
