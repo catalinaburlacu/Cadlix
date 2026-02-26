@@ -170,6 +170,11 @@
   border-radius: 12px;
   overflow: hidden;
   animation: mediaFadeIn 300ms ease;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
 }
 
 .media-card-image {

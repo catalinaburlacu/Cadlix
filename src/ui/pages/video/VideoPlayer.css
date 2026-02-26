@@ -1,0 +1,88 @@
+.video-player-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a153f, #121a55);
+  color: #fff;
+  padding: 24px;
+}
+
+.video-player-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.video-back-btn {
+  width: fit-content;
+  border: 1px solid rgba(52, 237, 243, 0.5);
+  background: rgba(52, 237, 243, 0.12);
+  color: #34edf3;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.video-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.video-header p {
+  margin: 6px 0 0;
+  color: #b8c2ff;
+}
+
+.video-stage {
+  border: 1px solid rgba(146, 1, 203, 0.4);
+  background: rgba(20, 26, 79, 0.8);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.video-element {
+  width: 100%;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-list-panel {
+  border: 1px solid rgba(146, 1, 203, 0.35);
+  border-radius: 14px;
+  background: rgba(20, 26, 79, 0.75);
+  padding: 16px;
+}
+
+.video-list-panel h2 {
+  margin: 0 0 12px;
+}
+
+.video-list-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.video-list-controls select,
+.video-list-controls button {
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(52, 237, 243, 0.5);
+  background: rgba(52, 237, 243, 0.12);
+  color: #fff;
+  padding: 0 12px;
+}
+
+.video-list-controls button {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.video-list-panel p {
+  margin: 12px 0 0;
+  color: #c7cffd;
+  font-size: 0.9rem;
+}

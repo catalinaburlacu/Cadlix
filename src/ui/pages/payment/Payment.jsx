@@ -4,6 +4,16 @@ import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
 import "./Payment.css";
 import { useUser } from "../../../context/useUser.js";
 
+const ACCEPTED_ISSUERS = [
+  { name: "ING Bank", icon: "ING" },
+  { name: "Raiffeisen Bank", icon: "RIF" },
+  { name: "CEC Bank", icon: "CEC" },
+  { name: "BRD", icon: "BRD" },
+  { name: "Banca Transilvania", icon: "BT" },
+  { name: "BCR", icon: "BCR" },
+  { name: "Revolut", icon: "REV" },
+];
+
 export default function Payment() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -274,9 +284,6 @@ export default function Payment() {
               }}
             />
             {errors.cardNumber ? <span className="field-error">{errors.cardNumber}</span> : null}
-            {!errors.cardNumber && detectedScheme ? (
-              <span className="field-info">Detected: {detectedScheme.name}</span>
-            ) : null}
           </label>
 
           <div className="split">
@@ -316,6 +323,18 @@ export default function Payment() {
               />
               {errors.cvv ? <span className="field-error">{errors.cvv}</span> : null}
             </label>
+          </div>
+
+          <div className="accepted-payments" aria-label="Accepted payment providers">
+            <p className="accepted-title">Banci acceptate</p>
+            <div className="accepted-issuer-list">
+              {ACCEPTED_ISSUERS.map((issuer) => (
+                <span key={issuer.name} className="accepted-chip" title={issuer.name}>
+                  <span className="accepted-chip-icon" aria-hidden="true">{issuer.icon}</span>
+                  <span className="accepted-chip-text">{issuer.name}</span>
+                </span>
+              ))}
+            </div>
           </div>
 
           <input

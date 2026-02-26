@@ -534,6 +534,10 @@
   overflow: hidden;
   transition: all 0.2s ease;
   cursor: pointer;
+  color: inherit;
+  text-align: left;
+  font-family: inherit;
+  padding: 0;
 }
 
 .content-card:hover {
