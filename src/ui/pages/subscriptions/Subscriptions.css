@@ -5,7 +5,6 @@
   padding: 40px 20px;
 }
 
-/* Pricing table */
 .pricing-table {
   display: flex;
   justify-content: center;
@@ -33,7 +32,6 @@
   transform: scale(1.04);
 }
 
-/* Flip reveal: hide price, show button on hover */
 .pricing-option:hover .front {
   opacity: 0;
   visibility: hidden;
@@ -44,7 +42,6 @@
   visibility: visible;
 }
 
-/* Tier accent colors */
 .pricing-option.basic    { border-top: 5px solid var(--color-accent-primary-light); }
 .pricing-option.standard { border-top: 5px solid var(--color-accent-primary); }
 .pricing-option.premium  {
@@ -55,7 +52,6 @@
   transform: scale(1.09);
 }
 
-/* Hover text color per tier */
 .pricing-option.basic:hover .plan-name,
 .pricing-option.basic:hover .price-display {
   color: var(--color-accent-primary-light);
@@ -71,7 +67,6 @@
   color: var(--color-accent-primary-dark);
 }
 
-/* Plan button per tier */
 .pricing-option.basic    .plan-btn { background: var(--color-accent-primary-light); }
 .pricing-option.basic    .plan-btn:hover { background: var(--color-accent-primary); }
 
@@ -102,7 +97,6 @@ hr {
   margin: 14px 0;
 }
 
-/* Price flip area */
 .price {
   position: relative;
   min-height: 60px;
@@ -156,7 +150,6 @@ hr {
   transform: translateY(-2px);
 }
 
-/* Features list */
 .features {
   margin-top: 18px;
   text-align: left;
@@ -195,7 +188,6 @@ hr {
   font-weight: 600;
 }
 
-/* Responsive */
 @media screen and (max-width: 1024px) {
   .pricing-option {
     width: 280px;
