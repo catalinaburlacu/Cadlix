@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import "./Subscriptions.css";
@@ -6,6 +6,83 @@ import "./Subscriptions.css";
 export default function Subscriptions() {
   const navigate = useNavigate();
   const { updateUser } = useUser();
+  const [expandedPlan, setExpandedPlan] = useState(null);
+
+  const plans = [
+    {
+      id: "genin",
+      name: "Genin",
+      subtitle: "Plan GRATIS",
+      priceLabel: "FREE",
+      priceValue: "$0",
+      cta: "Get Started",
+      onSelect: () => {
+        try {
+          updateUser({ plan: "Genin" });
+        } catch (error) {
+          console.error("Failed to update user plan:", error);
+        }
+        navigate("/profile");
+      },
+      features: [
+        "Acces la o parte din catalog (filme/anime selectate)",
+        "Calitate video 480p - 720p",
+        "Reclame inainte si in timpul vizionarii",
+        "1 dispozitiv conectat",
+        "Subtitrari standard (RO/EN)",
+        "Fara descarcare offline",
+        "Fara episoade noi imediat la lansare",
+        "Fara skip intro automat",
+      ],
+    },
+    {
+      id: "chunin",
+      name: "Chunin",
+      subtitle: "Plan MEDIU",
+      priceLabel: "399",
+      priceValue: "$",
+      cta: "Upgrade Now",
+      onSelect: () => navigate("/payment", { state: { plan: "Chunin", price: 399 } }),
+      features: [
+        "Acces complet la catalog (filme, seriale, anime)",
+        "Calitate Full HD (1080p)",
+        "Reclame reduse sau eliminate",
+        "2 dispozitive simultan",
+        "Episoade noi disponibile rapid dupa lansare",
+        "Skip intro",
+        "Creare liste personalizate",
+        "Istoric de vizionare salvat",
+        "Fara 4K",
+        "Fara continut exclusiv",
+      ],
+    },
+    {
+      id: "hokage",
+      name: "Hokage",
+      subtitle: "Plan PREMIUM",
+      priceLabel: "999",
+      priceValue: "$",
+      cta: "Become Hokage",
+      onSelect: () => navigate("/payment", { state: { plan: "Hokage", price: 999 } }),
+      features: [
+        "Tot ce e in Plus",
+        "4K Ultra HD",
+        "Fara reclame",
+        "4 dispozitive simultan",
+        "Descarcare offline",
+        "Acces anticipat la episoade (early access)",
+        "Continut exclusiv (filme/anime doar pentru premium)",
+        "Profiluri multiple (ex: Familie, Kids, Anime)",
+        "Avataruri personalizate (anime-style)",
+        "Badges speciale pe profil",
+        "Suport prioritar",
+      ],
+    },
+  ];
+
+  const toggleDetails = (planId) => {
+    setExpandedPlan((current) => (current === planId ? null : planId));
+  };
 
   return (
     <div className="subscriptions-container">
@@ -28,119 +105,53 @@ export default function Subscriptions() {
       <h1 className="demo-title">Choose Your Plan</h1>
 
       <div className="pricing-table">
-        <div className="pricing-option genin">
-          <h1>Genin</h1>
-          <p className="subtitle">Plan GRATIS</p>
-          <hr />
-          <div className="price">
-            <div className="front">
-              <span className="price">
-                FREE <b>$0</b>
-              </span>
-            </div>
-            <div className="back">
-              <button
-                className="button"
-                onClick={() => {
-                  try {
-                    updateUser({ plan: "Genin" });
-                  } catch (error) {
-                    console.error("Failed to update user plan:", error);
-                  }
-                  navigate("/profile");
-                }}
-              >
-                Get Started
-              </button>
-            </div>
-          </div>
-          <div className="features">
-            <h3 className="features-title">Ce include:</h3>
-            <ul className="features-list">
-              <li>Acces la o parte din catalog (filme/anime selectate)</li>
-              <li>Calitate video 480p - 720p</li>
-              <li>Reclame inainte si in timpul vizionarii</li>
-              <li>1 dispozitiv conectat</li>
-              <li>Subtitrari standard (RO/EN)</li>
-              <li>Fara descarcare offline</li>
-              <li>Fara episoade noi imediat la lansare</li>
-              <li>Fara skip intro automat</li>
-            </ul>
-          </div>
-        </div>
+        {plans.map((plan) => {
+          const isExpanded = expandedPlan === plan.id;
 
-        <div className="pricing-option chunin">
-          <h1>Chunin</h1>
-          <p className="subtitle">Plan MEDIU</p>
-          <hr />
-          <div className="price">
-            <div className="front">
-              <span className="price">
-                399 <b>$</b>
-              </span>
-            </div>
-            <div className="back">
-              <button
-                className="button"
-                onClick={() => navigate('/payment', { state: { plan: 'Chunin', price: 399 } })}
-              >
-                Upgrade Now
-              </button>
-            </div>
-          </div>
-          <div className="features">
-            <h3 className="features-title">Ce include:</h3>
-            <ul className="features-list">
-              <li>Acces complet la catalog (filme, seriale, anime)</li>
-              <li>Calitate Full HD (1080p)</li>
-              <li>Reclame reduse sau eliminate</li>
-              <li>2 dispozitive simultan</li>
-              <li>Episoade noi disponibile rapid dupa lansare</li>
-              <li>Skip intro</li>
-              <li>Creare liste personalizate</li>
-              <li>Istoric de vizionare salvat</li>
-              <li>Fara 4K</li>
-              <li>Fara continut exclusiv</li>
-            </ul>
-          </div>
-        </div>
+          return (
+            <div key={plan.id} className={`pricing-option ${plan.id}${isExpanded ? " expanded" : ""}`}>
+              <h1>{plan.name}</h1>
+              <p className="subtitle">{plan.subtitle}</p>
+              <hr />
 
-        <div className="pricing-option hokage">
-          <h1>Hokage</h1>
-          <p className="subtitle">Plan PREMIUM</p>
-          <hr />
-          <div className="price">
-            <div className="front">
-              <span className="price">
-                999 <b>$</b>
-              </span>
-            </div>
-            <div className="back">
-              <button
-                className="button"
-                onClick={() => navigate('/payment', { state: { plan: 'Hokage', price: 999 } })}
-              >
-                Become Hokage
+              <div className="price">
+                <div className="front">
+                  <span className="price">
+                    {plan.priceLabel} <b>{plan.priceValue}</b>
+                  </span>
+                </div>
+              </div>
+
+              <button className="button" onClick={plan.onSelect}>
+                {plan.cta}
               </button>
+
+              <button
+                className={`details-toggle${isExpanded ? " open" : ""}`}
+                onClick={() => toggleDetails(plan.id)}
+                aria-expanded={isExpanded}
+                aria-controls={`plan-details-${plan.id}`}
+              >
+                <span>Detalii plan</span>
+                <i className="material-icons" aria-hidden="true">keyboard_arrow_down</i>
+              </button>
+
+              <div
+                id={`plan-details-${plan.id}`}
+                className={`features-wrapper${isExpanded ? " open" : ""}`}
+              >
+                <div className="features">
+                  <h3 className="features-title">Ce include:</h3>
+                  <ul className="features-list">
+                    {plan.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="features">
-            <h3 className="features-title">Ce include:</h3>
-            <ul className="features-list">
-              <li>Tot ce e in Plus</li>
-              <li>4K Ultra HD</li>
-              <li>Fara reclame</li>
-              <li>4 dispozitive simultan</li>
-              <li>Descarcare offline</li>
-              <li>Acces anticipat la episoade (early access)</li>
-              <li>Continut exclusiv (filme/anime doar pentru premium)</li>
-              <li>Profiluri multiple (ex: Familie, Kids, Anime)</li>
-              <li>Avataruri personalizate (anime-style)</li>
-              <li>Badges speciale pe profil</li>
-              <li>Suport prioritar</li>
-            </ul>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );
