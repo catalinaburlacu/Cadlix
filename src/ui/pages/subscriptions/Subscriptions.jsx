@@ -12,7 +12,7 @@ const PLANS = [
     priceValue: "$0",
     buttonLabel: "Get Started",
     onClick: (navigate, updateUser) => {
-      try { updateUser({ plan: "Basic" }); } catch {}
+      try { updateUser({ plan: "Basic" }); } catch { }
       navigate("/profile");
     },
     features: [

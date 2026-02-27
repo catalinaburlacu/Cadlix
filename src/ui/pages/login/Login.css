@@ -191,9 +191,9 @@
 /* Login Section - Slides up to reveal signup */
 .login {
   height: 480px;
-  background: #F5F7FA;
+  background: #f5f7fa;
   border-top: 3px solid;
-  border-image: linear-gradient(to right, #FFC837, #FF3D6E) 1;
+  border-image: linear-gradient(to right, #ffc837, #ff3d6e) 1;
   border-radius: 16px 16px 0 0;
   transform: translateY(-110px);
   transition: transform 0.8s ease-in-out;

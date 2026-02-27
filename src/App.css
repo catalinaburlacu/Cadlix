@@ -18,15 +18,10 @@ body,
 }
 
 .app {
-    background: linear-gradient(
-    135deg,
-    var(--color-bg-dark) 0%,
-    var(--color-bg-gradient-2) 100%
-  );
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-gradient-2) 100%);
 }
 
 :root {
-  /* Dark Blue Backgrounds */
   --color-bg-dark: #0d1b2a;
   --color-bg-primary: #1b2838;
   --color-bg-secondary: #243447;
@@ -34,59 +29,21 @@ body,
   --color-bg-hover: #2a3f54;
   --color-bg-gradient-2: #ff3d6e26;
 
-  /* Accent Colors */
   --color-accent-primary: #ff3d6e;
   --color-accent-primary-dark: #4f46e5;
   --color-accent-primary-light: #818cf8;
 
   --color-accent-blue: #64b5f6;
 
-  /* Semantic Status Colors */
   --color-status-online: #2ecc71;
   --color-status-offline: #95a5a6;
   --color-status-away: #f39c12;
   --color-status-busy: #e74c3c;
 
-  /* Text Colors */
   --color-text-primary: #ffffff;
   --color-text-secondary: rgba(255, 255, 255, 0.87);
   --color-text-muted: rgba(255, 255, 255, 0.6);
 
-  /* Apply Colors */
   color: var(--color-text-secondary);
   background-color: var(--color-bg-dark);
-}
-
-a {
-  font-weight: 500;
-  color: var(--color-accent-primary);
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: var(--color-accent-primary-light);
-}
-
-button {
-  border-radius: 8px;
-  border: 2px solid var(--color-accent-primary);
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: transparent;
-  color: var(--color-accent-primary);
-  cursor: pointer;
-  transition: all 0.25s;
-}
-
-button:hover {
-  background-color: var(--color-accent-primary);
-  color: white;
-  transform: translateY(-2px);
-}
-
-button:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
-  outline-offset: 2px;
 }
