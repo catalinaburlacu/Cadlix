@@ -3,6 +3,7 @@ import { useNavigate, useLocation, NavLink } from 'react-router-dom'
 import { useUser } from '../../context/useUser.js'
 import { useToast } from '../../hooks/useToast.js'
 import '../../ui/pages/home/Home.css'
+import Button from '../common/Button.jsx'
 
 const SIDEBAR_STORAGE_KEY = 'cadlix_sidebar_state'
 
@@ -163,7 +164,7 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
               </button>
               {navbarContent}
             </div>
-            {user && (
+            {user ? (
               <div className='navbar-right'>
                 <button
                   className='navbar-user'
@@ -187,6 +188,11 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
                     <span className='user-plan'>{user.plan || 'Basic'}</span>
                   </div>
                 </button>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', gap: '12px'}}>
+                <Button variant="primary" size="small" >Login</Button>
+                <Button variant="primary" size="small" >Register</Button>
               </div>
             )}
           </div>
