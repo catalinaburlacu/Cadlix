@@ -37,7 +37,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-primary);
+
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 32px;
@@ -126,25 +126,37 @@
 }
 
 .plan-badge {
-  background: var(--color-accent-primary);
-  color: white;
+  background: transparent;
+  color: #ff3d6e;
   padding: 8px 16px;
   border-radius: 25px;
   font-size: 0.875rem;
   font-weight: 600;
   flex-shrink: 0;
-  border: 2px solid transparent;
+  border: 2px solid #ff3d6e;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .plan-badge:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: #ff3d6e;
+  color: white;
 }
 
 .plan-badge:active {
   transform: translateY(0);
+}
+
+.plan-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 25px rgba(255, 80, 100, 0.35);
+}
+
+.plan-badge:active {
+  transform: translateY(0);
+  background: #ff3d6e;
 }
 
 .user-email {
@@ -419,7 +431,7 @@
 /* Content Panel - Optimized */
 .content-panel {
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-primary);
+  border: none;
   border-radius: 16px;
   padding: 32px;
   min-height: 300px;

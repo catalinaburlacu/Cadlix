@@ -11,26 +11,26 @@ const exploreCategories = [
     items: ["Shonen", "Seinen", "Fantasy", "Romance", "Slice of Life", "Sci-Fi"],
   },
   {
-    id: "filme",
-    title: "Filme",
+    id: "films",
+    title: "Films",
     icon: "bx-movie-play",
-    items: ["Actiune", "Drama", "Comedie", "Thriller", "Animatie", "Documentar"],
+    items: ["Action", "Drama", "Comedy", "Thriller", "Animation", "Documentary"],
   },
   {
-    id: "seriale",
-    title: "Seriale",
+    id: "serials",
+    title: "Series",
     icon: "bx-camera-movie",
     items: ["Crime", "Mystery", "Adventure", "Comedy", "Historical", "Family"],
   },
   {
-    id: "tara",
-    title: "Dupa tara",
+    id: "country",
+    title: "By Country",
     icon: "bx-world",
-    items: ["Japonia", "SUA", "Coreea", "Franta", "Spania", "UK"],
+    items: ["Japan", "USA", "South Korea", "France", "Spain", "UK"],
   },
   {
     id: "studio",
-    title: "Dupa studiouri producatoare",
+    title: "By Studio",
     icon: "bx-buildings",
     items: ["MAPPA", "Ufotable", "Bones", "Madhouse", "A24", "Warner Bros."],
   },
@@ -70,8 +70,8 @@ const carouselRows = [
     ],
   },
   {
-    id: "filme-action",
-    title: "Filme - Action",
+    id: "films-action",
+    title: "Films - Action",
     items: [
       { title: "Mad Max Fury Road", meta: "Film" },
       { title: "John Wick", meta: "Film" },
@@ -86,8 +86,8 @@ const carouselRows = [
     ],
   },
   {
-    id: "filme-drama",
-    title: "Filme - Drama",
+    id: "films-drama",
+    title: "Films - Drama",
     items: [
       { title: "Interstellar", meta: "Film" },
       { title: "The Godfather", meta: "Film" },
@@ -102,35 +102,35 @@ const carouselRows = [
     ],
   },
   {
-    id: "seriale-crime",
-    title: "Seriale - Crime",
+    id: "series-crime",
+    title: "Series - Crime",
     items: [
-      { title: "Breaking Bad", meta: "Serial" },
-      { title: "Mindhunter", meta: "Serial" },
-      { title: "True Detective", meta: "Serial" },
-      { title: "Narcos", meta: "Serial" },
-      { title: "Ozark", meta: "Serial" },
-      { title: "Peaky Blinders", meta: "Serial" },
-      { title: "Better Call Saul", meta: "Serial" },
-      { title: "Money Heist", meta: "Serial" },
-      { title: "The Sopranos", meta: "Serial" },
-      { title: "Fargo", meta: "Serial" },
+      { title: "Breaking Bad", meta: "Series" },
+      { title: "Mindhunter", meta: "Series" },
+      { title: "True Detective", meta: "Series" },
+      { title: "Narcos", meta: "Series" },
+      { title: "Ozark", meta: "Series" },
+      { title: "Peaky Blinders", meta: "Series" },
+      { title: "Better Call Saul", meta: "Series" },
+      { title: "Money Heist", meta: "Series" },
+      { title: "The Sopranos", meta: "Series" },
+      { title: "Fargo", meta: "Series" },
     ],
   },
   {
-    id: "seriale-scifi",
-    title: "Seriale - Sci-Fi",
+    id: "series-scifi",
+    title: "Series - Sci-Fi",
     items: [
-      { title: "Dark", meta: "Serial" },
-      { title: "Stranger Things", meta: "Serial" },
-      { title: "The Expanse", meta: "Serial" },
-      { title: "Severance", meta: "Serial" },
-      { title: "Silo", meta: "Serial" },
-      { title: "Westworld", meta: "Serial" },
-      { title: "Black Mirror", meta: "Serial" },
-      { title: "Foundation", meta: "Serial" },
-      { title: "Lost in Space", meta: "Serial" },
-      { title: "Altered Carbon", meta: "Serial" },
+      { title: "Dark", meta: "Series" },
+      { title: "Stranger Things", meta: "Series" },
+      { title: "The Expanse", meta: "Series" },
+      { title: "Severance", meta: "Series" },
+      { title: "Silo", meta: "Series" },
+      { title: "Westworld", meta: "Series" },
+      { title: "Black Mirror", meta: "Series" },
+      { title: "Foundation", meta: "Series" },
+      { title: "Lost in Space", meta: "Series" },
+      { title: "Altered Carbon", meta: "Series" },
     ],
   },
 ];
@@ -182,8 +182,8 @@ export default function Explore() {
     >
       <div className="page-content explore-content">
         <section className="explore-intro">
-          <h2>Cauta rapid continutul preferat</h2>
-          <p>Toate titlurile sunt impartite pe categorii pentru filtrare rapida si organizare clara.</p>
+          <h2>Quickly search for your favorite content</h2>
+          <p>Browse titles by category for faster discovery and better organization.</p>
         </section>
 
         <section className="explore-categories-grid">
