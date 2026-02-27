@@ -1,7 +1,6 @@
 /* Profile Page - Optimized responsive styles */
 .profile-page {
   min-height: 100vh;
-  background-color: var(--color-bg-dark);
   color: var(--color-text-primary);
   padding: 24px;
   contain: layout style;

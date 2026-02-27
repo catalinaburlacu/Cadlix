@@ -17,6 +17,14 @@ body,
   height: 100%;
 }
 
+.app {
+    background: linear-gradient(
+    135deg,
+    var(--color-bg-dark) 0%,
+    var(--color-bg-gradient-2) 100%
+  );
+}
+
 :root {
   /* Dark Blue Backgrounds */
   --color-bg-dark: #0d1b2a;
@@ -24,9 +32,10 @@ body,
   --color-bg-secondary: #243447;
   --color-bg-card: #1e2d3d;
   --color-bg-hover: #2a3f54;
+  --color-bg-gradient-2: #ff3d6e26;
 
   /* Accent Colors */
-  --color-accent-primary: #6366f1;
+  --color-accent-primary: #ff3d6e;
   --color-accent-primary-dark: #4f46e5;
   --color-accent-primary-light: #818cf8;
 

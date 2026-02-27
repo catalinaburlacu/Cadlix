@@ -2,12 +2,6 @@
 .home-page {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    var(--color-bg-dark) 0%,
-    rgba(255, 200, 55, 0.15) 50%,
-    rgba(255, 61, 110, 0.15) 100%
-  );
   color: var(--color-text-primary);
   overflow-x: hidden;
 }

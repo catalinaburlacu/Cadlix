@@ -2,7 +2,6 @@
 
 .payment-page {
   min-height: 100vh;
-  background: var(--color-bg-dark);
   display: flex;
   flex-direction: column;
   align-items: center;

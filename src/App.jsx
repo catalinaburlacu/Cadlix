@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import './styles/modern-base.css'
 import './App.css'
@@ -15,24 +15,24 @@ const History = lazy(() => import('@pages/history/History'))
 // Eager load critical components
 import ProtectedRoute from '@components/common/ProtectedRoute'
 import PageLoader from '@components/common/PageLoader'
-import OfflineFallback from '@components/common/OfflineFallback'
 
 // Route configuration for better maintainability
 const routes = {
   public: [
-    { path: '/login', element: Login }
+    { path: '/home', element: Home },
+    { path: '/login', element: Login },
+    { path: '/explore', element: Explore },
+    { path: '/history', element: History }
   ],
   protected: [
-    { path: '/home', element: Home },
-    { path: '/explore', element: Explore },
     { path: '/profile', element: Profile },
     { path: '/subscriptions', element: Subscriptions },
-    { path: '/payment', element: Payment },
-    { path: '/history', element: History }
+    { path: '/payment', element: Payment }
   ]
 }
 
 function App() {
+  const [isLogged, setLogged] = useState(false)
   return (
     <div className="app">
       {/* Skip to main content link for accessibility */}
@@ -61,8 +61,8 @@ function App() {
           ))}
 
           {/* Redirects */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </Suspense>
     </div>
