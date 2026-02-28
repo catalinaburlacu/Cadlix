@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
 import "./Payment.css";
 import { useUser } from "../../../context/useUser.js";
 
@@ -16,7 +17,7 @@ const ACCEPTED_ISSUERS = [
 export default function Payment() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { plan = "Genin", price = 0 } = location.state || {};
+  const { plan = "Basic", price = 0 } = location.state || {};
 
   const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -27,7 +28,7 @@ export default function Payment() {
   const [errors, setErrors] = useState({});
   const { updateUser } = useUser();
 
-  const cleanPlan = (plan || "Genin")
+  const cleanPlan = (plan || "Basic")
     .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
     .trim();
 
@@ -171,13 +172,26 @@ export default function Payment() {
     }, 1200);
   }
 
+
+  const paymentSubnav = (
+    <nav className="page-subnav" aria-label="Account navigation">
+      <NavLink to="/profile" end className={({ isActive }) => `page-subnav-link${isActive ? ' active' : ''}`}>
+        Profile
+      </NavLink>
+      <NavLink to="/subscriptions" className={({ isActive }) => `page-subnav-link${isActive ? ' active' : ''}`}>
+        Subscriptions
+      </NavLink>
+    </nav>
+  );
+
   if (paid) {
     return (
-      <div className="payment-page">
+      <SidebarLayout navbarContent={paymentSubnav}>
+        <div className="payment-page">
         <div className="payment-header">
-          <button className="payment-back-btn" onClick={() => navigate("/profile")}>
-            <i className="bx bx-arrow-back payment-back-icon" aria-hidden="true"></i>
-            <span className="payment-back-label">Back</span>
+          <button className="back-btn" onClick={() => navigate("/profile")}>
+            <i className="bx bx-arrow-back" aria-hidden="true"></i>
+            Back
           </button>
         </div>
 
@@ -210,15 +224,17 @@ export default function Payment() {
           </div>
         </div>
       </div>
+      </SidebarLayout>
     );
   }
 
   return (
-    <div className="payment-page">
+    <SidebarLayout navbarContent={paymentSubnav}>
+      <div className="payment-page">
       <div className="payment-header">
-        <button className="payment-back-btn" onClick={() => navigate("/profile")}>
-          <i className="bx bx-arrow-back payment-back-icon" aria-hidden="true"></i>
-          <span className="payment-back-label">Back</span>
+        <button className="back-btn" onClick={() => navigate("/subscriptions")}>
+          <i className="bx bx-arrow-back" aria-hidden="true"></i>
+          Back
         </button>
       </div>
 
@@ -326,5 +342,6 @@ export default function Payment() {
         </form>
       </section>
     </div>
+    </SidebarLayout>
   );
 }

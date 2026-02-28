@@ -1,8 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useNavigate, NavLink, useLocation } from "react-router-dom";
-import { useUser } from "../../../context/useUser.js";
-import { useToast } from "../../../hooks/useToast.js";
-import { MOCK_VIDEOS } from "../../../utils/constants.js";
+import { useState, useEffect } from "react";
+import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
 import "../home/Home.css";
 import "./Explore.css";
 
@@ -14,26 +11,26 @@ const exploreCategories = [
     items: ["Shonen", "Seinen", "Fantasy", "Romance", "Slice of Life", "Sci-Fi"],
   },
   {
-    id: "filme",
-    title: "Filme",
+    id: "films",
+    title: "Films",
     icon: "bx-movie-play",
-    items: ["Actiune", "Drama", "Comedie", "Thriller", "Animatie", "Documentar"],
+    items: ["Action", "Drama", "Comedy", "Thriller", "Animation", "Documentary"],
   },
   {
-    id: "seriale",
-    title: "Seriale",
+    id: "serials",
+    title: "Series",
     icon: "bx-camera-movie",
     items: ["Crime", "Mystery", "Adventure", "Comedy", "Historical", "Family"],
   },
   {
-    id: "tara",
-    title: "Dupa tara",
+    id: "country",
+    title: "By Country",
     icon: "bx-world",
-    items: ["Japonia", "SUA", "Coreea", "Franta", "Spania", "UK"],
+    items: ["Japan", "USA", "South Korea", "France", "Spain", "UK"],
   },
   {
     id: "studio",
-    title: "Dupa studiouri producatoare",
+    title: "By Studio",
     icon: "bx-buildings",
     items: ["MAPPA", "Ufotable", "Bones", "Madhouse", "A24", "Warner Bros."],
   },
@@ -73,8 +70,8 @@ const carouselRows = [
     ],
   },
   {
-    id: "filme-action",
-    title: "Filme - Action",
+    id: "films-action",
+    title: "Films - Action",
     items: [
       { title: "Mad Max Fury Road", meta: "Film" },
       { title: "John Wick", meta: "Film" },
@@ -89,8 +86,8 @@ const carouselRows = [
     ],
   },
   {
-    id: "filme-drama",
-    title: "Filme - Drama",
+    id: "films-drama",
+    title: "Films - Drama",
     items: [
       { title: "Interstellar", meta: "Film" },
       { title: "The Godfather", meta: "Film" },
@@ -105,343 +102,138 @@ const carouselRows = [
     ],
   },
   {
-    id: "seriale-crime",
-    title: "Seriale - Crime",
+    id: "series-crime",
+    title: "Series - Crime",
     items: [
-      { title: "Breaking Bad", meta: "Serial" },
-      { title: "Mindhunter", meta: "Serial" },
-      { title: "True Detective", meta: "Serial" },
-      { title: "Narcos", meta: "Serial" },
-      { title: "Ozark", meta: "Serial" },
-      { title: "Peaky Blinders", meta: "Serial" },
-      { title: "Better Call Saul", meta: "Serial" },
-      { title: "Money Heist", meta: "Serial" },
-      { title: "The Sopranos", meta: "Serial" },
-      { title: "Fargo", meta: "Serial" },
+      { title: "Breaking Bad", meta: "Series" },
+      { title: "Mindhunter", meta: "Series" },
+      { title: "True Detective", meta: "Series" },
+      { title: "Narcos", meta: "Series" },
+      { title: "Ozark", meta: "Series" },
+      { title: "Peaky Blinders", meta: "Series" },
+      { title: "Better Call Saul", meta: "Series" },
+      { title: "Money Heist", meta: "Series" },
+      { title: "The Sopranos", meta: "Series" },
+      { title: "Fargo", meta: "Series" },
     ],
   },
   {
-    id: "seriale-scifi",
-    title: "Seriale - Sci-Fi",
+    id: "series-scifi",
+    title: "Series - Sci-Fi",
     items: [
-      { title: "Dark", meta: "Serial" },
-      { title: "Stranger Things", meta: "Serial" },
-      { title: "The Expanse", meta: "Serial" },
-      { title: "Severance", meta: "Serial" },
-      { title: "Silo", meta: "Serial" },
-      { title: "Westworld", meta: "Serial" },
-      { title: "Black Mirror", meta: "Serial" },
-      { title: "Foundation", meta: "Serial" },
-      { title: "Lost in Space", meta: "Serial" },
-      { title: "Altered Carbon", meta: "Serial" },
+      { title: "Dark", meta: "Series" },
+      { title: "Stranger Things", meta: "Series" },
+      { title: "The Expanse", meta: "Series" },
+      { title: "Severance", meta: "Series" },
+      { title: "Silo", meta: "Series" },
+      { title: "Westworld", meta: "Series" },
+      { title: "Black Mirror", meta: "Series" },
+      { title: "Foundation", meta: "Series" },
+      { title: "Lost in Space", meta: "Series" },
+      { title: "Altered Carbon", meta: "Series" },
     ],
   },
 ];
 
+function getVisibleItems(items, start, count) {
+  return Array.from({ length: count }, (_, offset) => {
+    const index = (start + offset) % items.length;
+    return items[index];
+  });
+}
+
 export default function Explore() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { user, logout } = useUser();
-  const toast = useToast();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(() =>
     Object.fromEntries(carouselRows.map((row) => [row.id, 0]))
   );
 
-  const toggleSidebar = useCallback(() => {
-    setSidebarOpen((prev) => !prev);
-  }, []);
-
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      logout();
-      toast.success("Logged out successfully");
-      navigate("/login");
-    } catch {
-      toast.error("Logout failed. Please try again.");
-      setIsLoggingOut(false);
-    }
-  };
-
   useEffect(() => {
-    const intervalRefs = [];
-    const timeoutRefs = [];
+    const timeoutIds = [];
+    const intervalIds = [];
 
     carouselRows.forEach((row, rowIndex) => {
-      const startDelayMs = rowIndex * 2000;
-      const rotationMs = 8000 + rowIndex * 1200;
+      const startDelay = rowIndex * 2000;
+      const rotationInterval = 8000 + rowIndex * 1200;
       const stepSize = rowIndex % 2 === 0 ? 1 : 2;
+
       const timeoutId = setTimeout(() => {
         const intervalId = setInterval(() => {
           setCarouselIndex((prev) => ({
             ...prev,
             [row.id]: ((prev[row.id] ?? 0) + stepSize) % row.items.length,
           }));
-        }, rotationMs);
-        intervalRefs.push(intervalId);
-      }, startDelayMs);
+        }, rotationInterval);
+        intervalIds.push(intervalId);
+      }, startDelay);
 
-      timeoutRefs.push(timeoutId);
+      timeoutIds.push(timeoutId);
     });
 
     return () => {
-      timeoutRefs.forEach((id) => clearTimeout(id));
-      intervalRefs.forEach((id) => clearInterval(id));
+      timeoutIds.forEach(clearTimeout);
+      intervalIds.forEach(clearInterval);
     };
   }, []);
 
-  const mainNavItems = [
-    { id: "dashboard", label: "Dashboard", icon: "bx-grid-alt", path: "/home" },
-    { id: "explore", label: "Explore", icon: "bx-compass", path: "/explore" },
-    { id: "favorites", label: "Favorites", icon: "bx-heart", path: "#favorites" },
-    { id: "history", label: "History", icon: "bx-history", path: "/history" },
-  ];
-
-  const settingsNavItems = [
-    { id: "settings", label: "Settings", icon: "bx-cog", path: "#settings" },
-    { id: "help", label: "Help & Support", icon: "bx-help-circle", path: "#help" },
-  ];
-
-  const isActiveRoute = (path) => {
-    if (path.startsWith("#")) return false;
-    return location.pathname === path;
-  };
-
-  const renderNavItem = (item) => {
-    const className = `nav-item ${isActiveRoute(item.path) ? "active" : ""}`;
-
-    if (item.path.startsWith("#")) {
-      return (
-        <a href={item.path} role="menuitem" className={className} tabIndex={sidebarOpen ? 0 : -1}>
-          <div className="nav-icon-wrapper">
-            <i className={`bx ${item.icon}`}></i>
-          </div>
-          <span className="nav-label">{item.label}</span>
-          {isActiveRoute(item.path) && <div className="active-indicator"></div>}
-        </a>
-      );
-    }
-
-    return (
-      <NavLink to={item.path} role="menuitem" className={className} tabIndex={sidebarOpen ? 0 : -1}>
-        <div className="nav-icon-wrapper">
-          <i className={`bx ${item.icon}`}></i>
-        </div>
-        <span className="nav-label">{item.label}</span>
-        {isActiveRoute(item.path) && <div className="active-indicator"></div>}
-      </NavLink>
-    );
-  };
-
-  const getVisibleItems = (items, start, count) => {
-    return Array.from({ length: count }, (_, offset) => {
-      const index = (start + offset) % items.length;
-      return items[index];
-    });
-  };
-
-  const handleOpenVideo = useCallback(
-    (title) => {
-      const match = MOCK_VIDEOS.find((video) => video.title.toLowerCase() === title.toLowerCase());
-      if (!match) {
-        toast.info("This item has no mock video yet.");
-        return;
-      }
-      navigate(`/video/${match.id}`);
-    },
-    [navigate, toast]
-  );
-
   return (
-    <div className="home-page explore-page">
-      <div
-        className={`sidebar-backdrop ${sidebarOpen ? "visible" : ""}`}
-        onClick={() => setSidebarOpen(false)}
-        aria-hidden={!sidebarOpen}
-      />
+    <SidebarLayout
+      pageClass="explore-page"
+      navbarContent={<h1 className="explore-heading">Explore by Categories</h1>}
+    >
+      <div className="page-content explore-content">
+        <section className="explore-intro">
+          <h2>Quickly search for your favorite content</h2>
+          <p>Browse titles by category for faster discovery and better organization.</p>
+        </section>
 
-      <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`} aria-label="Main navigation" aria-expanded={sidebarOpen}>
-        <div className="sidebar-brand">
-          <div className="brand-icon">
-            <i className="bx bxs-videos"></i>
-          </div>
-          <span className="brand-text">Cadlix</span>
-          <button className="sidebar-toggle-btn" onClick={() => setSidebarOpen(false)} aria-label="Collapse sidebar">
-            <i className="bx bx-chevron-left"></i>
-          </button>
-        </div>
-
-        {user && (
-          <div className="sidebar-user">
-            <div className="user-avatar">
-              <img
-                src={user.avatar || "https://via.placeholder.com/40"}
-                alt={user.username}
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/40";
-                }}
-              />
-              <span className={`user-status status-${user.status?.toLowerCase() || "online"}`}></span>
-            </div>
-            <div className="user-info">
-              <span className="user-name">{user.username}</span>
-              <span className="user-role">{user.group || "Member"}</span>
-            </div>
-          </div>
-        )}
-
-        <nav className="sidebar-nav">
-          <div className="nav-section">
-            <span className="nav-section-title">Menu</span>
-            <ul className="nav-list" role="menubar">
-              {mainNavItems.map((item) => (
-                <li key={item.id} role="none">
-                  {renderNavItem(item)}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="nav-divider"></div>
-
-          <div className="nav-section">
-            <span className="nav-section-title">System</span>
-            <ul className="nav-list" role="menubar">
-              {settingsNavItems.map((item) => (
-                <li key={item.id} role="none">
-                  {renderNavItem(item)}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
-
-        <div className="sidebar-footer">
-          <button className="footer-action" onClick={() => navigate("/profile")} tabIndex={sidebarOpen ? 0 : -1}>
-            <div className="nav-icon-wrapper">
-              <i className="bx bx-user"></i>
-            </div>
-            <span className="nav-label">My Profile</span>
-          </button>
-
-          <button
-            className="footer-action logout"
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-            tabIndex={sidebarOpen ? 0 : -1}
-          >
-            <div className="nav-icon-wrapper">
-              <i className={`bx ${isLoggingOut ? "bx-loader-alt bx-spin" : "bx-log-out"}`}></i>
-            </div>
-            <span className="nav-label">{isLoggingOut ? "Logging out..." : "Logout"}</span>
-          </button>
-        </div>
-      </aside>
-
-      <main className={`main-content ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
-        <header className="navbar">
-          <div className="navbar-content">
-            <div className="navbar-left">
-              <button
-                className="menu-btn"
-                onClick={toggleSidebar}
-                aria-label={sidebarOpen ? "Close menu" : "Open menu"}
-                aria-expanded={sidebarOpen}
-              >
-                <i className="bx bx-menu"></i>
-              </button>
-              <h1 className="explore-heading">Explore by Categories</h1>
-            </div>
-          </div>
-        </header>
-
-        <div className="page-content explore-content">
-          <section className="explore-intro">
-            <h2>Cauta rapid continutul preferat</h2>
-            <p>Toate titlurile sunt impartite pe categorii pentru filtrare rapida si organizare clara.</p>
-          </section>
-
-          <section className="explore-categories-grid">
-            {exploreCategories.map((category) => (
-              <article key={category.id} className="explore-category-card" id={category.id}>
-                <div className="explore-card-head">
-                  <div className="explore-card-icon">
-                    <i className={`bx ${category.icon}`}></i>
-                  </div>
-                  <h3>{category.title}</h3>
+        <section className="explore-categories-grid">
+          {exploreCategories.map((category) => (
+            <article key={category.id} className="explore-category-card" id={category.id}>
+              <div className="explore-card-head">
+                <div className="explore-card-icon">
+                  <i className={`bx ${category.icon}`}></i>
                 </div>
-
-                <div className="explore-chip-list">
-                  {category.items.map((item) => (
-                    <button key={item} type="button" className="explore-chip">
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </section>
-
-          <section className="explore-carousel-section">
-            <article className="media-row">
-              <header className="media-row-header">
-                <h3>Mock Videos (click to open player)</h3>
-              </header>
-              <div className="media-row-track">
-                {MOCK_VIDEOS.map((item) => (
-                  <button
-                    key={`mock-video-${item.id}`}
-                    type="button"
-                    className="media-card"
-                    onClick={() => navigate(`/video/${item.id}`)}
-                  >
-                    <div className="media-card-image"></div>
-                    <div className="media-card-info">
-                      <h4>{item.title}</h4>
-                      <p>{item.category}</p>
-                    </div>
+                <h3>{category.title}</h3>
+              </div>
+              <div className="explore-chip-list">
+                {category.items.map((item) => (
+                  <button key={item} type="button" className="explore-chip">
+                    {item}
                   </button>
                 ))}
               </div>
             </article>
+          ))}
+        </section>
 
-            <div className="explore-carousel-list">
-              {carouselRows.map((row) => {
-                const start = carouselIndex[row.id] ?? 0;
-                const visibleItems = getVisibleItems(row.items, start, 4);
+        <section className="explore-carousel-section">
+          <div className="explore-carousel-list">
+            {carouselRows.map((row) => {
+              const start = carouselIndex[row.id] ?? 0;
+              const visibleItems = getVisibleItems(row.items, start, 4);
 
-                return (
-                  <article key={row.id} className="media-row">
-                    <header className="media-row-header">
-                      <h3>{row.title}</h3>
-                    </header>
-
-                    <div className="media-row-track">
-                      {visibleItems.map((item, idx) => (
-                        <button
-                          key={`${row.id}-${item.title}-${start}-${idx}`}
-                          type="button"
-                          className="media-card"
-                          onClick={() => handleOpenVideo(item.title)}
-                        >
-                          <div className="media-card-image"></div>
-                          <div className="media-card-info">
-                            <h4>{item.title}</h4>
-                            <p>{item.meta}</p>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
+              return (
+                <article key={row.id} className="media-row">
+                  <header className="media-row-header">
+                    <h3>{row.title}</h3>
+                  </header>
+                  <div className="media-row-track">
+                    {visibleItems.map((item, idx) => (
+                      <div key={`${row.id}-${item.title}-${start}-${idx}`} className="media-card">
+                        <div className="media-card-image"></div>
+                        <div className="media-card-info">
+                          <h4>{item.title}</h4>
+                          <p>{item.meta}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </SidebarLayout>
   );
 }

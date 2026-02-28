@@ -1,279 +1,252 @@
-@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,300italic,400italic,600,700,600italic,700italic");
-
-:root {
-  --dark-navy: #070f34;
-  --ceford-blue: #0313a6;
-  --purple: #9201cb;
-  --pink-magenta: #f715ab;
-  --cyan: #34edf3;
-  --light-bg: #f8f9ff;
-}
+/* ===========================
+   SUBSCRIPTIONS PAGE
+   =========================== */
 
 .subscriptions-container {
-  font-family: "Josefin Sans", sans-serif;
-  line-height: 1;
-  padding: 20px;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--dark-navy) 0%, var(--ceford-blue) 100%);
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: var(--color-text-primary);
 }
 
 .subscriptions-header {
   width: 100%;
-  max-width: 1200px;
-  margin-bottom: 30px;
+  max-width: 1100px;
+  margin-bottom: 24px;
 }
 
-.back-btn {
-  display: flex;
+.subscriptions-header .back-btn {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #34edf3;
-  border: 2px solid #34edf3;
-  padding: 10px 16px;
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
   cursor: pointer;
-  font-family: "Josefin Sans", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  text-decoration: none;
+  padding: 8px 0;
+  transition: color 0.2s ease;
 }
 
-.back-btn:hover {
-  background: #34edf3;
-  color: #070f34;
-  transform: translateX(-4px);
-}
-
-.back-btn i {
-  font-size: 20px;
+.subscriptions-header .back-btn:hover {
+  color: var(--color-text-primary);
 }
 
 .demo-title {
   text-align: center;
-  font-size: 3rem;
-  margin-bottom: 50px;
-  color: var(--cyan);
-  text-shadow: 0 2px 10px rgba(52, 237, 243, 0.3);
+  font-size: 2.5rem;
   font-weight: 700;
+  margin: 0 0 48px;
+  color: var(--color-text-primary);
   width: 100%;
+  max-width: 1100px;
 }
+
+/* ===========================
+   PRICING GRID
+   =========================== */
 
 .pricing-table {
   display: grid;
   grid-template-columns: repeat(3, minmax(260px, 1fr));
-  justify-content: center;
   align-items: start;
-  gap: 30px;
+  gap: 28px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
 }
+
+/* ===========================
+   PRICING CARD BASE
+   =========================== */
 
 .pricing-option {
-  width: 100%;
-  min-height: 380px;
-  background: white;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-bg-secondary);
+  border-radius: 16px;
+  padding: 28px 24px;
   display: flex;
   flex-direction: column;
-}
-
-.pricing-option:nth-child(even) {
-  margin: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .pricing-option:hover {
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.4);
   transform: translateY(-4px);
-}
-
-.pricing-option:hover i,
-.pricing-option:hover h1,
-.pricing-option:hover span,
-.pricing-option:hover b {
-  transition: color 0.3s ease-in-out;
-}
-
-/* Specific theme colors for each tier */
-.pricing-option.genin {
-  border-top: 5px solid var(--cyan);
-}
-
-.pricing-option.genin:hover i,
-.pricing-option.genin:hover h1,
-.pricing-option.genin:hover span,
-.pricing-option.genin:hover b {
-  color: var(--cyan);
-}
-
-.pricing-option.genin .button {
-  background: var(--cyan);
-}
-
-.pricing-option.genin .button:hover {
-  background: #2fc9d0;
-}
-
-.pricing-option.chunin {
-  border-top: 5px solid var(--purple);
-}
-
-.pricing-option.chunin:hover i,
-.pricing-option.chunin:hover h1,
-.pricing-option.chunin:hover span,
-.pricing-option.chunin:hover b {
-  color: var(--purple);
-}
-
-.pricing-option.chunin .button {
-  background: var(--purple);
-}
-
-.pricing-option.chunin .button:hover {
-  background: #7a0ea6;
-}
-
-.pricing-option.hokage {
-  border-top: 5px solid var(--pink-magenta);
-}
-
-.pricing-option.hokage:hover {
-  transform: translateY(-4px);
-  box-shadow: 0px 15px 50px rgba(247, 21, 171, 0.3);
-}
-
-.pricing-option.hokage:hover i,
-.pricing-option.hokage:hover h1,
-.pricing-option.hokage:hover span,
-.pricing-option.hokage:hover b {
-  color: var(--pink-magenta);
-}
-
-.pricing-option.hokage .button {
-  background: var(--pink-magenta);
-}
-
-.pricing-option.hokage .button:hover {
-  background: #d400a0;
-}
-
-hr {
-  border: none;
-  border-bottom: 1px solid #f0f0f0;
-  margin: 15px 0;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  border-color: var(--color-bg-hover);
 }
 
 .pricing-option h1 {
-  margin: 15px 0 5px 0;
-  color: var(--dark-navy);
-  transition: all 0.3s ease-in-out;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--color-text-primary);
+  line-height: 1.2;
 }
 
 .pricing-option .subtitle {
-  color: var(--ceford-blue);
-  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
   font-weight: 600;
-  margin: 5px 0 15px 0;
-}
-
-.pricing-option p {
-  color: #666;
-  padding: 0 10px;
-  line-height: 1.5;
-  font-size: 0.95rem;
-}
-
-.price {
-  position: relative;
-  margin: 20px 0 14px;
-}
-
-.price .front {
-  transition: all 0.3s ease-in-out;
-}
-
-.price .front span.price {
-  font-size: 2.5rem;
   text-transform: uppercase;
-  margin-top: 20px;
-  display: block;
-  font-weight: 700;
-  position: relative;
-  color: var(--dark-navy);
+  letter-spacing: 0.5px;
+  margin: 0 0 16px;
 }
 
-.price .front span.price b {
-  position: absolute;
-  font-size: 1rem;
-  margin-left: 2px;
-  font-weight: 600;
-}
-
-.button {
-  padding: 13px 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+.pricing-option hr {
   border: none;
-  cursor: pointer;
-  color: white;
-  font-size: 13px;
-  text-transform: uppercase;
-  transition: all 0.3s ease-in-out;
-  border-radius: 5px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
+  border-bottom: 1px solid var(--color-bg-secondary);
+  margin: 0 0 20px;
 }
 
-.button:hover {
+/* ===========================
+   PLAN TIER ACCENTS
+   =========================== */
+
+.pricing-option.free {
+  border-top: 4px solid var(--color-accent-blue);
+}
+
+.pricing-option.free:hover {
+  box-shadow: 0 12px 40px rgba(100, 181, 246, 0.15);
+}
+
+.pricing-option.standard {
+  border-top: 4px solid var(--color-accent-primary);
+  transform: scale(1.04);
+}
+
+.pricing-option.standard:hover {
+  transform: scale(1.04) translateY(-4px);
+  box-shadow: 0 14px 48px rgba(255, 61, 110, 0.25);
+}
+
+.pricing-option.premium {
+  border-top: 4px solid var(--color-accent-primary-light);
+}
+
+.pricing-option.premium:hover {
+  box-shadow: 0 14px 48px rgba(129, 140, 248, 0.2);
+}
+
+/* ===========================
+   PRICE DISPLAY
+   =========================== */
+
+.price-wrapper {
+  margin: 0 0 20px;
+}
+
+.price-wrapper .front {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.price-wrapper .price {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.price-wrapper .price b {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-left: 3px;
+}
+
+/* ===========================
+   CTA BUTTON
+   =========================== */
+
+.pricing-option .button {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.pricing-option .button:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.pricing-option .button:active {
+  transform: translateY(0);
   filter: brightness(0.95);
 }
 
-.features {
-  margin-top: 10px;
-  text-align: left;
-  padding: 15px 10px;
-  background: var(--light-bg);
-  border-radius: 5px;
+.pricing-option.free .button {
+  background: var(--color-accent-blue);
+  color: #0d1b2a;
 }
 
+.pricing-option.standard .button {
+  background: var(--color-accent-primary);
+  color: #fff;
+}
+
+.pricing-option.premium .button {
+  background: var(--color-accent-primary-light);
+  color: #0d1b2a;
+}
+
+/* ===========================
+   DETAILS TOGGLE
+   =========================== */
+
 .details-toggle {
-  margin-top: 2px;
   width: 100%;
-  border: 1px solid #d9def8;
-  background: #f8f9ff;
-  color: var(--dark-navy);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-bg-hover);
   border-radius: 8px;
+  color: var(--color-text-muted);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 10px 12px;
+  padding: 10px 14px;
   cursor: pointer;
-  font-family: "Josefin Sans", sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: inherit;
+}
+
+.details-toggle:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
 }
 
 .details-toggle i {
   transition: transform 0.25s ease;
+  font-size: 1.25rem;
+}
+
+.details-toggle.open {
+  color: var(--color-text-primary);
 }
 
 .details-toggle.open i {
   transform: rotate(180deg);
 }
+
+/* ===========================
+   FEATURES PANEL
+   =========================== */
 
 .features-wrapper {
   max-height: 0;
@@ -282,14 +255,23 @@ hr {
 }
 
 .features-wrapper.open {
-  max-height: 520px;
+  max-height: 620px;
+}
+
+.features {
+  margin-top: 12px;
+  background: var(--color-bg-primary);
+  border-radius: 10px;
+  padding: 16px;
 }
 
 .features-title {
-  margin: 0 0 8px;
-  font-size: 0.95rem;
-  color: var(--dark-navy);
+  margin: 0 0 10px;
+  font-size: 0.8125rem;
   font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .features-list {
@@ -300,100 +282,109 @@ hr {
 
 .features-list li {
   padding: 8px 0;
-  color: #555;
-  font-size: 0.9rem;
-  line-height: 1.35;
-  border-bottom: 1px solid #e0e0e0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  border-bottom: 1px solid var(--color-bg-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .features-list li:last-child {
   border-bottom: none;
 }
 
-.pricing-option.genin .features-list li {
-  color: var(--dark-navy);
-  font-weight: 500;
+.features-list li::before {
+  content: "✓";
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
-.pricing-option.chunin .features-list li {
-  color: var(--dark-navy);
-  font-weight: 500;
+.pricing-option.standard .features-list li::before {
+  color: var(--color-accent-primary);
 }
 
-.pricing-option.hokage .features-list li {
-  color: var(--pink-magenta);
-  font-weight: 600;
+.pricing-option.premium .features-list li::before {
+  color: var(--color-accent-primary-light);
 }
 
-.plan-note {
-  margin: 12px 0 0;
-  font-size: 0.9rem;
-  color: #333;
-  line-height: 1.35;
+.pricing-option.free .features-list li::before {
+  color: var(--color-accent-blue);
 }
 
-@media screen and (max-width: 1024px) {
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 1024px) {
   .pricing-table {
     grid-template-columns: repeat(2, minmax(260px, 1fr));
   }
+
+  .pricing-option.standard {
+    transform: scale(1);
+  }
+
+  .pricing-option.standard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 48px rgba(255, 61, 110, 0.25);
+  }
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  .subscriptions-container {
+    padding: 20px 16px;
+  }
+
   .demo-title {
-    font-size: 2rem;
-    margin-bottom: 30px;
+    font-size: 1.875rem;
+    margin-bottom: 32px;
   }
 
   .pricing-table {
     grid-template-columns: 1fr;
+    max-width: 440px;
   }
 
-  .pricing-option {
-    width: 100%;
-    max-width: 350px;
-    padding: 20px;
-    min-height: 0;
-  }
-
-  .pricing-option.hokage {
+  .pricing-option.standard {
     transform: scale(1);
   }
 
-  .pricing-option.hokage:hover {
-    transform: scale(1.05);
+  .pricing-option.standard:hover {
+    transform: translateY(-4px);
   }
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 480px) {
   .subscriptions-container {
-    padding: 15px;
+    padding: 16px 12px;
+  }
+
+  .pricing-option {
+    padding: 22px 18px;
   }
 
   .demo-title {
     font-size: 1.5rem;
-    margin-bottom: 25px;
   }
 
-  .pricing-table {
-    gap: 20px;
+  .price-wrapper .price {
+    font-size: 1.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-option,
+  .details-toggle,
+  .pricing-option .button {
+    transition: none;
   }
 
-  .pricing-option {
-    width: 100%;
-    max-width: 100%;
-    padding: 5%;
-  }
-
-  .pricing-option h1 {
-    font-size: 1.3rem;
-  }
-
-  .price .front span.price {
-    font-size: 1.8rem;
-  }
-
-  .back-btn {
-    width: 100%;
-    justify-content: flex-start;
+  .pricing-option:hover,
+  .pricing-option.standard,
+  .pricing-option.standard:hover {
+    transform: none;
   }
 }

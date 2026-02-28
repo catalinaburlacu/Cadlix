@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 /dist
+/dev-dist
 /dist-ssr
 npm-debug.log
 yarn-error.log
@@ -30,3 +31,4 @@ pnpm-debug.log
 .DS_Store
 Thumbs.db
 
+AGENTS.md

@@ -12,13 +12,13 @@
   text-align: center;
   padding: 40px;
   background-color: var(--color-bg-card);
-  border: 2px solid var(--color-accent-pink);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .error-boundary__title {
-  color: var(--color-accent-pink);
+  color: var(--color-accent-primary);
   font-size: 1.75rem;
   margin: 0 0 16px 0;
 }
@@ -47,7 +47,7 @@
   padding: 16px;
   border-radius: 8px;
   font-size: 0.75rem;
-  color: var(--color-accent-pink);
+  color: var(--color-accent-primary);
   overflow-x: auto;
   white-space: pre-wrap;
   word-break: break-word;
@@ -64,9 +64,9 @@
 
 .error-boundary__button {
   padding: 12px 24px;
-  background-color: var(--color-accent-purple);
+  background-color: var(--color-accent-primary);
   color: white;
-  border: 2px solid var(--color-accent-purple);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
@@ -78,15 +78,15 @@
   background-color: #9a4be8;
   border-color: #9a4be8;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-accent-primary) 40%, transparent);
 }
 
 .error-boundary__button--secondary {
   background-color: transparent;
-  color: var(--color-accent-purple);
+  color: var(--color-accent-primary);
 }
 
 .error-boundary__button--secondary:hover {
-  background-color: var(--color-accent-purple);
+  background-color: var(--color-accent-primary);
   color: white;
 }

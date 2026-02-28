@@ -11,8 +11,8 @@
 }
 
 .history-intro {
-  background: rgba(30, 27, 81, 0.6);
-  border: 1px solid rgba(138, 43, 226, 0.3);
+  background: color-mix(in srgb, var(--color-bg-card) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
   border-radius: 16px;
   padding: 20px;
 }
@@ -34,29 +34,10 @@
 }
 
 .history-card {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  align-items: start;
-  gap: 14px;
-  background: rgba(30, 27, 81, 0.5);
-  border: 1px solid rgba(138, 43, 226, 0.3);
+  background: color-mix(in srgb, var(--color-bg-card) 50%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
   border-radius: 14px;
   padding: 16px;
-  cursor: pointer;
-  color: inherit;
-  text-align: left;
-  font-family: inherit;
-}
-
-.history-thumb {
-  width: 240px;
-  height: 160px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.history-info {
-  min-width: 0;
 }
 
 .history-main {
@@ -80,19 +61,14 @@
   letter-spacing: 0.2px;
 }
 
-.history-type--anime {
-  background: rgba(52, 237, 243, 0.2);
-  color: #34edf3;
-}
-
 .history-type--movie {
-  background: rgba(247, 21, 171, 0.2);
-  color: #f715ab;
+  background: color-mix(in srgb, var(--color-accent-primary) 20%, transparent);
+  color: var(--color-accent-primary);
 }
 
 .history-type--series {
-  background: rgba(146, 1, 203, 0.2);
-  color: #d8a6ef;
+  background: color-mix(in srgb, var(--color-accent-primary) 20%, transparent);
+  color: var(--color-accent-primary);
 }
 
 .history-meta {
@@ -108,8 +84,8 @@
 }
 
 .history-empty {
-  background: rgba(30, 27, 81, 0.5);
-  border: 1px dashed rgba(138, 43, 226, 0.4);
+  background: color-mix(in srgb, var(--color-bg-card) 50%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--color-accent-primary) 40%, transparent);
   border-radius: 14px;
   padding: 28px;
   text-align: center;
@@ -123,14 +99,6 @@
 }
 
 @media (max-width: 768px) {
-  .history-card {
-    grid-template-columns: 1fr;
-  }
-
-  .history-thumb {
-    width: 100%;
-  }
-
   .history-meta {
     grid-template-columns: 1fr;
   }

@@ -1,39 +1,96 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Security Meta Tags -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Cadlix - Manage your anime collection and track your progress" />
-    <meta name="keywords" content="anime, tracker, collection, cadlix" />
-    <meta name="author" content="Cadlix Team" />
-    
-    <!-- Theme Color for Mobile Browsers -->
-    <meta name="theme-color" content="#0A0F3D" />
-    <meta name="msapplication-TileColor" content="#0A0F3D" />
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cadlix" />
-    <meta property="og:description" content="Manage your anime collection and track your progress" />
-    <meta property="og:site_name" content="Cadlix" />
-    
-    <!-- Preconnect to External Resources -->
-    <link rel="preconnect" href="https://unpkg.com" crossorigin />
-    
-    <!-- Styles -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    
-    <title>Cadlix - Anime Collection Manager</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <title>Cadlix - Stream Anime, Movies & Series</title>
+  <meta name="description"
+    content="Cadlix is your ultimate streaming platform for anime, movies, and series. Track your watch history, manage favorites, and discover new content." />
+  <meta name="keywords"
+    content="anime streaming, movie streaming, series tracker, watch history, anime collection, cadlix" />
+  <meta name="author" content="Cadlix Team" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+
+  <meta name="theme-color" content="#e63946" />
+  <meta name="msapplication-TileColor" content="#e63946" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Cadlix" />
+  <meta name="application-name" content="Cadlix" />
+
+  <meta name="format-detection" content="telephone=no" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cadlix.app/" />
+  <meta property="og:title" content="Cadlix - Stream Anime, Movies & Series" />
+  <meta property="og:description"
+    content="Your ultimate streaming platform for anime, movies, and series. Track your watch history and discover new content." />
+  <meta property="og:image" content="https://cadlix.app/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Cadlix" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://cadlix.app/" />
+  <meta property="twitter:title" content="Cadlix - Stream Anime, Movies & Series" />
+  <meta property="twitter:description"
+    content="Your ultimate streaming platform for anime, movies, and series. Track your watch history and discover new content." />
+  <meta property="twitter:image" content="https://cadlix.app/og-image.jpg" />
+
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="alternate icon" type="image/png" href="/icons/icon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png" />
+  <link rel="mask-icon" href="/vite.svg" color="#e63946" />
+
+  <link rel="manifest" href="/manifest.json" />
+
+  <link rel="preconnect" href="https://api.dicebear.com" crossorigin />
+  <link rel="dns-prefetch" href="https://unpkg.com" />
+
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #0D1B2A;
+      color: rgba(255, 255, 255, .87)
+    }
+
+    #root {
+      width: 100%;
+      height: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

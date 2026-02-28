@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'dev-dist', 'coverage', 'playwright-report', 'test-results']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -14,8 +14,12 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      ecmaVersion: 2024,
+      globals: {
+        ...globals.browser,
+        ...globals.es2024,
+        ...globals.node
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -23,7 +27,28 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': ['error', { 
+        varsIgnorePattern: '^[A-Z_]|^_',
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }],
+      'no-console': ['warn', { allow: ['error', 'warn'] }],
+      'no-debugger': 'error',
+      'prefer-const': 'error',
+      'no-var': 'error',
+      'object-shorthand': 'error',
+      'prefer-template': 'error',
+      'eqeqeq': ['error', 'always', { null: 'ignore' }],
+      'curly': ['error', 'multi-line'],
     },
   },
+  {
+    files: ['**/*.test.{js,jsx}', '**/__tests__/**/*.{js,jsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.vitest,
+        ...globals.browser,
+      }
+    }
+  }
 ])

@@ -7,11 +7,19 @@ const USER_STORAGE_KEY = 'cadlix_user';
 const AUTH_STORAGE_KEY = 'cadlix_auth';
 
 export function UserProvider({ children }) {
-  // Initialize state from localStorage if available
+  // Initialize state from localStorage, merging with defaults to fill in any missing fields
   const [user, setUser] = useState(() => {
     try {
       const savedUser = localStorage.getItem(USER_STORAGE_KEY);
-      return savedUser ? JSON.parse(savedUser) : null;
+      if (!savedUser) return null;
+      const parsed = JSON.parse(savedUser);
+      return {
+        ...defaultUser,
+        ...parsed,
+        stats: { ...defaultUser.stats, ...parsed.stats },
+        watchList: parsed.watchList?.length ? parsed.watchList : defaultUser.watchList,
+        watchHistory: parsed.watchHistory?.length ? parsed.watchHistory : defaultUser.watchHistory,
+      };
     } catch {
       return null;
     }

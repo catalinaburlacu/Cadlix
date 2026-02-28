@@ -15,7 +15,7 @@
 }
 
 .input-required {
-  color: var(--color-accent-pink);
+  color: var(--color-accent-primary);
 }
 
 .input-container {
@@ -55,13 +55,13 @@
 }
 
 .input-field:hover {
-  border-color: var(--color-accent-purple);
+  border-color: var(--color-accent-primary);
 }
 
 .input-field:focus {
   outline: none;
-  border-color: var(--color-accent-teal);
-  box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.15);
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
 }
 
 .input-field:disabled {
@@ -73,17 +73,17 @@
 /* Error state */
 .input-container--error .input-field,
 .input-field--error {
-  border-color: var(--color-accent-pink);
+  border-color: var(--color-accent-primary);
 }
 
 .input-field--error:focus {
-  border-color: var(--color-accent-pink);
-  box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.15);
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
 }
 
 .input-error {
   font-size: 0.75rem;
-  color: var(--color-accent-pink);
+  color: var(--color-accent-primary);
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -91,7 +91,7 @@
 }
 
 .input-error::before {
-  content: '⚠';
+  content: "⚠";
   font-size: 0.875rem;
 }
 
