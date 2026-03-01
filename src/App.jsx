@@ -9,6 +9,8 @@ const Profile = lazy(() => import('@pages/profile/Profile'))
 const Subscriptions = lazy(() => import('@pages/subscriptions/Subscriptions'))
 const Payment = lazy(() => import('@pages/payment/Payment'))
 const History = lazy(() => import('@pages/history/History'))
+const Trending = lazy(() => import('@pages/trending/Trending'))
+const Settings = lazy(() => import('@pages/settings/Settings'))
 
 import ProtectedRoute from '@components/common/ProtectedRoute'
 import PageLoader from '@components/common/PageLoader'
@@ -19,12 +21,14 @@ const routes = {
     { path: '/home', element: Home },
     { path: '/login', element: Login },
     { path: '/explore', element: Explore },
-    { path: '/history', element: History }
+    { path: '/history', element: History },
+    { path: '/trending', element: Trending }
   ],
   protected: [
     { path: '/profile', element: Profile },
     { path: '/subscriptions', element: Subscriptions },
-    { path: '/payment', element: Payment }
+    { path: '/payment', element: Payment },
+    { path: '/settings', element: Settings }
   ]
 }
 
