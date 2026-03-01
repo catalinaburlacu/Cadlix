@@ -150,6 +150,7 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
               <span className='nav-label'>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
             </button>
           )}
+          <p className='sidebar-copyright'>© 2026 Cadlix. All rights reserved.</p>
         </div>
       </aside>
 
