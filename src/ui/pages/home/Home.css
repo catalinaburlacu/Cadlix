@@ -568,6 +568,12 @@
   background: var(--color-bg-hover);
 }
 
+.nav-menu-link--disabled {
+  color: var(--color-text-muted);
+  cursor: default;
+  opacity: 0.5;
+}
+
 /* Page Content */
 .page-content {
   flex: 1;

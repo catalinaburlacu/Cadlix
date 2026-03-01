@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx';
 import Button from '../../../components/common/Button.jsx';
 import './Trending.css';
@@ -81,7 +82,12 @@ const TRENDING_DATA = [
 
 export default function Trending() {
   const [period, setPeriod] = useState('today');
-  const [filter, setFilter] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filter = searchParams.get('filter') || 'all';
+
+  function setFilter(value) {
+    setSearchParams(value === 'all' ? {} : { filter: value });
+  }
 
   const hero = TRENDING_DATA[0];
 

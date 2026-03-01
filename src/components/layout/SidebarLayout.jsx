@@ -58,7 +58,7 @@ function NavItem({ item }) {
  */
 export default function SidebarLayout({ children, pageClass = '', navbarContent }) {
   const navigate = useNavigate()
-  const { user, logout } = useUser()
+  const { user, isAuthenticated, logout } = useUser()
   const toast = useToast()
 
   const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -87,7 +87,7 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
       await new Promise(resolve => setTimeout(resolve, 500))
       logout()
       toast.success('Logged out successfully')
-      navigate('/login')
+      navigate('/home')
     } catch {
       toast.error('Logout failed. Please try again.')
       setIsLoggingOut(false)
@@ -142,12 +142,14 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
         </nav>
 
         <div className='sidebar-footer'>
-          <button className='footer-action logout' onClick={handleLogout} disabled={isLoggingOut}>
-            <div className='nav-icon-wrapper'>
-              <i className={`bx ${isLoggingOut ? 'bx-loader-alt bx-spin' : 'bx-log-out'}`}></i>
-            </div>
-            <span className='nav-label'>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
-          </button>
+          {isAuthenticated && (
+            <button className='footer-action logout' onClick={handleLogout} disabled={isLoggingOut}>
+              <div className='nav-icon-wrapper'>
+                <i className={`bx ${isLoggingOut ? 'bx-loader-alt bx-spin' : 'bx-log-out'}`}></i>
+              </div>
+              <span className='nav-label'>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+            </button>
+          )}
         </div>
       </aside>
 
@@ -191,10 +193,9 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
                 </button>
               </div>
             ) : (
-              <div style={{ display: 'flex', gap: '12px'}}>
-                <Button variant="primary" size="small" >Login</Button>
-                <Button variant="primary" size="small" >Register</Button>
-              </div>
+              <Button variant="primary" size="small" onClick={() => navigate('/login')}>
+                Sign In
+              </Button>
             )}
           </div>
         </header>
