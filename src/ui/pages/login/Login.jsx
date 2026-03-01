@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import { sanitizeInput } from "../../../utils/security.js";
+import { ADMIN_CREDENTIALS, ADMIN_USER_DATA } from "../../../utils/constants.js";
 import "./Login.css";
 
 const SOCIAL_PROVIDERS = ["Google", "Facebook", "Apple"];
@@ -56,7 +57,7 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
+
     if (!loginData.email || !loginData.password) {
       toast.error('Please fill in all fields');
       return;
@@ -68,10 +69,20 @@ export default function Login() {
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Create complete user object
+
+      // Check admin credentials
+      if (sanitizedEmail === ADMIN_CREDENTIALS.email && loginData.password === ADMIN_CREDENTIALS.password) {
+        login(ADMIN_USER_DATA);
+        toast.success('Welcome, Admin!');
+        const from = location.state?.from || '/home';
+        navigate(from);
+        return;
+      }
+
+      // Create regular user object
       const userData = {
         id: Date.now().toString(),
+        role: 'user',
         username: sanitizedEmail.split('@')[0],
         email: sanitizedEmail,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedEmail}`,
@@ -88,10 +99,10 @@ export default function Login() {
           daysOnSite: 1
         }
       };
-      
+
       login(userData);
       toast.success('Welcome back! Login successful');
-      
+
       // Redirect to originally requested page or home
       const from = location.state?.from || '/home';
       navigate(from);
@@ -122,6 +133,7 @@ export default function Login() {
       // Create complete user object for new signup
       const userData = {
         id: Date.now().toString(),
+        role: 'user',
         username: sanitizedData.username,
         email: sanitizedData.email,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedData.username}`,

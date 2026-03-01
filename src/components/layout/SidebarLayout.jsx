@@ -122,6 +122,11 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
                   <NavItem item={item} />
                 </li>
               ))}
+              {user?.role === 'admin' && (
+                <li role='none'>
+                  <NavItem item={{ id: 'admin', label: 'Admin Panel', icon: 'bx-shield-quarter', path: '/admin' }} />
+                </li>
+              )}
             </ul>
           </div>
 

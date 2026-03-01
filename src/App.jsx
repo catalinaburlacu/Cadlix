@@ -11,8 +11,10 @@ const Payment = lazy(() => import('@pages/payment/Payment'))
 const History = lazy(() => import('@pages/history/History'))
 const Trending = lazy(() => import('@pages/trending/Trending'))
 const Settings = lazy(() => import('@pages/settings/Settings'))
+const Admin = lazy(() => import('@pages/admin/Admin'))
 
 import ProtectedRoute from '@components/common/ProtectedRoute'
+import AdminRoute from '@components/common/AdminRoute'
 import PageLoader from '@components/common/PageLoader'
 
 // Route configuration for better maintainability
@@ -53,6 +55,15 @@ function App() {
               }
             />
           ))}
+
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            }
+          />
 
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="*" element={<Navigate to="/home" replace />} />

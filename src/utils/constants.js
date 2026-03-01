@@ -53,9 +53,40 @@ export const SORT_OPTIONS = [
   { value: 'duration', label: 'Duration' },
 ];
 
+// Admin credentials (checked on login)
+export const ADMIN_CREDENTIALS = {
+  email: 'admin@cadlix.com',
+  password: 'admin123',
+};
+
+// Admin user account (pre-existing)
+export const ADMIN_USER_DATA = {
+  id: 'admin-1',
+  role: 'admin',
+  username: 'Admin',
+  email: 'admin@cadlix.com',
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=cadlix-admin',
+  group: 'Administrator',
+  plan: 'Admin',
+  status: 'Online',
+  stats: {
+    rating: '5.0',
+    titlesWatched: 250,
+    comments: 320,
+    likesGiven: 890,
+    likesReceived: 1450,
+    hoursWatched: 1200,
+    addedToList: 310,
+    daysOnSite: 730,
+  },
+  watchList: [],
+  watchHistory: [],
+};
+
 // Default User Data
 export const DEFAULT_USER_DATA = {
   id: 1,
+  role: 'user',
   username: 'DefaultUser',
   email: 'user@cadlix.com',
   avatar: 'https://via.placeholder.com/120x120?text=Avatar',
