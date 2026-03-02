@@ -18,16 +18,17 @@ body,
 }
 
 .app {
+  min-height: 100vh;
   background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-gradient-2) 100%);
 }
 
 :root {
-  --color-bg-dark: #0d1b2a;
-  --color-bg-primary: #1b2838;
-  --color-bg-secondary: #243447;
-  --color-bg-card: #1e2d3d;
-  --color-bg-hover: #2a3f54;
-  --color-bg-gradient-2: #ff3d6e26;
+  --color-bg-dark: #dff1ff;
+  --color-bg-primary: #f5fbff;
+  --color-bg-secondary: #e4f1ff;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #d6e9ff;
+  --color-bg-gradient-2: #b8d7ff;
 
   --color-accent-primary: #ff3d6e;
   --color-accent-primary-dark: #4f46e5;
@@ -40,9 +41,25 @@ body,
   --color-status-away: #f39c12;
   --color-status-busy: #e74c3c;
 
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.87);
-  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-primary: #123652;
+  --color-text-secondary: #2d5f86;
+  --color-text-muted: #5f83a3;
+
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-dark);
+}
+
+:root[data-theme='dark'] {
+  --color-bg-dark: #081a2b;
+  --color-bg-primary: #102840;
+  --color-bg-secondary: #173754;
+  --color-bg-card: #0f2d46;
+  --color-bg-hover: #1a4264;
+  --color-bg-gradient-2: #0f4c81;
+
+  --color-text-primary: #f2f8ff;
+  --color-text-secondary: rgba(242, 248, 255, 0.9);
+  --color-text-muted: rgba(222, 236, 250, 0.7);
 
   color: var(--color-text-secondary);
   background-color: var(--color-bg-dark);

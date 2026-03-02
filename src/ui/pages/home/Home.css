@@ -427,6 +427,38 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-bg-secondary);
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle-btn i {
+  font-size: 1rem;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent-blue);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
 }
 
 /* Page subnav — Profile / Subscriptions / Payment */
@@ -763,6 +795,15 @@
   .menu-btn {
     width: 40px;
     height: 40px;
+  }
+
+  .theme-toggle-btn {
+    height: 36px;
+    padding: 0 10px;
+  }
+
+  .theme-toggle-btn span {
+    display: none;
   }
 
   .hero-title {

@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useNavigate, useLocation, NavLink } from 'react-router-dom'
 import { useUser } from '../../context/useUser.js'
+import { useTheme } from '../../context/useTheme.js'
 import { useToast } from '../../hooks/useToast.js'
 import '../../ui/pages/home/Home.css'
 import Button from '../common/Button.jsx'
@@ -59,6 +60,7 @@ function NavItem({ item }) {
 export default function SidebarLayout({ children, pageClass = '', navbarContent }) {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useUser()
+  const { theme, isDark, toggleTheme } = useTheme()
   const toast = useToast()
 
   const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -173,8 +175,18 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
               </button>
               {navbarContent}
             </div>
-            {user ? (
-              <div className='navbar-right'>
+            <div className='navbar-right'>
+              <button
+                className='theme-toggle-btn'
+                onClick={toggleTheme}
+                aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+                title={isDark ? 'Switch to day theme' : 'Switch to night theme'}
+                aria-pressed={isDark}
+              >
+                <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'}`} aria-hidden='true'></i>
+                <span>{theme === 'dark' ? 'Night' : 'Day'}</span>
+              </button>
+              {user ? (
                 <button
                   className='navbar-user'
                   onClick={() => navigate('/profile')}
@@ -197,12 +209,12 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
                     <span className='user-plan'>{user.plan || 'Basic'}</span>
                   </div>
                 </button>
-              </div>
-            ) : (
-              <Button variant="primary" size="small" onClick={() => navigate('/login')}>
-                Sign In
-              </Button>
-            )}
+              ) : (
+                <Button variant="primary" size="small" onClick={() => navigate('/login')}>
+                  Sign In
+                </Button>
+              )}
+            </div>
           </div>
         </header>
 
