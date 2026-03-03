@@ -1,0 +1,255 @@
+import type { User, VideoItem, WatchListItem } from '@/types'
+
+// Tabs Configuration
+export const CONTENT_TABS: { id: string; label: string }[] = [
+  { id: 'watching', label: 'Watching' },
+  { id: 'planned', label: 'Planned' },
+  { id: 'completed', label: 'Completed' },
+  { id: 'dropped', label: 'Dropped' },
+  { id: 'favorites', label: 'Favorites' },
+]
+
+// Content Types
+export const CONTENT_TYPES: { value: string; label: string }[] = [
+  { value: '', label: 'All Types' },
+  { value: 'movie', label: 'Movie' },
+  { value: 'tv', label: 'TV Series' },
+  { value: 'documentary', label: 'Documentary' },
+  { value: 'miniseries', label: 'Mini-Series' },
+  { value: 'special', label: 'Special' },
+]
+
+// Content Genres
+export const CONTENT_GENRES: { value: string; label: string }[] = [
+  { value: '', label: 'All Genres' },
+  { value: 'action', label: 'Action' },
+  { value: 'adventure', label: 'Adventure' },
+  { value: 'comedy', label: 'Comedy' },
+  { value: 'crime', label: 'Crime' },
+  { value: 'detective', label: 'Detective' },
+  { value: 'drama', label: 'Drama' },
+  { value: 'fantasy', label: 'Fantasy' },
+  { value: 'historical', label: 'Historical' },
+  { value: 'horror', label: 'Horror' },
+  { value: 'military', label: 'Military' },
+  { value: 'mystery', label: 'Mystery' },
+  { value: 'psychological', label: 'Psychological' },
+  { value: 'romance', label: 'Romance' },
+  { value: 'sci-fi', label: 'Sci-Fi' },
+  { value: 'sports', label: 'Sports' },
+  { value: 'supernatural', label: 'Supernatural' },
+  { value: 'thriller', label: 'Thriller' },
+  { value: 'biography', label: 'Biography' },
+]
+
+// Sort Options
+export const SORT_OPTIONS: { value: string; label: string }[] = [
+  { value: '', label: 'Sort By' },
+  { value: 'title', label: 'Title' },
+  { value: 'score', label: 'Score' },
+  { value: 'date', label: 'Date Added' },
+  { value: 'duration', label: 'Duration' },
+]
+
+// Admin credentials (checked on login)
+export const ADMIN_CREDENTIALS: { email: string; password: string } = {
+  email: 'admin@cadlix.com',
+  password: 'admin123',
+}
+
+// Admin user account (pre-existing)
+export const ADMIN_USER_DATA: User = {
+  id: 'admin-1',
+  role: 'admin',
+  username: 'Admin',
+  email: 'admin@cadlix.com',
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=cadlix-admin',
+  group: 'Administrator',
+  plan: 'Admin',
+  status: 'Online',
+  stats: {
+    rating: '5.0',
+    titlesWatched: 250,
+    comments: 320,
+    likesGiven: 890,
+    likesReceived: 1450,
+    hoursWatched: 1200,
+    addedToList: 310,
+    daysOnSite: 730,
+  },
+  watchList: [],
+  watchHistory: [],
+}
+
+// Default User Data
+export const DEFAULT_USER_DATA: User = {
+  id: 1,
+  role: 'user',
+  username: 'DefaultUser',
+  email: 'user@cadlix.com',
+  avatar: 'https://via.placeholder.com/120x120?text=Avatar',
+  group: 'Member',
+  status: 'Online',
+  stats: {
+    rating: '4.5',
+    titlesWatched: 42,
+    comments: 15,
+    likesGiven: 128,
+    likesReceived: 256,
+    hoursWatched: 168,
+    addedToList: 67,
+    daysOnSite: 30,
+  },
+  watchList: [
+    {
+      id: 'wl-1',
+      status: 'watching',
+      title: 'The Last of Us',
+      type: 'tv',
+      category: 'Series',
+      genre: 'drama',
+      score: 9.2,
+      episode: 'S1E4',
+      dateAdded: '2026-02-10T10:00:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=TLOU',
+    },
+    {
+      id: 'wl-2',
+      status: 'watching',
+      title: 'Stranger Things',
+      type: 'tv',
+      category: 'Series',
+      genre: 'sci-fi',
+      score: 8.7,
+      episode: 'S4E5',
+      dateAdded: '2026-02-12T14:30:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=ST',
+    },
+    {
+      id: 'wl-3',
+      status: 'watching',
+      title: 'Peaky Blinders',
+      type: 'tv',
+      category: 'Series',
+      genre: 'crime',
+      score: 8.9,
+      episode: 'S5E3',
+      dateAdded: '2026-01-28T18:00:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=PB',
+    },
+    {
+      id: 'wl-4',
+      status: 'watching',
+      title: 'Dune: Part Two',
+      type: 'movie',
+      category: 'Movie',
+      genre: 'sci-fi',
+      score: 8.5,
+      episode: '-',
+      dateAdded: '2026-02-16T20:00:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=Dune',
+    },
+    {
+      id: 'wl-5',
+      status: 'watching',
+      title: 'The Bear',
+      type: 'tv',
+      category: 'Series',
+      genre: 'drama',
+      score: 8.6,
+      episode: 'S2E3',
+      dateAdded: '2026-02-18T09:15:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=Bear',
+    },
+    {
+      id: 'wl-6',
+      status: 'planned',
+      title: 'Severance',
+      type: 'tv',
+      category: 'Series',
+      genre: 'thriller',
+      score: null,
+      episode: '-',
+      dateAdded: '2026-02-20T11:00:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=SEV',
+    },
+    {
+      id: 'wl-7',
+      status: 'completed',
+      title: 'Breaking Bad',
+      type: 'tv',
+      category: 'Series',
+      genre: 'crime',
+      score: 10,
+      episode: 'S5E16',
+      dateAdded: '2025-12-01T08:00:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=BB',
+    },
+    {
+      id: 'wl-8',
+      status: 'favorites',
+      title: 'Interstellar',
+      type: 'movie',
+      category: 'Movie',
+      genre: 'sci-fi',
+      score: 9.5,
+      episode: '-',
+      dateAdded: '2025-11-15T16:00:00Z',
+      poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=INT',
+    },
+  ],
+  watchHistory: [
+    {
+      id: 'h-1',
+      title: 'The Last of Us',
+      category: 'Series',
+      series: 'Season 1',
+      episode: 'Episode 4',
+      watchedAt: '2026-02-17T21:42:00Z',
+      progress: '44:12',
+    },
+    {
+      id: 'h-2',
+      title: 'Dune: Part Two',
+      category: 'Movie',
+      series: '-',
+      episode: '-',
+      watchedAt: '2026-02-16T20:05:00Z',
+      progress: '01:58:11',
+    },
+    {
+      id: 'h-3',
+      title: 'Stranger Things',
+      category: 'Series',
+      series: 'Season 4',
+      episode: 'Episode 5',
+      watchedAt: '2026-02-15T19:30:00Z',
+      progress: '42:10',
+    },
+    {
+      id: 'h-4',
+      title: 'Peaky Blinders',
+      category: 'Series',
+      series: 'Season 5',
+      episode: 'Episode 3',
+      watchedAt: '2026-02-14T22:18:00Z',
+      progress: '52:00',
+    },
+  ],
+}
+
+export const MOCK_VIDEOS: VideoItem[] = [
+  {
+    id: 'v-1',
+    title: 'The Last of Us - S1E4',
+    category: 'Series',
+    type: 'tv',
+    genre: 'drama',
+    series: 'Season 1',
+    episode: 'Episode 4',
+    src: '',
+    durationSec: 3600,
+  },
+]
+
+export const MOCK_MEDIA_LIBRARY: WatchListItem[] = DEFAULT_USER_DATA.watchList ?? []

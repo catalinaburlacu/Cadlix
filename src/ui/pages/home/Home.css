@@ -443,7 +443,10 @@
   cursor: pointer;
   font-size: 0.8125rem;
   font-weight: 600;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .theme-toggle-btn i {
@@ -478,7 +481,9 @@
   font-weight: 500;
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
   white-space: nowrap;
 }
 
@@ -880,7 +885,12 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, rgba(10, 10, 20, 0.95) 0%, rgba(10, 10, 20, 0.5) 55%, transparent 100%),
+    linear-gradient(
+      to right,
+      rgba(10, 10, 20, 0.95) 0%,
+      rgba(10, 10, 20, 0.5) 55%,
+      transparent 100%
+    ),
     linear-gradient(to top, rgba(10, 10, 20, 0.9) 0%, transparent 50%);
   pointer-events: none;
 }
@@ -956,8 +966,12 @@
   font-weight: 600;
 }
 
-.featured-stat--score { color: #fbbf24; }
-.featured-stat--views { color: var(--color-text-muted); }
+.featured-stat--score {
+  color: #fbbf24;
+}
+.featured-stat--views {
+  color: var(--color-text-muted);
+}
 
 .featured-actions {
   display: flex;
@@ -1020,7 +1034,9 @@
   transition: opacity 0.15s ease;
 }
 
-.content-row-see-all:hover { opacity: 0.75; }
+.content-row-see-all:hover {
+  opacity: 0.75;
+}
 
 .content-row-scroll {
   display: flex;
@@ -1031,8 +1047,12 @@
   scrollbar-color: var(--color-bg-secondary) transparent;
 }
 
-.content-row-scroll::-webkit-scrollbar { height: 4px; }
-.content-row-scroll::-webkit-scrollbar-track { background: transparent; }
+.content-row-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.content-row-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
 .content-row-scroll::-webkit-scrollbar-thumb {
   background: var(--color-bg-secondary);
   border-radius: 2px;
@@ -1051,7 +1071,9 @@
   border-radius: 10px;
   overflow: hidden;
   background: var(--color-bg-card);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .row-card:hover {
@@ -1105,7 +1127,9 @@
   font-size: 1.1rem;
   opacity: 0;
   transform: scale(0.8);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .row-card:hover .row-card-play-btn {
@@ -1180,7 +1204,9 @@
   border-radius: 10px;
   overflow: hidden;
   background: var(--color-bg-card);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .continue-card:hover {
@@ -1234,7 +1260,9 @@
   font-size: 1.1rem;
   opacity: 0;
   transform: scale(0.8);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .continue-card:hover .continue-card-play-btn {
@@ -1310,7 +1338,11 @@
   gap: 16px;
   padding: 56px 32px;
   text-align: center;
-  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--color-accent-primary) 10%, transparent) 0%, transparent 65%);
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    color-mix(in srgb, var(--color-accent-primary) 10%, transparent) 0%,
+    transparent 65%
+  );
 }
 
 .home-cta-icon {

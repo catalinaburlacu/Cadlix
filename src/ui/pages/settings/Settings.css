@@ -73,7 +73,9 @@
   font-weight: 500;
   cursor: pointer;
   text-align: left;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .settings-nav-item i {
@@ -229,7 +231,9 @@
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-bg-hover);
   border-radius: 999px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .toggle-input:checked + .toggle-track {

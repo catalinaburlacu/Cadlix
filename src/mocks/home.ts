@@ -1,0 +1,260 @@
+import type { MediaItem } from '@/types'
+
+export const CATEGORY_NAV_ITEMS: { id: string; label: string; to: string; filter: string | null }[] = [
+  { id: 'home', label: 'Home', to: '/home', filter: null },
+  { id: 'trending', label: 'Trending', to: '/trending', filter: 'all' },
+  { id: 'movies', label: 'Movies', to: '/trending?filter=movie', filter: 'movie' },
+  { id: 'series', label: 'Series', to: '/trending?filter=tv', filter: 'tv' },
+  {
+    id: 'documentaries',
+    label: 'Documentaries',
+    to: '/trending?filter=documentary',
+    filter: 'documentary',
+  },
+]
+
+export const FEATURED: {
+  title: string
+  type: string
+  genre: string
+  year: number
+  score: number
+  views: string
+  description: string
+  poster: string
+} = {
+  title: 'The Last of Us',
+  type: 'tv',
+  genre: 'Drama',
+  year: 2023,
+  score: 9.2,
+  views: '2.4M',
+  description:
+    'A hardened survivor and a teenage girl traverse a post-apocalyptic world filled with infected and ruthless survivors fighting for dominance and survival.',
+  poster: 'https://via.placeholder.com/1280x520/0d0d1e/3a3a5c?text=The+Last+of+Us',
+}
+
+export const TRENDING_ROW: MediaItem[] = [
+  {
+    id: 'tr-1',
+    title: 'The Last of Us',
+    type: 'tv',
+    genre: 'Drama',
+    score: 9.2,
+    year: 2023,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=TLOU',
+  },
+  {
+    id: 'tr-2',
+    title: 'Oppenheimer',
+    type: 'movie',
+    genre: 'Drama',
+    score: 8.9,
+    year: 2023,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=OPP',
+  },
+  {
+    id: 'tr-3',
+    title: 'Severance',
+    type: 'tv',
+    genre: 'Thriller',
+    score: 8.7,
+    year: 2022,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=SEV',
+  },
+  {
+    id: 'tr-4',
+    title: 'Dune: Part Two',
+    type: 'movie',
+    genre: 'Sci-Fi',
+    score: 8.5,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=Dune',
+  },
+  {
+    id: 'tr-5',
+    title: 'The Bear',
+    type: 'tv',
+    genre: 'Drama',
+    score: 8.6,
+    year: 2022,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=Bear',
+  },
+  {
+    id: 'tr-6',
+    title: 'Succession',
+    type: 'tv',
+    genre: 'Drama',
+    score: 9.0,
+    year: 2018,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=Succ',
+  },
+  {
+    id: 'tr-7',
+    title: 'Poor Things',
+    type: 'movie',
+    genre: 'Fantasy',
+    score: 8.0,
+    year: 2023,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=PT',
+  },
+  {
+    id: 'tr-8',
+    title: 'Fallout',
+    type: 'tv',
+    genre: 'Sci-Fi',
+    score: 8.5,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=FALL',
+  },
+]
+
+export const NEW_RELEASES: MediaItem[] = [
+  {
+    id: 'nr-1',
+    title: 'Fallout',
+    type: 'tv',
+    genre: 'Sci-Fi',
+    score: 8.5,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=FALL',
+  },
+  {
+    id: 'nr-2',
+    title: 'Dune: Part Two',
+    type: 'movie',
+    genre: 'Sci-Fi',
+    score: 8.5,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=Dune',
+  },
+  {
+    id: 'nr-3',
+    title: 'House of the Dragon S2',
+    type: 'tv',
+    genre: 'Fantasy',
+    score: 7.8,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=HOTD',
+  },
+  {
+    id: 'nr-4',
+    title: 'Civil War',
+    type: 'movie',
+    genre: 'Action',
+    score: 7.5,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=CW',
+  },
+  {
+    id: 'nr-5',
+    title: 'Shogun',
+    type: 'tv',
+    genre: 'Historical',
+    score: 8.7,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=SHO',
+  },
+  {
+    id: 'nr-6',
+    title: 'Furiosa',
+    type: 'movie',
+    genre: 'Action',
+    score: 7.8,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=FUR',
+  },
+  {
+    id: 'nr-7',
+    title: 'A Quiet Place: Day One',
+    type: 'movie',
+    genre: 'Horror',
+    score: 7.2,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=QP',
+  },
+  {
+    id: 'nr-8',
+    title: 'The Acolyte',
+    type: 'tv',
+    genre: 'Sci-Fi',
+    score: 6.4,
+    year: 2024,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=ACOL',
+  },
+]
+
+export const TOP_RATED: MediaItem[] = [
+  {
+    id: 'top-1',
+    title: 'Breaking Bad',
+    type: 'tv',
+    genre: 'Crime',
+    score: 9.5,
+    year: 2008,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=BB',
+  },
+  {
+    id: 'top-2',
+    title: 'The Wire',
+    type: 'tv',
+    genre: 'Crime',
+    score: 9.4,
+    year: 2002,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=Wire',
+  },
+  {
+    id: 'top-3',
+    title: 'Chernobyl',
+    type: 'tv',
+    genre: 'Drama',
+    score: 9.4,
+    year: 2019,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=CHR',
+  },
+  {
+    id: 'top-4',
+    title: 'The Sopranos',
+    type: 'tv',
+    genre: 'Crime',
+    score: 9.2,
+    year: 1999,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=SOP',
+  },
+  {
+    id: 'top-5',
+    title: 'Interstellar',
+    type: 'movie',
+    genre: 'Sci-Fi',
+    score: 9.0,
+    year: 2014,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=INT',
+  },
+  {
+    id: 'top-6',
+    title: 'The Dark Knight',
+    type: 'movie',
+    genre: 'Action',
+    score: 9.0,
+    year: 2008,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=TDK',
+  },
+  {
+    id: 'top-7',
+    title: 'Peaky Blinders',
+    type: 'tv',
+    genre: 'Crime',
+    score: 8.9,
+    year: 2013,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=PB',
+  },
+  {
+    id: 'top-8',
+    title: 'Parasite',
+    type: 'movie',
+    genre: 'Thriller',
+    score: 8.5,
+    year: 2019,
+    poster: 'https://via.placeholder.com/130x190/1a1a2e/e0e0e0?text=PAR',
+  },
+]

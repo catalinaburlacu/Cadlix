@@ -1,0 +1,241 @@
+import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useUser } from '../../../context/useUser'
+import { useToast } from '../../../hooks/useToast'
+import { sanitizeInput } from '../../../utils/security'
+import { ADMIN_CREDENTIALS, ADMIN_USER_DATA } from '../../../mocks/constants'
+import { SOCIAL_PROVIDERS, SOCIAL_ICONS } from '../../../mocks/login'
+import './Login.css'
+
+interface SocialButtonsProps {
+  onSocialLogin: (provider: string) => void
+}
+
+function SocialButtons({ onSocialLogin }: SocialButtonsProps) {
+  return (
+    <div className='social-login'>
+      <div className='social-divider'>
+        <span>or continue with</span>
+      </div>
+      <div className='social-buttons'>
+        {SOCIAL_PROVIDERS.map(provider => (
+          <button
+            key={provider}
+            type='button'
+            className={`social-btn ${provider.toLowerCase()}`}
+            onClick={() => onSocialLogin(provider)}
+          >
+            <i className={`bx ${SOCIAL_ICONS[provider]}`}></i>
+            <span>{provider}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function Login() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { login } = useUser()
+  const toast = useToast()
+  const [isSignup, setIsSignup] = useState(false)
+
+  // Form states
+  const [loginData, setLoginData] = useState<{ email: string; password: string }>({ email: '', password: '' })
+  const [signupData, setSignupData] = useState<{ txt: string; email: string; password: string }>({ txt: '', email: '', password: '' })
+
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value })
+  }
+
+  const handleSignupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSignupData({ ...signupData, [e.target.name]: e.target.value })
+  }
+
+  const handleSocialLogin = (provider: string) => {
+    toast.info(`${provider} login coming soon!`)
+  }
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (!loginData.email || !loginData.password) {
+      toast.error('Please fill in all fields')
+      return
+    }
+
+    try {
+      // Sanitize inputs
+      const sanitizedEmail = sanitizeInput(loginData.email) as string
+
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Check admin credentials
+      if (
+        sanitizedEmail === ADMIN_CREDENTIALS.email &&
+        loginData.password === ADMIN_CREDENTIALS.password
+      ) {
+        login(ADMIN_USER_DATA)
+        toast.success('Welcome, Admin!')
+        const from = (location.state as { from?: string })?.from || '/home'
+        navigate(from)
+        return
+      }
+
+      // Create regular user object
+      const userData = {
+        id: Date.now().toString(),
+        role: 'user',
+        username: sanitizedEmail.split('@')[0],
+        email: sanitizedEmail,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedEmail}`,
+        group: 'Member',
+        status: 'Online',
+        stats: {
+          rating: '0',
+          titlesWatched: 0,
+          comments: 0,
+          likesGiven: 0,
+          likesReceived: 0,
+          hoursWatched: 0,
+          addedToList: 0,
+          daysOnSite: 1,
+        },
+      }
+
+      login(userData)
+      toast.success('Welcome back! Login successful')
+
+      // Redirect to originally requested page or home
+      const from = (location.state as { from?: string })?.from || '/home'
+      navigate(from)
+    } catch (error) {
+      toast.error('Login failed. Please check your credentials and try again.')
+      console.error('Login error:', error)
+    }
+  }
+
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (!signupData.txt || !signupData.email || !signupData.password) {
+      toast.error('Please fill in all fields')
+      return
+    }
+
+    try {
+      // Sanitize inputs
+      const sanitizedData = {
+        username: sanitizeInput(signupData.txt) as string,
+        email: sanitizeInput(signupData.email) as string,
+      }
+
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Create complete user object for new signup
+      const userData = {
+        id: Date.now().toString(),
+        role: 'user',
+        username: sanitizedData.username,
+        email: sanitizedData.email,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedData.username}`,
+        group: 'Member',
+        status: 'Online',
+        stats: {
+          rating: '0',
+          titlesWatched: 0,
+          comments: 0,
+          likesGiven: 0,
+          likesReceived: 0,
+          hoursWatched: 0,
+          addedToList: 0,
+          daysOnSite: 1,
+        },
+      }
+
+      login(userData)
+      toast.success('Account created successfully! Welcome to Cadlix')
+      navigate('/home')
+    } catch (error) {
+      toast.error('Signup failed. Please try again.')
+      console.error('Signup error:', error)
+    }
+  }
+
+  return (
+    <div className='login-page'>
+      <div className='main'>
+        <input
+          type='checkbox'
+          id='chk'
+          aria-hidden='true'
+          checked={isSignup}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsSignup(e.target.checked)}
+        />
+
+        <div className='signup'>
+          <form onSubmit={handleSignup}>
+            <label htmlFor='chk' aria-hidden='true'>
+              Sign up
+            </label>
+            <input
+              type='text'
+              name='txt'
+              placeholder='User name'
+              required
+              value={signupData.txt}
+              onChange={handleSignupChange}
+            />
+            <input
+              type='email'
+              name='email'
+              placeholder='Email'
+              required
+              value={signupData.email}
+              onChange={handleSignupChange}
+            />
+            <input
+              type='password'
+              name='password'
+              placeholder='Password'
+              required
+              value={signupData.password}
+              onChange={handleSignupChange}
+            />
+            <button type='submit'>Sign up</button>
+            <SocialButtons onSocialLogin={handleSocialLogin} />
+          </form>
+        </div>
+
+        <div className='login'>
+          <form onSubmit={handleLogin}>
+            <label htmlFor='chk' aria-hidden='true'>
+              Login
+            </label>
+            <input
+              type='email'
+              name='email'
+              placeholder='Email'
+              required
+              value={loginData.email}
+              onChange={handleLoginChange}
+            />
+            <input
+              type='password'
+              name='password'
+              placeholder='Password'
+              required
+              value={loginData.password}
+              onChange={handleLoginChange}
+            />
+            <button type='submit'>Login</button>
+            <SocialButtons onSocialLogin={handleSocialLogin} />
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -49,7 +49,7 @@ body,
   background-color: var(--color-bg-dark);
 }
 
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
   --color-bg-dark: #081a2b;
   --color-bg-primary: #102840;
   --color-bg-secondary: #173754;

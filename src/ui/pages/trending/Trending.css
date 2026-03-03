@@ -61,7 +61,9 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .period-tab:hover {
@@ -90,10 +92,10 @@
 }
 
 .trending-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at top right, rgba(255, 61, 110, 0.10) 0%, transparent 65%);
+  background: radial-gradient(ellipse at top right, rgba(255, 61, 110, 0.1) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -282,7 +284,9 @@
   overflow: hidden;
   background: var(--color-bg-card);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .trending-card:hover {
@@ -334,7 +338,7 @@
   padding: 3px 7px;
   border-radius: 6px;
   backdrop-filter: blur(6px);
-  background: rgba(46, 204, 113, 0.20);
+  background: rgba(46, 204, 113, 0.2);
   color: #2ecc71;
   border: 1px solid rgba(46, 204, 113, 0.35);
 }
