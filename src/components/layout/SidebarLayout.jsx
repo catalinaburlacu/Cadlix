@@ -5,21 +5,7 @@ import { useTheme } from '../../context/useTheme.js'
 import { useToast } from '../../hooks/useToast.js'
 import '../../ui/pages/home/Home.css'
 import Button from '../common/Button.jsx'
-
-const SIDEBAR_STORAGE_KEY = 'cadlix_sidebar_state'
-
-const MAIN_NAV_ITEMS = [
-  { id: 'dashboard', label: 'Dashboard', icon: 'bx-grid-alt', path: '/home' },
-  { id: 'trending', label: 'Trending', icon: 'bx-trending-up', path: '/trending' },
-  { id: 'explore', label: 'Explore', icon: 'bx-compass', path: '/explore' },
-  { id: 'favorites', label: 'Favorites', icon: 'bx-heart', path: '#favorites' },
-  { id: 'history', label: 'History', icon: 'bx-history', path: '/history' },
-]
-
-const SETTINGS_NAV_ITEMS = [
-  { id: 'settings', label: 'Settings', icon: 'bx-cog', path: '/settings' },
-  { id: 'help', label: 'Help & Support', icon: 'bx-help-circle', path: '#help' },
-]
+import { SIDEBAR_STORAGE_KEY, MAIN_NAV_ITEMS, SETTINGS_NAV_ITEMS } from '../../mocks/sidebar.js'
 
 function NavItem({ item }) {
   const location = useLocation()

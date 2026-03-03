@@ -3,11 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import { sanitizeInput } from "../../../utils/security.js";
-import { ADMIN_CREDENTIALS, ADMIN_USER_DATA } from "../../../utils/constants.js";
+import { ADMIN_CREDENTIALS, ADMIN_USER_DATA } from "../../../mocks/constants.js";
+import { SOCIAL_PROVIDERS, SOCIAL_ICONS } from "../../../mocks/login.js";
 import "./Login.css";
-
-const SOCIAL_PROVIDERS = ["Google", "Facebook", "Apple"];
-const SOCIAL_ICONS = { Google: "bxl-google", Facebook: "bxl-facebook", Apple: "bxl-apple" };
 
 function SocialButtons({ onSocialLogin }) {
   return (

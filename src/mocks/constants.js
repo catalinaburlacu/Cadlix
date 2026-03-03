@@ -1,7 +1,3 @@
-/**
- * Application Constants
- */
-
 // Tabs Configuration
 export const CONTENT_TABS = [
   { id: 'watching', label: 'Watching' },

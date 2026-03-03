@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
-import { MOCK_MEDIA_LIBRARY, MOCK_VIDEOS } from "../../../utils/constants.js";
+import { MOCK_MEDIA_LIBRARY, MOCK_VIDEOS } from "../../../mocks/constants.js";
 import "./VideoPlayer.css";
 
 const LIST_OPTIONS = [

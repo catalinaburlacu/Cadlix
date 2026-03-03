@@ -4,41 +4,8 @@ import Button from '../../../components/common/Button.jsx'
 import Input from '../../../components/common/Input.jsx'
 import { useUser } from '../../../context/useUser.js'
 import { useToast } from '../../../hooks/useToast.js'
+import { SECTIONS, DEFAULT_SETTINGS } from '../../../mocks/settings.js'
 import './Settings.css'
-
-const SECTIONS = [
-  { id: 'playback',       label: 'Playback',       icon: 'bx-play-circle' },
-  { id: 'notifications',  label: 'Notifications',  icon: 'bx-bell' },
-  { id: 'privacy',        label: 'Privacy',        icon: 'bx-lock' },
-  { id: 'appearance',     label: 'Appearance',     icon: 'bx-palette' },
-  { id: 'security',       label: 'Security',       icon: 'bx-shield' },
-]
-
-const DEFAULT_SETTINGS = {
-  playback: {
-    quality: 'auto',
-    autoplay: true,
-    skipIntro: false,
-    subtitleLang: 'off',
-  },
-  notifications: {
-    newReleases: true,
-    recommendations: true,
-    accountActivity: true,
-    promotions: false,
-  },
-  privacy: {
-    profileVisibility: 'public',
-    trackHistory: true,
-    shareActivity: false,
-    allowDataCollection: true,
-  },
-  appearance: {
-    language: 'en',
-    region: 'us',
-    subtitleSize: 'medium',
-  },
-}
 
 function SettingsRow({ label, description, children }) {
   return (

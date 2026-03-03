@@ -5,7 +5,7 @@ import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
 import Input from "../../../components/common/Input.jsx";
 import { SkeletonAvatar, SkeletonStats } from "../../../components/common/Skeleton.jsx";
-import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS } from "../../../utils/constants.js";
+import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS } from "../../../mocks/constants.js";
 import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
 import PropTypes from 'prop-types';
 import "./Profile.css";
