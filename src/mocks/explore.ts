@@ -1,4 +1,4 @@
-interface CarouselItem {
+export interface CarouselItem {
   title: string
   meta: string
 }

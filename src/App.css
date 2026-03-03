@@ -12,11 +12,6 @@ body,
   padding: 0;
 }
 
-#root {
-  width: 100%;
-  height: 100%;
-}
-
 .app {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-gradient-2) 100%);

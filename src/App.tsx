@@ -1,7 +1,6 @@
 import { Suspense, lazy } from 'react'
 import type { ComponentType } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { ThemeProvider } from './context/ThemeProvider'
 import './App.css'
 
 const Login = lazy(() => import('@pages/login/Login'))
@@ -42,41 +41,39 @@ const routes: { public: RouteConfig[]; protected: RouteConfig[] } = {
 
 function App() {
   return (
-    <ThemeProvider>
-      <div className='app'>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            {routes.public.map(({ path, element: Component }) => (
-              <Route key={path} path={path} element={<Component />} />
-            ))}
+    <div className='app'>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {routes.public.map(({ path, element: Component }) => (
+            <Route key={path} path={path} element={<Component />} />
+          ))}
 
-            {routes.protected.map(({ path, element: Component }) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  <ProtectedRoute>
-                    <Component />
-                  </ProtectedRoute>
-                }
-              />
-            ))}
-
+          {routes.protected.map(({ path, element: Component }) => (
             <Route
-              path='/admin'
+              key={path}
+              path={path}
               element={
-                <AdminRoute>
-                  <Admin />
-                </AdminRoute>
+                <ProtectedRoute>
+                  <Component />
+                </ProtectedRoute>
               }
             />
+          ))}
 
-            <Route path='/' element={<Navigate to='/home' replace />} />
-            <Route path='*' element={<Navigate to='/home' replace />} />
-          </Routes>
-        </Suspense>
-      </div>
-    </ThemeProvider>
+          <Route
+            path='/admin'
+            element={
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            }
+          />
+
+          <Route path='/' element={<Navigate to='/home' replace />} />
+          <Route path='*' element={<Navigate to='/home' replace />} />
+        </Routes>
+      </Suspense>
+    </div>
   )
 }
 

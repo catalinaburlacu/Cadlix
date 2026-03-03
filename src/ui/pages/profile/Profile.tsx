@@ -5,7 +5,7 @@ import { useToast } from '../../../hooks/useToast'
 import Button from '../../../components/common/Button'
 import Input from '../../../components/common/Input'
 import { SkeletonAvatar, SkeletonStats } from '../../../components/common/Skeleton'
-import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS } from '../../../mocks/constants'
+import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS, CONTENT_TABS } from '../../../mocks/constants'
 import SidebarLayout from '../../../components/layout/SidebarLayout'
 import './Profile.css'
 
@@ -15,14 +15,6 @@ interface StatCardProps {
   icon: string
   highlight?: boolean
 }
-
-const TABS = [
-  { id: 'watching', label: 'Watching' },
-  { id: 'planned', label: 'Planned' },
-  { id: 'completed', label: 'Completed' },
-  { id: 'dropped', label: 'Dropped' },
-  { id: 'favorites', label: 'Favorites' },
-]
 
 const StatCard = memo(function StatCard({ value, label, icon, highlight }: StatCardProps) {
   return (
@@ -635,7 +627,7 @@ export default function Profile() {
 
           <nav className='tabs-container' aria-label='Content tabs'>
             <div className='tabs' role='tablist'>
-              {TABS.map(tab => (
+              {CONTENT_TABS.map(tab => (
                 <button
                   key={tab.id}
                   role='tab'
@@ -736,7 +728,7 @@ export default function Profile() {
                 <div className='empty-state'>
                   <i className='bx bx-inbox empty-icon' aria-hidden='true'></i>
                   <p className='empty-message'>
-                    No entries found in {TABS.find(t => t.id === activeTab)?.label.toLowerCase()}
+                    No entries found in {CONTENT_TABS.find(t => t.id === activeTab)?.label.toLowerCase()}
                   </p>
                   <Button variant='secondary' size='small'>
                     <i className='bx bx-plus' aria-hidden='true'></i>

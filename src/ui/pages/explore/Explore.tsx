@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react'
 import SidebarLayout from '../../../components/layout/SidebarLayout'
 import { exploreCategories, carouselRows } from '../../../mocks/explore'
+import type { CarouselItem } from '../../../mocks/explore'
 import '../home/Home.css'
 import './Explore.css'
-
-interface CarouselItem {
-  title: string
-  meta: string
-}
 
 function getVisibleItems(items: CarouselItem[], start: number, count: number): CarouselItem[] {
   return Array.from({ length: count }, (_, offset) => {

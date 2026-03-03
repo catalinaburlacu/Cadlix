@@ -43,7 +43,7 @@ export default function Login() {
 
   // Form states
   const [loginData, setLoginData] = useState<{ email: string; password: string }>({ email: '', password: '' })
-  const [signupData, setSignupData] = useState<{ txt: string; email: string; password: string }>({ txt: '', email: '', password: '' })
+  const [signupData, setSignupData] = useState<{ username: string; email: string; password: string }>({ username: '', email: '', password: '' })
 
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value })
@@ -120,7 +120,7 @@ export default function Login() {
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!signupData.txt || !signupData.email || !signupData.password) {
+    if (!signupData.username || !signupData.email || !signupData.password) {
       toast.error('Please fill in all fields')
       return
     }
@@ -128,7 +128,7 @@ export default function Login() {
     try {
       // Sanitize inputs
       const sanitizedData = {
-        username: sanitizeInput(signupData.txt) as string,
+        username: sanitizeInput(signupData.username) as string,
         email: sanitizeInput(signupData.email) as string,
       }
 
@@ -183,10 +183,10 @@ export default function Login() {
             </label>
             <input
               type='text'
-              name='txt'
+              name='username'
               placeholder='User name'
               required
-              value={signupData.txt}
+              value={signupData.username}
               onChange={handleSignupChange}
             />
             <input

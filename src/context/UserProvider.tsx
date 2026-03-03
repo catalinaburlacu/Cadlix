@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { UserContext } from './UserContext'
-import { defaultUser } from './userData'
+import { DEFAULT_USER_DATA } from '../mocks/constants'
 import type { User, ChildrenProps } from '@/types'
 
 const USER_STORAGE_KEY = 'cadlix_user'
@@ -13,11 +13,11 @@ export function UserProvider({ children }: ChildrenProps) {
       if (!savedUser) return null
       const parsed = JSON.parse(savedUser)
       return {
-        ...defaultUser,
+        ...DEFAULT_USER_DATA,
         ...parsed,
-        stats: { ...defaultUser.stats, ...parsed.stats },
-        watchList: parsed.watchList?.length ? parsed.watchList : defaultUser.watchList,
-        watchHistory: parsed.watchHistory?.length ? parsed.watchHistory : defaultUser.watchHistory,
+        stats: { ...DEFAULT_USER_DATA.stats, ...parsed.stats },
+        watchList: parsed.watchList?.length ? parsed.watchList : DEFAULT_USER_DATA.watchList,
+        watchHistory: parsed.watchHistory?.length ? parsed.watchHistory : DEFAULT_USER_DATA.watchHistory,
       }
     } catch {
       return null
@@ -53,7 +53,7 @@ export function UserProvider({ children }: ChildrenProps) {
     }
   }, [isAuthenticated])
 
-  const login = useCallback((userData: User = defaultUser) => {
+  const login = useCallback((userData: User = DEFAULT_USER_DATA) => {
     setUser(userData)
     setIsAuthenticated(true)
   }, [])

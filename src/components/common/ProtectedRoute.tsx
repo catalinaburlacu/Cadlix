@@ -1,13 +1,8 @@
-import type { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useUser } from '../../context/useUser'
+import type { ChildrenProps } from '@/types'
 
-interface ProtectedRouteProps {
-  children: ReactNode
-  fallback?: ReactNode
-}
-
-export default function ProtectedRoute({ children, fallback = null }: ProtectedRouteProps) {
+export default function ProtectedRoute({ children }: ChildrenProps) {
   const { isAuthenticated, user } = useUser()
   const location = useLocation()
 
@@ -15,5 +10,5 @@ export default function ProtectedRoute({ children, fallback = null }: ProtectedR
     return <Navigate to='/login' state={{ from: location.pathname }} replace />
   }
 
-  return fallback || children
+  return children
 }
