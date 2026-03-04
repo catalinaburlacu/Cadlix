@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
 import { exploreCategories, carouselRows } from '../../../mocks/explore.js'
+import SearchBar from './SearchBar.jsx'
 import '../home/Home.css'
 import './Explore.css'
 
@@ -52,8 +53,13 @@ export default function Explore() {
     >
       <div className='page-content explore-content'>
         <section className='explore-intro'>
-          <h2>Quickly search for your favorite content</h2>
-          <p>Browse titles by category for faster discovery and better organization.</p>
+          <div className='explore-intro-content'>
+            <h2>Quickly search for your favorite content</h2>
+            <p>Browse titles by category for faster discovery and better organization.</p>
+          </div>
+          <div className='explore-intro-search'>
+            <SearchBar />
+          </div>
         </section>
 
         <section className='explore-categories-grid'>
