@@ -31,6 +31,84 @@ export const exploreCategories = [
   },
 ]
 
+export const MOVIE_DATABASE = [
+  { id: 'explore-1', title: 'Attack on Titan', year: 2013, rating: 9.1, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=AOT' },
+  { id: 'explore-2', title: 'Jujutsu Kaisen', year: 2020, rating: 8.7, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=JJK' },
+  { id: 'explore-3', title: 'Demon Slayer', year: 2019, rating: 8.9, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=DS' },
+  { id: 'explore-4', title: 'My Hero Academia', year: 2016, rating: 8.4, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MHA' },
+  { id: 'explore-5', title: 'Bleach', year: 2004, rating: 8.2, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=BL' },
+  { id: 'explore-6', title: 'One Punch Man', year: 2015, rating: 8.5, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=OPM' },
+  { id: 'explore-7', title: 'Chainsaw Man', year: 2022, rating: 8.3, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=CSD' },
+  { id: 'explore-8', title: 'Solo Leveling', year: 2024, rating: 8.6, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=SL' },
+  { id: 'explore-9', title: 'Fullmetal Alchemist', year: 2009, rating: 9.1, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FMA' },
+  { id: 'explore-10', title: 'Mob Psycho 100', year: 2016, rating: 8.7, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MP100' },
+  { id: 'explore-11', title: 'Your Name', year: 2016, rating: 8.8, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=YN' },
+  { id: 'explore-12', title: 'Horimiya', year: 2021, rating: 8.5, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=HR' },
+  { id: 'explore-13', title: 'Kaguya-sama: Love is War', year: 2019, rating: 8.6, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=KS' },
+  { id: 'explore-14', title: 'Toradora', year: 2008, rating: 8.4, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=TR' },
+  { id: 'explore-15', title: 'Clannad', year: 2007, rating: 8.6, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=CL' },
+  { id: 'explore-16', title: 'Fruits Basket', year: 2019, rating: 8.7, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FB' },
+  { id: 'explore-17', title: 'A Silent Voice', year: 2016, rating: 8.9, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=ASS' },
+  { id: 'explore-18', title: 'Weathering With You', year: 2019, rating: 8.3, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=WWY' },
+  { id: 'explore-19', title: 'Kimi ni Todoke', year: 2010, rating: 8.4, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=KNT' },
+  { id: 'explore-20', title: 'ReLIFE', year: 2016, rating: 8.3, type: 'Anime', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=RL' },
+  { id: 'explore-21', title: 'Mad Max: Fury Road', year: 2015, rating: 8.1, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MM' },
+  { id: 'explore-22', title: 'John Wick', year: 2014, rating: 7.4, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=JW' },
+  { id: 'explore-23', title: 'Gladiator', year: 2000, rating: 8.5, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=GL' },
+  { id: 'explore-24', title: 'Top Gun: Maverick', year: 2022, rating: 8.3, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=TG' },
+  { id: 'explore-25', title: 'The Batman', year: 2022, rating: 7.8, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=BT' },
+  { id: 'explore-26', title: 'The Dark Knight', year: 2008, rating: 9.0, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=DK' },
+  { id: 'explore-27', title: 'Dune: Part Two', year: 2024, rating: 8.6, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=DU' },
+  { id: 'explore-28', title: 'Mission: Impossible', year: 1996, rating: 7.9, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MI' },
+  { id: 'explore-29', title: 'The Matrix', year: 1999, rating: 8.7, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MX' },
+  { id: 'explore-30', title: 'Inception', year: 2010, rating: 8.8, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=IN' },
+  { id: 'explore-31', title: 'Interstellar', year: 2014, rating: 8.7, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=INT' },
+  { id: 'explore-32', title: 'The Godfather', year: 1972, rating: 9.2, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=GF' },
+  { id: 'explore-33', title: 'Fight Club', year: 1999, rating: 8.8, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FC' },
+  { id: 'explore-34', title: 'Whiplash', year: 2014, rating: 8.5, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=WH' },
+  { id: 'explore-35', title: 'The Social Network', year: 2010, rating: 7.8, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=SN' },
+  { id: 'explore-36', title: 'Parasite', year: 2019, rating: 8.5, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=PR' },
+  { id: 'explore-37', title: 'La La Land', year: 2016, rating: 8.0, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=LL' },
+  { id: 'explore-38', title: 'Forrest Gump', year: 1994, rating: 8.8, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FG' },
+  { id: 'explore-39', title: 'Joker', year: 2019, rating: 8.4, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=JK' },
+  { id: 'explore-40', title: 'Oppenheimer', year: 2023, rating: 8.4, type: 'Movie', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=OP' },
+  { id: 'explore-41', title: 'Breaking Bad', year: 2008, rating: 9.5, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=BB' },
+  { id: 'explore-42', title: 'Mindhunter', year: 2017, rating: 8.6, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MH' },
+  { id: 'explore-43', title: 'True Detective', year: 2014, rating: 8.9, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=TD' },
+  { id: 'explore-44', title: 'Narcos', year: 2015, rating: 8.1, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=NC' },
+  { id: 'explore-45', title: 'Ozark', year: 2017, rating: 8.4, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=OZ' },
+  { id: 'explore-46', title: 'Peaky Blinders', year: 2013, rating: 8.8, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=PB' },
+  { id: 'explore-47', title: 'Better Call Saul', year: 2015, rating: 9.0, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=BCS' },
+  { id: 'explore-48', title: 'Money Heist', year: 2017, rating: 8.2, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=MH2' },
+  { id: 'explore-49', title: 'The Sopranos', year: 1999, rating: 9.2, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=SP' },
+  { id: 'explore-50', title: 'Fargo', year: 2014, rating: 8.9, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FD' },
+  { id: 'explore-51', title: 'Dark', year: 2017, rating: 8.7, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=DK2' },
+  { id: 'explore-52', title: 'Stranger Things', year: 2016, rating: 8.7, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=ST' },
+  { id: 'explore-53', title: 'The Expanse', year: 2015, rating: 8.5, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=EX' },
+  { id: 'explore-54', title: 'Severance', year: 2022, rating: 8.7, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=SV' },
+  { id: 'explore-55', title: 'Silo', year: 2023, rating: 8.1, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=SL2' },
+  { id: 'explore-56', title: 'Westworld', year: 2016, rating: 8.5, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=WW' },
+  { id: 'explore-57', title: 'Black Mirror', year: 2011, rating: 8.7, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=BM' },
+  { id: 'explore-58', title: 'Foundation', year: 2021, rating: 7.5, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FD2' },
+  { id: 'explore-59', title: 'Lost in Space', year: 2018, rating: 7.3, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=LS' },
+  { id: 'explore-60', title: 'Altered Carbon', year: 2018, rating: 8.0, type: 'Series', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=AC' },
+  { id: 'actor-1', title: 'Ryan Reynolds', year: 1976, rating: null, type: 'Actor', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=RR' },
+  { id: 'actor-2', title: 'Florence Pugh', year: 1996, rating: null, type: 'Actor', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=FP' },
+  { id: 'actor-3', title: 'Pedro Pascal', year: 1975, rating: null, type: 'Actor', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=PP' },
+  { id: 'actor-4', title: 'Ana de Armas', year: 1988, rating: null, type: 'Actor', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=AdA' },
+  { id: 'actor-5', title: 'Timothee Chalamet', year: 1995, rating: null, type: 'Actor', poster: 'https://via.placeholder.com/60x85/1a1a2e/e0e0e0?text=TC' },
+]
+
+export function searchMovies(query) {
+  if (!query || query.trim().length === 0) return []
+  const q = query.toLowerCase().trim()
+  return MOVIE_DATABASE.filter(
+    movie =>
+      movie.title.toLowerCase().includes(q) ||
+      movie.type.toLowerCase().includes(q)
+  ).slice(0, 10)
+}
+
 export const carouselRows = [
   {
     id: 'anime-action',
