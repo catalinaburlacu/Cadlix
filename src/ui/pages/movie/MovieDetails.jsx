@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
 import Button from '../../../components/common/Button.jsx'
 import { TRENDING_ROW, NEW_RELEASES, TOP_RATED } from '../../../mocks/home.js'
@@ -125,10 +125,10 @@ export default function MovieDetails() {
             </div>
 
             <div className='movie-details-actions'>
-              <Button variant='primary' size='large'>
+              <Link to={`/watch/${movie.id}`} className='btn btn-primary btn-large'>
                 <i className='bx bx-play'></i>
                 Watch Now
-              </Button>
+              </Link>
               <Button variant='ghost' size='large'>
                 <i className='bx bx-plus'></i>
                 Add to List

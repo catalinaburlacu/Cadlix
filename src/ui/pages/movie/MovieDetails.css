@@ -135,6 +135,35 @@
   margin-bottom: 32px;
 }
 
+.movie-details-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.movie-details-actions .btn-primary {
+  background: var(--color-accent-primary);
+  color: white;
+}
+
+.movie-details-actions .btn-primary:hover {
+  background: color-mix(in srgb, var(--color-accent-primary) 85%, white);
+}
+
+.movie-details-actions .btn-large {
+  padding: 14px 32px;
+  font-size: 1.1rem;
+}
+
 .movie-details-description {
   margin-bottom: 24px;
 }
