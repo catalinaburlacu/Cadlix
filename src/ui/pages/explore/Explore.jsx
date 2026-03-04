@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
-import { exploreCategories, carouselRows } from '../../../mocks/explore.js'
+import { exploreCategories, carouselRows, MOVIE_DATABASE } from '../../../mocks/explore.js'
 import SearchBar from './SearchBar.jsx'
 import '../home/Home.css'
 import './Explore.css'
@@ -94,19 +94,28 @@ export default function Explore() {
                     <h3>{row.title}</h3>
                   </header>
                   <div className='media-row-track'>
-                    {visibleItems.map((item, idx) => (
-                      <Link
-                        key={`${row.id}-${item.title}-${start}-${idx}`}
-                        to={`/movie/${item.id}`}
-                        className='media-card'
-                      >
-                        <div className='media-card-image'></div>
-                        <div className='media-card-info'>
-                          <h4>{item.title}</h4>
-                          <p>{item.meta}</p>
-                        </div>
-                      </Link>
-                    ))}
+                    {visibleItems.map((item, idx) => {
+                      const movieData = MOVIE_DATABASE.find(m => m.id === item.id)
+                      return (
+                        <Link
+                          key={`${row.id}-${item.title}-${start}-${idx}`}
+                          to={`/movie/${item.id}`}
+                          className='media-card'
+                        >
+                          <div className='media-card-image'>
+                            <img 
+                              src={movieData?.poster || `https://via.placeholder.com/120x180?text=${encodeURIComponent(item.title)}`} 
+                              alt={item.title} 
+                              loading='lazy' 
+                            />
+                          </div>
+                          <div className='media-card-info'>
+                            <h4>{item.title}</h4>
+                            <p>{item.meta}</p>
+                          </div>
+                        </Link>
+                      )
+                    })}
                   </div>
                 </article>
               )

@@ -202,28 +202,34 @@
 
 .media-row-track {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   overflow: hidden;
 }
 
 .media-card {
-  flex: 0 0 calc((100% - 36px) / 4);
-  background: color-mix(in srgb, var(--color-bg-card) 92%, var(--color-bg-secondary));
-  border: 1px solid color-mix(in srgb, var(--color-accent-blue) 22%, var(--color-bg-secondary));
+  flex: 0 0 calc((100% - 48px) / 4);
+  display: flex;
+  flex-direction: column;
   border-radius: 12px;
   overflow: hidden;
-  animation: mediaFadeIn 300ms ease;
+  background: var(--color-bg-card);
   cursor: pointer;
-  text-align: left;
-  padding: 0;
-  color: inherit;
-  font-family: inherit;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   text-decoration: none;
-  display: block;
+  color: inherit;
+}
+
+.media-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 
 .media-card-image {
-  height: 104px;
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
   background: linear-gradient(
     135deg,
     color-mix(in srgb, var(--color-accent-blue) 32%, transparent),
@@ -231,20 +237,41 @@
   );
 }
 
+.media-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.media-card:hover .media-card-image img {
+  transform: scale(1.05);
+}
+
 .media-card-info {
-  padding: 10px 12px 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .media-card-info h4 {
-  margin: 0 0 4px;
-  font-size: 0.9rem;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
   color: var(--color-text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3;
 }
 
 .media-card-info p {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 @keyframes mediaFadeIn {
