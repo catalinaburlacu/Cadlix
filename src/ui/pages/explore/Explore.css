@@ -183,6 +183,8 @@
   padding: 0;
   color: inherit;
   font-family: inherit;
+  text-decoration: none;
+  display: block;
 }
 
 .media-card-image {

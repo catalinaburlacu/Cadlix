@@ -38,6 +38,9 @@
   border: 1px solid color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
   border-radius: 14px;
   padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .history-main {
