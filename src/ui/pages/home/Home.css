@@ -1119,11 +1119,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
-}
-
-.row-card:hover .row-card-overlay {
-  background: rgba(0, 0, 0, 0.45);
 }
 
 .row-card-play-btn {
@@ -1141,11 +1136,7 @@
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
-}
-
-.row-card:hover .row-card-play-btn {
-  opacity: 1;
-  transform: scale(1);
+  pointer-events: none;
 }
 
 .row-card-score {
