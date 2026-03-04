@@ -3,6 +3,7 @@ export const SIDEBAR_STORAGE_KEY = 'cadlix_sidebar_state';
 export const MAIN_NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: 'bx-grid-alt', path: '/home' },
   { id: 'trending', label: 'Trending', icon: 'bx-trending-up', path: '/trending' },
+  { id: 'leaderboard', label: 'Leaderboard', icon: 'bx-trophy', path: '/leaderboard' },
   { id: 'explore', label: 'Explore', icon: 'bx-compass', path: '/explore' },
   { id: 'favorites', label: 'Favorites', icon: 'bx-heart', path: '#favorites' },
   { id: 'history', label: 'History', icon: 'bx-history', path: '/history' },
