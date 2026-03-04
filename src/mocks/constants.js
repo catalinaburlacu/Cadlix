@@ -5,7 +5,7 @@ export const CONTENT_TABS = [
   { id: 'completed', label: 'Completed' },
   { id: 'dropped', label: 'Dropped' },
   { id: 'favorites', label: 'Favorites' },
-];
+]
 
 // Content Types
 export const CONTENT_TYPES = [
@@ -15,7 +15,7 @@ export const CONTENT_TYPES = [
   { value: 'documentary', label: 'Documentary' },
   { value: 'miniseries', label: 'Mini-Series' },
   { value: 'special', label: 'Special' },
-];
+]
 
 // Content Genres
 export const CONTENT_GENRES = [
@@ -38,7 +38,7 @@ export const CONTENT_GENRES = [
   { value: 'supernatural', label: 'Supernatural' },
   { value: 'thriller', label: 'Thriller' },
   { value: 'biography', label: 'Biography' },
-];
+]
 
 // Sort Options
 export const SORT_OPTIONS = [
@@ -47,13 +47,13 @@ export const SORT_OPTIONS = [
   { value: 'score', label: 'Score' },
   { value: 'date', label: 'Date Added' },
   { value: 'duration', label: 'Duration' },
-];
+]
 
 // Admin credentials (checked on login)
 export const ADMIN_CREDENTIALS = {
   email: 'admin@cadlix.com',
   password: 'admin123',
-};
+}
 
 // Admin user account (pre-existing)
 export const ADMIN_USER_DATA = {
@@ -77,7 +77,7 @@ export const ADMIN_USER_DATA = {
   },
   watchList: [],
   watchHistory: [],
-};
+}
 
 // Default User Data
 export const DEFAULT_USER_DATA = {
@@ -234,4 +234,98 @@ export const DEFAULT_USER_DATA = {
       progress: '52:00',
     },
   ],
-};
+}
+
+export const MOCK_VIDEOS = [
+  {
+    id: 'tr-1',
+    title: 'The Last of Us',
+    category: 'Series',
+    type: 'tv',
+    genre: 'Drama',
+    series: 'Season 1',
+    episode: 'Episode 1',
+    durationSec: 3000,
+    score: 9.2,
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    id: 'tr-2',
+    title: 'Oppenheimer',
+    category: 'Movie',
+    type: 'movie',
+    genre: 'Drama',
+    series: '-',
+    episode: '-',
+    durationSec: 5400,
+    score: 8.9,
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    id: 't-1',
+    title: 'The Last of Us',
+    category: 'Series',
+    type: 'tv',
+    genre: 'Drama',
+    series: 'Season 1',
+    episode: 'Episode 1',
+    durationSec: 3000,
+    score: 9.2,
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    id: 't-2',
+    title: 'Oppenheimer',
+    category: 'Movie',
+    type: 'movie',
+    genre: 'Drama',
+    series: '-',
+    episode: '-',
+    durationSec: 5400,
+    score: 8.9,
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    id: 't-3',
+    title: 'Severance',
+    category: 'Series',
+    type: 'tv',
+    genre: 'Thriller',
+    series: 'Season 1',
+    episode: 'Episode 1',
+    durationSec: 2700,
+    score: 8.7,
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+  {
+    id: 't-4',
+    title: 'Dune: Part Two',
+    category: 'Movie',
+    type: 'movie',
+    genre: 'Sci-Fi',
+    series: '-',
+    episode: '-',
+    durationSec: 6600,
+    score: 8.5,
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+  },
+]
+
+export const MOCK_MEDIA_LIBRARY = [
+  {
+    id: 'tr-1',
+    title: 'The Last of Us',
+    category: 'Series',
+    type: 'tv',
+    genre: 'Drama',
+    score: 9.2,
+  },
+  {
+    id: 'tr-2',
+    title: 'Oppenheimer',
+    category: 'Movie',
+    type: 'movie',
+    genre: 'Drama',
+    score: 8.9,
+  },
+]
