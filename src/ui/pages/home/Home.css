@@ -329,7 +329,7 @@
 }
 
 .sidebar.collapsed .active-indicator {
-  right: 8px;
+  display: none;
 }
 
 /* Footer */
