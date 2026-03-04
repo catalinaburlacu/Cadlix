@@ -45,6 +45,17 @@ body,
   --color-text-secondary: #2d5f86;
   --color-text-muted: #5f83a3;
 
+  --explore-icon-color: var(--color-accent-primary);
+  --explore-icon-bg-start: color-mix(in srgb, var(--color-accent-primary) 35%, transparent);
+  --explore-icon-bg-end: color-mix(in srgb, var(--color-accent-primary) 22%, transparent);
+  --explore-icon-border: color-mix(in srgb, var(--color-accent-primary) 45%, transparent);
+  --explore-chip-bg: #fff6c7;
+  --explore-chip-border: #f2d773;
+  --explore-chip-text: #8b6b00;
+  --explore-chip-bg-hover: #f8e79f;
+  --explore-chip-border-hover: #e3c34b;
+  --explore-chip-text-hover: #6f5200;
+
   color: var(--color-text-secondary);
   background-color: var(--color-bg-dark);
 }
@@ -60,6 +71,17 @@ body,
   --color-text-primary: #f2f8ff;
   --color-text-secondary: rgba(242, 248, 255, 0.9);
   --color-text-muted: rgba(222, 236, 250, 0.7);
+
+  --explore-icon-color: #c72f60;
+  --explore-icon-bg-start: rgba(199, 47, 96, 0.30);
+  --explore-icon-bg-end: rgba(199, 47, 96, 0.18);
+  --explore-icon-border: rgba(199, 47, 96, 0.55);
+  --explore-chip-bg: #cda52cbd;
+  --explore-chip-border: #c59922;
+  --explore-chip-text: #ffe8a8;
+  --explore-chip-bg-hover: #765d16;
+  --explore-chip-border-hover: #9f7b1c;
+  --explore-chip-text-hover: #fff2c8;
 
   color: var(--color-text-secondary);
   background-color: var(--color-bg-dark);
