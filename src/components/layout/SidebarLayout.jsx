@@ -170,7 +170,6 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
                 aria-pressed={isDark}
               >
                 <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'}`} aria-hidden='true'></i>
-                <span>{theme === 'dark' ? 'Night' : 'Day'}</span>
               </button>
               {user ? (
                 <button

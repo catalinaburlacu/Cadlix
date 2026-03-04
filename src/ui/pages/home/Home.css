@@ -451,12 +451,17 @@
 
 .theme-toggle-btn i {
   font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn:hover i {
+  transform: rotate(15deg);
 }
 
 .theme-toggle-btn:hover {
-  background: var(--color-bg-hover);
-  color: var(--color-text-primary);
-  border-color: var(--color-accent-blue);
+  background: linear-gradient(135deg, #f1c40f 0%, #ff3d6e 100%);
+  color: white;
+  border-color: transparent;
 }
 
 .theme-toggle-btn:focus-visible {
@@ -1073,11 +1078,11 @@
 
 .row-card {
   flex-shrink: 0;
-  width: 130px;
+  width: 160px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--color-bg-card);
   transition:
@@ -1088,8 +1093,8 @@
 }
 
 .row-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 
 .row-card-poster-wrap {
@@ -1171,14 +1176,14 @@
 }
 
 .row-card-body {
-  padding: 8px 10px 10px;
+  padding: 10px 12px 12px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 6px;
 }
 
 .row-card-title {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--color-text-primary);
   display: -webkit-box;
@@ -1189,8 +1194,9 @@
 }
 
 .row-card-meta {
-  font-size: 0.725rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 /* ===========================
