@@ -21,6 +21,7 @@ const Settings = lazy(() => import('@pages/settings/Settings'))
 const Admin = lazy(() => import('@pages/admin/Admin'))
 const MovieDetails = lazy(() => import('@pages/movie/MovieDetails'))
 const VideoPlayer = lazy(() => import('@pages/video/VideoPlayer'))
+const Leaderboard = lazy(() => import('@pages/leaderboard/Leaderboard'))
 
 import ProtectedRoute from '@components/common/ProtectedRoute'
 import AdminRoute from '@components/common/AdminRoute'
@@ -34,6 +35,7 @@ const routes = {
     { path: '/explore', element: Explore },
     { path: '/history', element: History },
     { path: '/trending', element: Trending },
+    { path: '/leaderboard', element: Leaderboard },
     { path: '/movie/:id', element: MovieDetails },
     { path: '/watch/:id', element: VideoPlayer },
   ],
