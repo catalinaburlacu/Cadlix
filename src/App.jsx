@@ -7,6 +7,11 @@ const Login = lazy(() => import('@pages/login/Login'))
 const Home = lazy(() => import('@pages/home/Home'))
 const Explore = lazy(() => import('@pages/explore/Explore'))
 const Profile = lazy(() => import('@pages/profile/Profile'))
+const ProfileWatching = lazy(() => import('@pages/profile/tabs/ProfileWatching'))
+const ProfilePlanned = lazy(() => import('@pages/profile/tabs/ProfilePlanned'))
+const ProfileCompleted = lazy(() => import('@pages/profile/tabs/ProfileCompleted'))
+const ProfileDropped = lazy(() => import('@pages/profile/tabs/ProfileDropped'))
+const ProfileFavorites = lazy(() => import('@pages/profile/tabs/ProfileFavorites'))
 const Subscriptions = lazy(() => import('@pages/subscriptions/Subscriptions'))
 const Payment = lazy(() => import('@pages/payment/Payment'))
 const History = lazy(() => import('@pages/history/History'))
@@ -28,7 +33,6 @@ const routes = {
     { path: '/trending', element: Trending }
   ],
   protected: [
-    { path: '/profile', element: Profile },
     { path: '/subscriptions', element: Subscriptions },
     { path: '/payment', element: Payment },
     { path: '/settings', element: Settings }
@@ -56,6 +60,23 @@ function App() {
                 }
               />
             ))}
+
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="watching" replace />} />
+              <Route path="watching" element={<ProfileWatching />} />
+              <Route path="planned" element={<ProfilePlanned />} />
+              <Route path="completed" element={<ProfileCompleted />} />
+              <Route path="dropped" element={<ProfileDropped />} />
+              <Route path="favorites" element={<ProfileFavorites />} />
+              <Route path="*" element={<Navigate to="watching" replace />} />
+            </Route>
 
             <Route
               path="/admin"
