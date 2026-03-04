@@ -13,6 +13,7 @@ const History = lazy(() => import('@pages/history/History'))
 const Trending = lazy(() => import('@pages/trending/Trending'))
 const Settings = lazy(() => import('@pages/settings/Settings'))
 const Admin = lazy(() => import('@pages/admin/Admin'))
+const MovieDetails = lazy(() => import('@pages/movie/MovieDetails'))
 
 import ProtectedRoute from '@components/common/ProtectedRoute'
 import AdminRoute from '@components/common/AdminRoute'
@@ -25,20 +26,21 @@ const routes = {
     { path: '/login', element: Login },
     { path: '/explore', element: Explore },
     { path: '/history', element: History },
-    { path: '/trending', element: Trending }
+    { path: '/trending', element: Trending },
+    { path: '/movie/:id', element: MovieDetails },
   ],
   protected: [
     { path: '/profile', element: Profile },
     { path: '/subscriptions', element: Subscriptions },
     { path: '/payment', element: Payment },
-    { path: '/settings', element: Settings }
-  ]
+    { path: '/settings', element: Settings },
+  ],
 }
 
 function App() {
   return (
     <ThemeProvider>
-      <div className="app">
+      <div className='app'>
         <Suspense fallback={<PageLoader />}>
           <Routes>
             {routes.public.map(({ path, element: Component }) => (
@@ -58,7 +60,7 @@ function App() {
             ))}
 
             <Route
-              path="/admin"
+              path='/admin'
               element={
                 <AdminRoute>
                   <Admin />
@@ -66,8 +68,8 @@ function App() {
               }
             />
 
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="*" element={<Navigate to="/home" replace />} />
+            <Route path='/' element={<Navigate to='/home' replace />} />
+            <Route path='*' element={<Navigate to='/home' replace />} />
           </Routes>
         </Suspense>
       </div>
