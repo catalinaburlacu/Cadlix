@@ -3,6 +3,7 @@ import { useUser } from "../../../../context/useUser.js";
 import Button from "../../../../components/common/Button.jsx";
 import Input from "../../../../components/common/Input.jsx";
 import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS } from "../../../../mocks/constants.js";
+import ProfilePageFrame from "./ProfilePageFrame.jsx";
 
 export default function ProfileTabPage({ tabId, label }) {
   const { user } = useUser();
@@ -51,7 +52,7 @@ export default function ProfileTabPage({ tabId, label }) {
   }, [tabId, searchQuery, selectedType, selectedGenre, selectedSort, watchList]);
 
   return (
-    <>
+    <ProfilePageFrame>
       <div className="filters-bar">
         <div className="search-container">
           <i className="bx bx-search search-icon" aria-hidden="true"></i>
@@ -197,6 +198,6 @@ export default function ProfileTabPage({ tabId, label }) {
           )}
         </div>
       </div>
-    </>
+    </ProfilePageFrame>
   );
 }
