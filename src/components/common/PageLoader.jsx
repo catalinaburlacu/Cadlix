@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import './PageLoader.css'
 
 /**
@@ -20,8 +19,4 @@ export default function PageLoader() {
       </div>
     </div>
   )
-}
-
-PageLoader.propTypes = {
-  message: PropTypes.string
 }
