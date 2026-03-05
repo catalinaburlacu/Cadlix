@@ -83,43 +83,31 @@ export default function Explore() {
         </section>
 
         <section className='explore-carousel-section'>
-          <div className='explore-carousel-list'>
-            {carouselRows.map(row => {
-              const start = carouselIndex[row.id] ?? 0
-              const visibleItems = getVisibleItems(row.items, start, 4)
-
-              return (
-                <article key={row.id} className='media-row'>
-                  <header className='media-row-header'>
-                    <h3>{row.title}</h3>
-                  </header>
-                  <div className='media-row-track'>
-                    {visibleItems.map((item, idx) => {
-                      const movieData = MOVIE_DATABASE.find(m => m.id === item.id)
-                      return (
-                        <Link
-                          key={`${row.id}-${item.title}-${start}-${idx}`}
-                          to={`/movie/${item.id}`}
-                          className='media-card'
-                        >
-                          <div className='media-card-image'>
-                            <img 
-                              src={movieData?.poster || `https://via.placeholder.com/120x180?text=${encodeURIComponent(item.title)}`} 
-                              alt={item.title} 
-                              loading='lazy' 
-                            />
-                          </div>
-                          <div className='media-card-info'>
-                            <h4>{item.title}</h4>
-                            <p>{item.meta}</p>
-                          </div>
-                        </Link>
-                      )
-                    })}
-                  </div>
-                </article>
-              )
-            })}
+          <div className='explore-grid'>
+            {carouselRows.flatMap(row => 
+              row.items.map((item, idx) => {
+                const movieData = MOVIE_DATABASE.find(m => m.id === item.id)
+                return (
+                  <Link
+                    key={`${row.id}-${item.id}-${idx}`}
+                    to={`/movie/${item.id}`}
+                    className='media-card'
+                  >
+                    <div className='media-card-image'>
+                      <img 
+                        src={movieData?.poster || `https://via.placeholder.com/120x180?text=${encodeURIComponent(item.title)}`} 
+                        alt={item.title} 
+                        loading='lazy' 
+                      />
+                    </div>
+                    <div className='media-card-info'>
+                      <h4>{item.title}</h4>
+                      <p>{item.meta}</p>
+                    </div>
+                  </Link>
+                )
+              })
+            )}
           </div>
         </section>
       </div>
