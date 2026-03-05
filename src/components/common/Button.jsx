@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './Button.css';
 
 /**
@@ -42,14 +41,3 @@ export default function Button({
     </button>
   );
 }
-
-Button.propTypes = {
-  variant: PropTypes.oneOf(['primary', 'secondary', 'danger', 'ghost', 'accent']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  isLoading: PropTypes.bool,
-  disabled: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  type: PropTypes.oneOf(['button', 'submit', 'reset']),
-  onClick: PropTypes.func,
-};

@@ -1,7 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/useUser.js';
-import PropTypes from 'prop-types';
-
 /**
  * ProtectedRoute - A wrapper component that redirects unauthenticated users to login
  * Usage: <ProtectedRoute><YourComponent /></ProtectedRoute>
@@ -17,8 +15,3 @@ export default function ProtectedRoute({ children, fallback = null }) {
 
   return fallback || children;
 }
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-  fallback: PropTypes.node,
-};

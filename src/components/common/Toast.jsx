@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { ToastContext } from '../../context/ToastContext.js';
 import './Toast.css';
 
@@ -45,10 +44,6 @@ export function ToastProvider({ children }) {
   );
 }
 
-ToastProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 /**
  * Toast Container Component
  */
@@ -61,11 +56,6 @@ function ToastContainer({ toasts, onRemove }) {
     </div>
   );
 }
-
-ToastContainer.propTypes = {
-  toasts: PropTypes.array.isRequired,
-  onRemove: PropTypes.func.isRequired,
-};
 
 /**
  * Individual Toast Component
@@ -94,10 +84,3 @@ function Toast({ id, message, type, onRemove }) {
     </div>
   );
 }
-
-Toast.propTypes = {
-  id: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['success', 'error', 'warning', 'info']).isRequired,
-  onRemove: PropTypes.func.isRequired,
-};

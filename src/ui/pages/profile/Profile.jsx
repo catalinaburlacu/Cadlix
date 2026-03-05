@@ -7,7 +7,6 @@ import Input from "../../../components/common/Input.jsx";
 import { SkeletonAvatar, SkeletonStats } from "../../../components/common/Skeleton.jsx";
 import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS } from "../../../mocks/constants.js";
 import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
-import PropTypes from 'prop-types';
 import "./Profile.css";
 
 const TABS = [
@@ -29,13 +28,6 @@ const StatCard = memo(function StatCard({ value, label, icon, highlight }) {
     </div>
   )
 })
-
-StatCard.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  label: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  highlight: PropTypes.bool,
-}
 
 export default function Profile() {
   const navigate = useNavigate()

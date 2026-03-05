@@ -1,7 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/useUser.js';
-import PropTypes from 'prop-types';
-
 /**
  * AdminRoute - Wraps routes accessible only to users with role === 'admin'.
  * Unauthenticated users go to /login; authenticated non-admins go to /home.
@@ -20,7 +18,3 @@ export default function AdminRoute({ children }) {
 
   return children;
 }
-
-AdminRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-};

@@ -1,5 +1,4 @@
 import React, { useId } from 'react';
-import PropTypes from 'prop-types';
 import './Input.css';
 
 /**
@@ -54,20 +53,3 @@ export default function Input({
     </div>
   );
 }
-
-Input.propTypes = {
-  label: PropTypes.string,
-  error: PropTypes.string,
-  helperText: PropTypes.string,
-  touched: PropTypes.bool,
-  icon: PropTypes.node,
-  className: PropTypes.string,
-  id: PropTypes.string,
-  required: PropTypes.bool,
-  type: PropTypes.string,
-  name: PropTypes.string,
-  value: PropTypes.string,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
-};
