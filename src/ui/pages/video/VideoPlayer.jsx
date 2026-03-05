@@ -47,6 +47,7 @@ export default function VideoPlayer() {
   const [showCaptions, setShowCaptions] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showSaveMenu, setShowSaveMenu] = useState(false)
 
   const controlsTimeoutRef = useRef(null)
 
@@ -314,7 +315,37 @@ export default function VideoPlayer() {
         </button>
 
         <div className='video-header'>
-          <h1>{videoItem.title}</h1>
+          <div className='video-header-top'>
+            <h1>{videoItem.title}</h1>
+            <div className='video-save-wrapper'>
+              <button
+                className='video-save-btn'
+                onClick={() => setShowSaveMenu(!showSaveMenu)}
+                aria-label='Save to list'
+              >
+                <i className='bx bx-bookmark-plus'></i>
+              </button>
+              {showSaveMenu && (
+                <div className='video-save-menu'>
+                  <div className='video-save-menu-header'>Save to list</div>
+                  {LIST_OPTIONS.map(option => (
+                    <button
+                      key={option.value}
+                      className={`video-save-option ${selectedList === option.value ? 'active' : ''}`}
+                      onClick={() => {
+                        setSelectedListManual(option.value)
+                        handleAssignList()
+                        setShowSaveMenu(false)
+                      }}
+                    >
+                      <i className={`bx ${selectedList === option.value ? 'bxs-bookmark' : 'bx-bookmark'}`}></i>
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           <p>
             {videoItem.category} | {videoItem.series}{' '}
             {videoItem.episode !== '-' ? `| ${videoItem.episode}` : ''}
@@ -426,23 +457,6 @@ export default function VideoPlayer() {
             </div>
           </div>
         </div>
-
-        <section className='video-list-panel'>
-          <h2>Choose List</h2>
-          <div className='video-list-controls'>
-            <select value={selectedList} onChange={e => setSelectedListManual(e.target.value)}>
-              {LIST_OPTIONS.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <button type='button' onClick={handleAssignList}>
-              Save in List
-            </button>
-          </div>
-          <p>When you pause or leave this page, history is updated with the current stop moment.</p>
-        </section>
       </div>
     </div>
   )
