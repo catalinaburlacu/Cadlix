@@ -12,6 +12,7 @@ const ProfilePlanned = lazy(() => import('@pages/profile/tabs/ProfilePlanned'))
 const ProfileCompleted = lazy(() => import('@pages/profile/tabs/ProfileCompleted'))
 const ProfileDropped = lazy(() => import('@pages/profile/tabs/ProfileDropped'))
 const ProfileFavorites = lazy(() => import('@pages/profile/tabs/ProfileFavorites'))
+const ProfileEdit = lazy(() => import('@pages/profile/tabs/ProfileEdit'))
 const Subscriptions = lazy(() => import('@pages/subscriptions/Subscriptions'))
 const Payment = lazy(() => import('@pages/payment/Payment'))
 const History = lazy(() => import('@pages/history/History'))
@@ -75,6 +76,7 @@ function App() {
               <Route path="completed" element={<ProfileCompleted />} />
               <Route path="dropped" element={<ProfileDropped />} />
               <Route path="favorites" element={<ProfileFavorites />} />
+              <Route path="edit" element={<ProfileEdit />} />
               <Route path="*" element={<Navigate to="watching" replace />} />
             </Route>
 

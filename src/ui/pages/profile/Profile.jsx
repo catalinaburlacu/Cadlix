@@ -1,5 +1,5 @@
-import React, { useState, useMemo, memo } from "react";
-import { useNavigate, NavLink, Outlet } from "react-router-dom";
+import React, { useState, useMemo, memo, useEffect } from "react";
+import { useNavigate, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import Button from "../../../components/common/Button.jsx";
@@ -37,9 +37,9 @@ StatCard.propTypes = {
 
 export default function Profile() {
   const navigate = useNavigate()
+  const routerLocation = useLocation()
   const { user, updateUser, logout } = useUser()
   const toast = useToast()
-  const [isEditOpen, setIsEditOpen] = useState(false)
   const [profileName, setProfileName] = useState('')
   const [profileEmail, setProfileEmail] = useState('')
   const [avatarFileName, setAvatarFileName] = useState('No file chosen')
@@ -50,13 +50,14 @@ export default function Profile() {
   const [repeatPassword, setRepeatPassword] = useState('')
   const [showBookmarks, setShowBookmarks] = useState('yes')
   const [gender, setGender] = useState('female')
-  const [location, setLocation] = useState('')
+  const [profileLocation, setProfileLocation] = useState('')
   const [timezone, setTimezone] = useState('default-gmt-plus-3')
   const [about, setAbout] = useState('')
   const [signature, setSignature] = useState('')
   const [isAvatarProcessing, setIsAvatarProcessing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isDeleteLoading, setIsDeleteLoading] = useState(false)
+  const isEditOpen = routerLocation.pathname === '/profile/edit'
 
   const profileSettings = user?.profileSettings || {};
   const profileAbout = profileSettings.about || "";
@@ -117,22 +118,24 @@ export default function Profile() {
     }
   }, [isDeleteLoading, logout, navigate, toast]);
 
-  const handleToggleEditor = React.useCallback(() => {
-    if (!isEditOpen) {
-      setProfileName(user?.username || '')
-      setProfileEmail(user?.email || '')
-      setAvatarUrl(user?.avatar || '')
-      setGravatarEmail(user?.email || '')
-      setShowBookmarks(user?.profileSettings?.showBookmarksToEveryone === false ? 'no' : 'yes')
-      setGender(user?.profileSettings?.gender || 'female')
-      setLocation(user?.profileSettings?.location || '')
-      setTimezone(user?.profileSettings?.timezone || 'default-gmt-plus-3')
-      setAbout(user?.profileSettings?.about || '')
-      setSignature(user?.profileSettings?.signature || '')
-      setAvatarFileName('No file chosen')
-    }
-    setIsEditOpen(prev => !prev)
+  useEffect(() => {
+    if (!isEditOpen) return
+    setProfileName(user?.username || '')
+    setProfileEmail(user?.email || '')
+    setAvatarUrl(user?.avatar || '')
+    setGravatarEmail(user?.email || '')
+    setShowBookmarks(user?.profileSettings?.showBookmarksToEveryone === false ? 'no' : 'yes')
+    setGender(user?.profileSettings?.gender || 'female')
+    setProfileLocation(user?.profileSettings?.location || '')
+    setTimezone(user?.profileSettings?.timezone || 'default-gmt-plus-3')
+    setAbout(user?.profileSettings?.about || '')
+    setSignature(user?.profileSettings?.signature || '')
+    setAvatarFileName('No file chosen')
   }, [isEditOpen, user])
+
+  const handleToggleEditor = React.useCallback(() => {
+    navigate(isEditOpen ? '/profile/watching' : '/profile/edit')
+  }, [isEditOpen, navigate])
 
   const handleAvatarChange = React.useCallback(
     e => {
@@ -220,7 +223,7 @@ export default function Profile() {
           gravatarEmail: gravatarEmail.trim(),
           showBookmarksToEveryone: showBookmarks === 'yes',
           gender,
-          location: location.trim(),
+          location: profileLocation.trim(),
           timezone,
           about: about.trim(),
           signature: signature.trim(),
@@ -230,7 +233,7 @@ export default function Profile() {
       setOldPassword('')
       setNewPassword('')
       setRepeatPassword('')
-      setIsEditOpen(false)
+      navigate('/profile/watching')
       toast.success('Profile updated.')
     },
     [
@@ -238,7 +241,7 @@ export default function Profile() {
       avatarUrl,
       gender,
       gravatarEmail,
-      location,
+      profileLocation,
       newPassword,
       profileEmail,
       profileName,
@@ -250,6 +253,7 @@ export default function Profile() {
       updateUser,
       user,
       isAvatarProcessing,
+      navigate
     ]
   );
 
@@ -302,7 +306,7 @@ export default function Profile() {
               <Button
                 variant="secondary"
                 size="small"
-                onClick={() => toast.info('Settings coming soon!')}
+                onClick={() => navigate('/settings')}
               >
                 <i className="bx bx-cog" aria-hidden="true"></i>
                 Settings
@@ -510,8 +514,8 @@ export default function Profile() {
                     <input
                       id='location'
                       type='text'
-                      value={location}
-                      onChange={e => setLocation(e.target.value)}
+                      value={profileLocation}
+                      onChange={e => setProfileLocation(e.target.value)}
                       placeholder='Place of residence'
                     />
                   </div>
