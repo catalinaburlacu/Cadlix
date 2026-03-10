@@ -1,0 +1,8 @@
+services:
+  web:
+    container_name: cadlix-frontend
+    build:
+      context: .
+    image: cadlix:1.0
+    ports:
+      - "80:8080"
