@@ -35,7 +35,14 @@ export default defineConfig({
     port: 3000,
     strictPort: false,
     open: true,
-    cors: true
+    cors: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5184',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   },
   // Preview server config
   preview: {
