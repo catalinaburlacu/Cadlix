@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
-import { PLANS_DATA } from "../../../mocks/subscriptions.js";
+import { SUBSCRIPTION_PLANS } from "../../../constants/ui-data.js";
 import "./Subscriptions.css";
 
 export default function Subscriptions() {
@@ -10,8 +10,9 @@ export default function Subscriptions() {
   const { updateUser } = useUser();
   const [expandedPlan, setExpandedPlan] = useState(null);
 
-  const plans = PLANS_DATA.map((planData) => ({
+  const plans = SUBSCRIPTION_PLANS.map((planData) => ({
     ...planData,
+    displayPrice: planData.price > 0 ? (planData.price / 100).toFixed(2) : "0.00",
     onSelect:
       planData.id === "free"
         ? () => {
@@ -72,7 +73,7 @@ export default function Subscriptions() {
                 <div className="price-wrapper">
                   <div className="front">
                     <span className="price">
-                      {plan.priceLabel} <b>{plan.priceValue}</b>
+                      {plan.id === "free" ? "FREE" : `$${plan.displayPrice}`}
                     </span>
                   </div>
                 </div>
