@@ -2,8 +2,46 @@ import React, { useMemo, useState } from "react";
 import { useUser } from "../../../../context/useUser.js";
 import Button from "../../../../components/common/Button.jsx";
 import Input from "../../../../components/common/Input.jsx";
-import { CONTENT_GENRES, CONTENT_TYPES, SORT_OPTIONS } from "../../../../mocks/constants.js";
 import ProfilePageFrame from "./ProfilePageFrame.jsx";
+
+const CONTENT_TYPES = [
+  { value: '', label: 'All Types' },
+  { value: 'movie', label: 'Movie' },
+  { value: 'tv', label: 'TV Series' },
+  { value: 'documentary', label: 'Documentary' },
+  { value: 'miniseries', label: 'Mini-Series' },
+  { value: 'special', label: 'Special' },
+]
+
+const CONTENT_GENRES = [
+  { value: '', label: 'All Genres' },
+  { value: 'action', label: 'Action' },
+  { value: 'adventure', label: 'Adventure' },
+  { value: 'comedy', label: 'Comedy' },
+  { value: 'crime', label: 'Crime' },
+  { value: 'detective', label: 'Detective' },
+  { value: 'drama', label: 'Drama' },
+  { value: 'fantasy', label: 'Fantasy' },
+  { value: 'historical', label: 'Historical' },
+  { value: 'horror', label: 'Horror' },
+  { value: 'military', label: 'Military' },
+  { value: 'mystery', label: 'Mystery' },
+  { value: 'psychological', label: 'Psychological' },
+  { value: 'romance', label: 'Romance' },
+  { value: 'sci-fi', label: 'Sci-Fi' },
+  { value: 'sports', label: 'Sports' },
+  { value: 'supernatural', label: 'Supernatural' },
+  { value: 'thriller', label: 'Thriller' },
+  { value: 'biography', label: 'Biography' },
+]
+
+const SORT_OPTIONS = [
+  { value: '', label: 'Sort By' },
+  { value: 'title', label: 'Title' },
+  { value: 'score', label: 'Score' },
+  { value: 'date', label: 'Date Added' },
+  { value: 'duration', label: 'Duration' },
+]
 
 export default function ProfileTabPage({ tabId, label }) {
   const { user } = useUser();
@@ -142,13 +180,9 @@ export default function ProfileTabPage({ tabId, label }) {
             filteredEntries.map((entry) => (
               <div key={entry.id} className="media-card">
                 <div className="media-card-poster-wrap">
-                  {entry.poster ? (
-                    <img className="media-card-poster" src={entry.poster} alt={entry.title} loading="lazy" />
-                  ) : (
-                    <div className="media-card-poster media-card-poster--placeholder">
-                      <i className="bx bx-film" aria-hidden="true"></i>
-                    </div>
-                  )}
+                  <img className="media-card-poster" src={entry.poster || '/api/media/image/defaults/default-poster.png'} alt={entry.title} loading="lazy"
+                    onError={(e) => { e.target.src = '/api/media/image/defaults/default-poster.png' }}
+                  />
                   {entry.score != null && (
                     <span className="media-card-score">
                       <i className="bx bxs-star" aria-hidden="true"></i>
@@ -170,13 +204,9 @@ export default function ProfileTabPage({ tabId, label }) {
           ) : (
             filteredEntries.map((entry) => (
               <div key={entry.id} className="media-row">
-                {entry.poster ? (
-                  <img className="media-row-poster" src={entry.poster} alt={entry.title} loading="lazy" />
-                ) : (
-                  <div className="media-row-poster media-row-poster--placeholder">
-                    <i className="bx bx-film" aria-hidden="true"></i>
-                  </div>
-                )}
+                <img className="media-row-poster" src={entry.poster || '/api/media/image/defaults/default-poster.png'} alt={entry.title} loading="lazy"
+                  onError={(e) => { e.target.src = '/api/media/image/defaults/default-poster.png' }}
+                />
                 <div className="media-row-info">
                   <span className="media-row-title">{entry.title}</span>
                   <div className="media-row-meta">
