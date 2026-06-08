@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
 import Button from '../../../components/common/Button.jsx'
 import Input from '../../../components/common/Input.jsx'
 import { useUser } from '../../../context/useUser.js'
 import { useToast } from '../../../hooks/useToast.js'
-import { SECTIONS, DEFAULT_SETTINGS } from '../../../mocks/settings.js'
+import { SETTINGS_SECTIONS, DEFAULT_SETTINGS } from '../../../constants/ui-data.js'
 import './Settings.css'
 
 function SettingsRow({ label, description, children }) {
@@ -44,17 +45,29 @@ export default function Settings() {
   const [activeSection, setActiveSection] = useState('playback')
   const [isSaving, setIsSaving] = useState(false)
 
+  const sections = SETTINGS_SECTIONS
+  const defaultSettings = DEFAULT_SETTINGS
+
   const saved = user?.settings || {}
   const [settings, setSettings] = useState({
-    playback:      { ...DEFAULT_SETTINGS.playback,      ...saved.playback },
-    notifications: { ...DEFAULT_SETTINGS.notifications, ...saved.notifications },
-    privacy:       { ...DEFAULT_SETTINGS.privacy,       ...saved.privacy },
-    appearance:    { ...DEFAULT_SETTINGS.appearance,    ...saved.appearance },
+    playback:      { ...defaultSettings.playback,      ...saved.playback },
+    notifications: { ...defaultSettings.notifications, ...saved.notifications },
+    privacy:       { ...defaultSettings.privacy,       ...saved.privacy },
+    appearance:    { ...defaultSettings.appearance,    ...saved.appearance },
   })
 
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+
+  useEffect(() => {
+    setSettings({
+      playback: { ...defaultSettings.playback, ...saved.playback },
+      notifications: { ...defaultSettings.notifications, ...saved.notifications },
+      privacy: { ...defaultSettings.privacy, ...saved.privacy },
+      appearance: { ...defaultSettings.appearance, ...saved.appearance },
+    })
+  }, [defaultSettings, saved.playback, saved.notifications, saved.privacy, saved.appearance])
 
   function set(section, key, value) {
     setSettings(prev => ({
@@ -383,7 +396,7 @@ export default function Settings() {
     security:      renderSecurity,
   }
 
-  const activeLabel = SECTIONS.find(s => s.id === activeSection)?.label
+  const activeLabel = sections.find(s => s.id === activeSection)?.label
 
   return (
     <SidebarLayout>
@@ -396,7 +409,7 @@ export default function Settings() {
         <div className="settings-layout">
           {/* Left nav */}
           <nav className="settings-nav" aria-label="Settings sections">
-            {SECTIONS.map(section => (
+            {sections.map(section => (
               <button
                 key={section.id}
                 className={`settings-nav-item${activeSection === section.id ? ' active' : ''}`}
