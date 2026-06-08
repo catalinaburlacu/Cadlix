@@ -10,8 +10,9 @@ export default function UserProfileModal({ user: u, onClose }) {
         <div className="admin-profile-header">
           <img
             className="admin-profile-avatar"
-            src={u.avatar}
+            src={u.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(u.username)}`}
             alt={u.username}
+            onError={(e) => { const seed = encodeURIComponent(u.username); e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`; }}
           />
           <div className="admin-profile-info">
             <div className="admin-profile-name-row">
