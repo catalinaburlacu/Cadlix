@@ -3,26 +3,27 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../../context/useUser.js";
 import { useToast } from "../../../hooks/useToast.js";
 import { sanitizeInput } from "../../../utils/security.js";
-import { ADMIN_CREDENTIALS, ADMIN_USER_DATA } from "../../../mocks/constants.js";
-import { SOCIAL_PROVIDERS, SOCIAL_ICONS } from "../../../mocks/login.js";
+import { cadlixApi, storeTokens } from "../../../api/cadlixApi.js";
+import { mapProfilePayload, mapAuthResponse } from "../../../api/mappers.js";
+import { SOCIAL_PROVIDERS } from "../../../constants/ui-data.js";
 import "./Login.css";
 
-function SocialButtons({ onSocialLogin }) {
+function SocialButtons({ providers, onSocialLogin }) {
   return (
     <div className="social-login">
       <div className="social-divider">
         <span>or continue with</span>
       </div>
       <div className="social-buttons">
-        {SOCIAL_PROVIDERS.map((provider) => (
+        {providers.map((provider) => (
           <button
-            key={provider}
+            key={provider.name}
             type="button"
-            className={`social-btn ${provider.toLowerCase()}`}
-            onClick={() => onSocialLogin(provider)}
+            className={`social-btn ${provider.name.toLowerCase()}`}
+            onClick={() => onSocialLogin(provider.name)}
           >
-            <i className={`bx ${SOCIAL_ICONS[provider]}`}></i>
-            <span>{provider}</span>
+            <i className={`bx ${provider.icon}`}></i>
+            <span>{provider.name}</span>
           </button>
         ))}
       </div>
@@ -36,8 +37,8 @@ export default function Login() {
   const { login } = useUser();
   const toast = useToast();
   const [isSignup, setIsSignup] = useState(false);
+  const socialProviders = SOCIAL_PROVIDERS
 
-  // Form states
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({ txt: '', email: '', password: '' });
 
@@ -62,32 +63,38 @@ export default function Login() {
     }
 
     try {
-      // Sanitize inputs
       const sanitizedEmail = sanitizeInput(loginData.email);
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const rawResponse = await cadlixApi.login({
+        email: sanitizedEmail,
+        password: loginData.password,
+      });
 
-      // Check admin credentials
-      if (sanitizedEmail === ADMIN_CREDENTIALS.email && loginData.password === ADMIN_CREDENTIALS.password) {
-        login(ADMIN_USER_DATA);
-        toast.success('Welcome, Admin!');
-        const from = location.state?.from || '/home';
-        navigate(from);
+      const authResponse = mapAuthResponse(rawResponse);
+
+      if (!authResponse || !authResponse.user) {
+        toast.error('Invalid email or password.');
         return;
       }
 
-      // Create regular user object
-      const userData = {
-        id: Date.now().toString(),
-        role: 'user',
-        username: sanitizedEmail.split('@')[0],
-        email: sanitizedEmail,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedEmail}`,
-        group: 'Member',
+      const tokenValue = authResponse.token;
+      const refreshTokenValue = rawResponse.RefreshToken ?? rawResponse.refreshToken;
+
+      storeTokens(tokenValue, refreshTokenValue);
+
+      const profile = mapProfilePayload(await cadlixApi.getProfile(authResponse.user.id));
+
+      const userData = profile || {
+        id: authResponse.user.id,
+        role: authResponse.user.level === 1 ? 'admin' : 'user',
+        username: authResponse.user.name || sanitizedEmail.split('@')[0],
+        email: authResponse.user.email || sanitizedEmail,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(sanitizedEmail)}`,
+        group: authResponse.user.level === 1 ? 'Administrator' : 'Member',
+        plan: 'Free',
         status: 'Online',
         stats: {
-          rating: '0',
+          rating: 0,
           titlesWatched: 0,
           comments: 0,
           likesGiven: 0,
@@ -95,13 +102,21 @@ export default function Login() {
           hoursWatched: 0,
           addedToList: 0,
           daysOnSite: 1
-        }
+        },
+        watchList: [],
+        watchHistory: [],
       };
 
-      login(userData);
+      login({
+        ...userData,
+        id: userData.id ?? authResponse.user.id,
+        role: userData.role ?? (authResponse.user.level === 1 ? 'admin' : 'user'),
+        username: userData.username ?? authResponse.user.name,
+        email: userData.email ?? authResponse.user.email,
+      });
+
       toast.success('Welcome back! Login successful');
 
-      // Redirect to originally requested page or home
       const from = location.state?.from || '/home';
       navigate(from);
     } catch (error) {
@@ -112,33 +127,59 @@ export default function Login() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    
+
     if (!signupData.txt || !signupData.email || !signupData.password) {
       toast.error('Please fill in all fields');
       return;
     }
 
     try {
-      // Sanitize inputs
       const sanitizedData = {
         username: sanitizeInput(signupData.txt),
         email: sanitizeInput(signupData.email),
       };
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Create complete user object for new signup
-      const userData = {
-        id: Date.now().toString(),
-        role: 'user',
-        username: sanitizedData.username,
+      const rawResponse = await cadlixApi.createUser({
+        name: sanitizedData.username,
         email: sanitizedData.email,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${sanitizedData.username}`,
-        group: 'Member',
+        password: signupData.password,
+        level: 0,
+        historyId: 0,
+        movieListId: 0,
+      });
+
+      const authResponse = mapAuthResponse(rawResponse);
+
+      if (!authResponse || !authResponse.user) {
+        throw new Error('Invalid response from server');
+      }
+
+      const userId = authResponse.user.id;
+      const tokenValue = authResponse.token;
+      const refreshTokenValue = rawResponse.RefreshToken ?? rawResponse.refreshToken;
+
+      if (tokenValue) {
+        storeTokens(tokenValue, refreshTokenValue);
+      }
+
+      let profile = null;
+      try {
+        profile = mapProfilePayload(await cadlixApi.getProfile(userId));
+      } catch (err) {
+        console.warn('Failed to fetch profile after signup:', err);
+      }
+
+      const userData = profile || {
+        id: userId,
+        role: authResponse.user.level === 1 ? 'admin' : 'user',
+        username: authResponse.user.name || sanitizedData.username,
+        email: authResponse.user.email || sanitizedData.email,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(sanitizedData.username)}`,
+        group: authResponse.user.level === 1 ? 'Administrator' : 'Member',
+        plan: 'Free',
         status: 'Online',
         stats: {
-          rating: '0',
+          rating: 0,
           titlesWatched: 0,
           comments: 0,
           likesGiven: 0,
@@ -146,14 +187,20 @@ export default function Login() {
           hoursWatched: 0,
           addedToList: 0,
           daysOnSite: 1
-        }
+        },
+        watchList: [],
+        watchHistory: [],
       };
-      
+
       login(userData);
       toast.success('Account created successfully! Welcome to Cadlix');
       navigate('/home');
     } catch (error) {
-      toast.error('Signup failed. Please try again.');
+      if (error.message?.includes('already registered')) {
+        toast.error('Email already registered. Please login instead.');
+      } else {
+        toast.error('Signup failed. Please try again.');
+      }
       console.error('Signup error:', error);
     }
   };
@@ -197,7 +244,7 @@ export default function Login() {
               onChange={handleSignupChange}
             />
             <button type="submit">Sign up</button>
-            <SocialButtons onSocialLogin={handleSocialLogin} />
+            <SocialButtons providers={socialProviders} onSocialLogin={handleSocialLogin} />
           </form>
         </div>
 
@@ -221,7 +268,7 @@ export default function Login() {
               onChange={handleLoginChange}
             />
             <button type="submit">Login</button>
-            <SocialButtons onSocialLogin={handleSocialLogin} />
+            <SocialButtons providers={socialProviders} onSocialLogin={handleSocialLogin} />
           </form>
         </div>
       </div>
