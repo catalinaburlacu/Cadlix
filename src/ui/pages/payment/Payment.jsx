@@ -3,7 +3,7 @@ import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import SidebarLayout from "../../../components/layout/SidebarLayout.jsx";
 import "./Payment.css";
 import { useUser } from "../../../context/useUser.js";
-import { ACCEPTED_ISSUERS, CARD_SCHEMES } from "../../../mocks/payment.js";
+import { ACCEPTED_ISSUERS, CARD_SCHEMES } from "../../../constants/ui-data.js";
 
 export default function Payment() {
   const navigate = useNavigate();
@@ -19,6 +19,25 @@ export default function Payment() {
   const [errors, setErrors] = useState({});
   const { updateUser } = useUser();
 
+  const acceptedIssuers = ACCEPTED_ISSUERS
+  const paymentSchemes = CARD_SCHEMES.map((scheme) => {
+    if (scheme.pattern instanceof RegExp) {
+      return scheme
+    }
+
+    try {
+      return {
+        ...scheme,
+        pattern: new RegExp(scheme.pattern),
+      }
+    } catch {
+      return {
+        ...scheme,
+        pattern: /.*/,
+      }
+    }
+  })
+
   const cleanPlan = (plan || "Basic")
     .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
     .trim();
@@ -28,13 +47,13 @@ export default function Payment() {
   const detectedScheme = useMemo(() => {
     if (!digitsOnlyCard) return null;
     return (
-      CARD_SCHEMES.find(
+      paymentSchemes.find(
         (scheme) =>
           scheme.lengths.includes(digitsOnlyCard.length) &&
           scheme.pattern.test(digitsOnlyCard)
       ) || null
     );
-  }, [digitsOnlyCard]);
+  }, [digitsOnlyCard, paymentSchemes]);
 
   function passesLuhn(number) {
     let sum = 0;
@@ -88,7 +107,7 @@ export default function Payment() {
     }
 
     const scheme =
-      CARD_SCHEMES.find(
+      paymentSchemes.find(
         (item) =>
           item.lengths.includes(digitsOnlyCard.length) &&
           item.pattern.test(digitsOnlyCard)
@@ -299,7 +318,7 @@ export default function Payment() {
           <div className="accepted-payments" aria-label="Accepted payment providers">
             <p className="accepted-title">Banci acceptate</p>
             <div className="accepted-issuer-list">
-              {ACCEPTED_ISSUERS.map((issuer) => (
+              {acceptedIssuers.map((issuer) => (
                 <span key={issuer.name} className="accepted-chip" title={issuer.name}>
                   <span className="accepted-chip-icon" aria-hidden="true">{issuer.icon}</span>
                   <span className="accepted-chip-text">{issuer.name}</span>
