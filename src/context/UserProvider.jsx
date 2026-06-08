@@ -1,25 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { UserContext } from './UserContext.js';
-import { defaultUser } from './userData.js';
+import { cadlixApi, storeTokens, clearTokens } from '../api/cadlixApi.js';
+import { mapProfilePayload } from '../api/mappers.js';
+import { AUTH_STORAGE_KEY } from '../constants/index.js';
 
-// Storage key for localStorage
 const USER_STORAGE_KEY = 'cadlix_user';
-const AUTH_STORAGE_KEY = 'cadlix_auth';
 
 export function UserProvider({ children }) {
-  // Initialize state from localStorage, merging with defaults to fill in any missing fields
   const [user, setUser] = useState(() => {
     try {
       const savedUser = localStorage.getItem(USER_STORAGE_KEY);
       if (!savedUser) return null;
-      const parsed = JSON.parse(savedUser);
-      return {
-        ...defaultUser,
-        ...parsed,
-        stats: { ...defaultUser.stats, ...parsed.stats },
-        watchList: parsed.watchList?.length ? parsed.watchList : defaultUser.watchList,
-        watchHistory: parsed.watchHistory?.length ? parsed.watchHistory : defaultUser.watchHistory,
-      };
+      return JSON.parse(savedUser);
     } catch {
       return null;
     }
@@ -28,13 +20,14 @@ export function UserProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     try {
       const savedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
-      return savedAuth ? JSON.parse(savedAuth) : false;
+      if (!savedAuth) return false;
+      const parsed = JSON.parse(savedAuth);
+      return parsed === true || !!parsed?.token;
     } catch {
       return false;
     }
   });
 
-  // Persist user data to localStorage whenever it changes
   useEffect(() => {
     try {
       if (user) {
@@ -47,16 +40,37 @@ export function UserProvider({ children }) {
     }
   }, [user]);
 
-  // Persist auth state to localStorage whenever it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(isAuthenticated));
-    } catch (error) {
-      console.error('Failed to save auth state to localStorage:', error);
+  const refreshUser = useCallback(async () => {
+    if (!isAuthenticated || !user?.id) {
+      return;
     }
-  }, [isAuthenticated]);
 
-  const login = useCallback((userData = defaultUser) => {
+    const numericId = Number(user.id);
+    if (!Number.isFinite(numericId)) {
+      return;
+    }
+
+    try {
+      const rawProfile = await cadlixApi.getProfile(numericId);
+      const profile = mapProfilePayload(rawProfile);
+      if (profile) {
+        setUser(current => current ? {
+          ...current,
+          ...profile,
+          stats: { ...current.stats, ...profile.stats },
+          watchList: profile.watchList.length ? profile.watchList : current.watchList,
+        } : current);
+      }
+    } catch (error) {
+      console.error('Failed to refresh user profile from API:', error);
+    }
+  }, [isAuthenticated, user?.id]);
+
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
+
+  const login = useCallback((userData) => {
     setUser(userData);
     setIsAuthenticated(true);
   }, []);
@@ -64,10 +78,9 @@ export function UserProvider({ children }) {
   const logout = useCallback(() => {
     setUser(null);
     setIsAuthenticated(false);
-    // Clear localStorage on logout
+    clearTokens();
     try {
       localStorage.removeItem(USER_STORAGE_KEY);
-      localStorage.removeItem(AUTH_STORAGE_KEY);
     } catch (error) {
       console.error('Failed to clear localStorage:', error);
     }
@@ -77,7 +90,6 @@ export function UserProvider({ children }) {
     setUser(prev => {
       if (!prev) return null;
       const updatedUser = { ...prev, ...updates };
-      // Also update localStorage immediately
       try {
         localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUser));
       } catch (error) {
@@ -93,6 +105,7 @@ export function UserProvider({ children }) {
     login,
     logout,
     updateUser,
+    refreshUser,
   };
 
   return (
