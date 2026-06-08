@@ -41,8 +41,9 @@ export default function ProfilePageFrame({ children, isEditPage, avatarOverride 
   const [isDeleteLoading, setIsDeleteLoading] = React.useState(false);
 
   const profileAbout = user?.profileSettings?.about || "";
+  const DEFAULT_AVATAR = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.username || 'default'}`;
   const visibleAvatar =
-    avatarOverride || user?.avatar || "https://via.placeholder.com/120?text=Avatar";
+    avatarOverride || user?.avatar || DEFAULT_AVATAR;
 
   const statsData = useMemo(() => {
     if (!user) return [];
@@ -165,7 +166,8 @@ export default function ProfilePageFrame({ children, isEditPage, avatarOverride 
                 loading="lazy"
                 decoding="async"
                 onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/120?text=Avatar";
+                  const seed = encodeURIComponent(user?.username || 'default');
+                  e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
                 }}
               />
               <span
