@@ -3,18 +3,19 @@ import { useNavigate, useLocation, NavLink } from 'react-router-dom'
 import { useUser } from '../../context/useUser.js'
 import { useTheme } from '../../context/useTheme.js'
 import { useToast } from '../../hooks/useToast.js'
+import { MAIN_NAV_ITEMS, SETTINGS_NAV_ITEMS } from '../../constants/ui-data.js'
 import '../../ui/pages/home/Home.css'
 import Button from '../common/Button.jsx'
-import { SIDEBAR_STORAGE_KEY, MAIN_NAV_ITEMS, SETTINGS_NAV_ITEMS } from '../../mocks/sidebar.js'
 
 function NavItem({ item }) {
   const location = useLocation()
-  const isActive = !item.path.startsWith('#') && location.pathname === item.path
+  const path = item.path || item.to || ''
+  const isActive = !path.startsWith('#') && location.pathname === path
   const className = `nav-item ${isActive ? 'active' : ''}`
 
-  if (item.path.startsWith('#')) {
+  if (path.startsWith('#')) {
     return (
-      <a href={item.path} role='menuitem' className={className}>
+      <a href={path} role='menuitem' className={className}>
         <div className='nav-icon-wrapper'>
           <i className={`bx ${item.icon}`}></i>
         </div>
@@ -24,7 +25,7 @@ function NavItem({ item }) {
   }
 
   return (
-    <NavLink to={item.path} role='menuitem' className={className}>
+    <NavLink to={path} role='menuitem' className={className}>
       <div className='nav-icon-wrapper'>
         <i className={`bx ${item.icon}`}></i>
       </div>
@@ -49,9 +50,13 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
   const { theme, isDark, toggleTheme } = useTheme()
   const toast = useToast()
 
+  const mainNavItems = MAIN_NAV_ITEMS
+  const settingsNavItems = SETTINGS_NAV_ITEMS
+  const sidebarStorageKey = 'cadlix_sidebar_state'
+
   const [sidebarOpen, setSidebarOpen] = useState(() => {
     try {
-      const saved = localStorage.getItem(SIDEBAR_STORAGE_KEY)
+      const saved = localStorage.getItem(DEFAULT_SIDEBAR_STORAGE_KEY)
       return saved ? JSON.parse(saved) : false
     } catch {
       return false
@@ -61,11 +66,11 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
 
   useEffect(() => {
     try {
-      localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(sidebarOpen))
+      localStorage.setItem(sidebarStorageKey, JSON.stringify(sidebarOpen))
     } catch (error) {
       console.error('Failed to save sidebar state:', error)
     }
-  }, [sidebarOpen])
+  }, [sidebarOpen, sidebarStorageKey])
 
   const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), [])
 
@@ -105,7 +110,7 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
           <div className='nav-section'>
             <span className='nav-section-title'>Menu</span>
             <ul className='nav-list' role='menubar'>
-              {MAIN_NAV_ITEMS.map(item => (
+              {mainNavItems.map(item => (
                 <li key={item.id} role='none'>
                   <NavItem item={item} />
                 </li>
@@ -124,7 +129,7 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
             <div className='nav-section'>
               <span className='nav-section-title'>System</span>
               <ul className='nav-list' role='menubar'>
-                {SETTINGS_NAV_ITEMS.map(item => (
+                {settingsNavItems.map(item => (
                   <li key={item.id} role='none'>
                     <NavItem item={item} />
                   </li>
@@ -179,10 +184,11 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
                 >
                   <div className='user-avatar'>
                     <img
-                      src={user.avatar || 'https://via.placeholder.com/40'}
+                      src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.username)}`}
                       alt={user.username}
                       onError={e => {
-                        e.target.src = 'https://via.placeholder.com/40'
+                        const seed = encodeURIComponent(user.username);
+                        e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
                       }}
                     />
                     <span
