@@ -2,13 +2,36 @@ import { useState, useMemo, useCallback } from 'react'
 import { useUser } from '../../../context/useUser.js'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
 import Input from '../../../components/common/Input.jsx'
-import {
-  MOCK_LEADERBOARD_USERS,
-  LEADERBOARD_FILTERS,
-  COUNTRY_FLAGS,
-  SCORING_WEIGHTS,
-} from '../../../mocks/leaderboard.js'
+import { useApiQuery } from '../../../hooks/useApiQuery.js'
+import { cadlixApi } from '../../../api/cadlixApi.js'
+import { mapLeaderboardPayload, mapLeaderboardEntry } from '../../../api/mappers.js'
 import './Leaderboard.css'
+
+const COUNTRY_FLAGS = {
+  US: '🇺🇸',
+  UK: '🇬🇧',
+  CA: '🇨🇦',
+  AU: '🇦🇺',
+  DE: '🇩🇪',
+  JP: '🇯🇵',
+  FR: '🇫🇷',
+  BR: '🇧🇷',
+  ES: '🇪🇸',
+  MX: '🇲🇽',
+  IN: '🇮🇳',
+  IT: '🇮🇹',
+  KR: '🇰🇷',
+  SE: '🇸🇪',
+  NL: '🇳🇱',
+  PL: '🇵🇱',
+}
+
+const SCORING_WEIGHTS = {
+  watchTime: 1,
+  moviesCompleted: 5,
+  reviewsWritten: 2,
+  likesReceived: 0.5,
+}
 
 function LeaderboardRow({ user, rank, isCurrentUser }) {
   const rankChange = user.previousRank - rank
@@ -34,12 +57,13 @@ function LeaderboardRow({ user, rank, isCurrentUser }) {
 
       <div className="user-cell">
         <img
-          src={user.avatar}
+          src={user.avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.username)}`}
           alt={user.username}
           className="user-avatar"
           loading="lazy"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/40'
+            const seed = encodeURIComponent(user.username);
+            e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
           }}
         />
         <div className="user-info">
@@ -55,7 +79,7 @@ function LeaderboardRow({ user, rank, isCurrentUser }) {
 
       <div className="stats-cell watch-time">
         <i className="bx bx-time" aria-hidden="true"></i>
-        <span className="stat-value">{user.hoursWatched}</span>
+        <span className="stat-value">{user.watchTimeHours}</span>
         <span className="stat-label">hours</span>
       </div>
 
@@ -73,7 +97,7 @@ function LeaderboardRow({ user, rank, isCurrentUser }) {
 
       <div className="stats-cell rating">
         <i className="bx bxs-star" aria-hidden="true"></i>
-        <span className="stat-value">{user.avgRating}</span>
+        <span className="stat-value">{Math.round(user.averageRating)}</span>
       </div>
 
       <div className="stats-cell reviews">
@@ -83,7 +107,7 @@ function LeaderboardRow({ user, rank, isCurrentUser }) {
       </div>
 
       <div className="score-cell">
-        <span className="score-value">{user.activityScore.toLocaleString()}</span>
+        <span className="score-value">{user.score.toLocaleString()}</span>
         <span className="score-label">points</span>
       </div>
     </div>
@@ -97,19 +121,20 @@ export default function Leaderboard() {
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
   const itemsPerPage = 10
+  const { data: leaderboardResponse } = useApiQuery(() => cadlixApi.getLeaderboardPage(100), [], null)
+  const leaderboardData = mapLeaderboardPayload(leaderboardResponse)
+  const leaderboardUsers = (leaderboardData?.users || []).map(mapLeaderboardEntry).filter(Boolean)
 
   const filteredUsers = useMemo(() => {
-    let users = [...MOCK_LEADERBOARD_USERS]
+    let users = [...leaderboardUsers]
 
     if (searchQuery.trim()) {
       const query = searchQuery.trim().toLowerCase()
       users = users.filter((u) => u.username.toLowerCase().includes(query))
     }
 
-    users.sort((a, b) => b.activityScore - a.activityScore)
-
     return users
-  }, [searchQuery, timeFilter, scopeFilter])
+  }, [searchQuery, leaderboardUsers])
 
   const paginatedUsers = useMemo(() => {
     const start = (page - 1) * itemsPerPage
@@ -120,7 +145,8 @@ export default function Leaderboard() {
 
   const currentUserRank = useMemo(() => {
     if (!currentUser) return null
-    return filteredUsers.findIndex((u) => u.id === currentUser.id) + 1
+    const idx = filteredUsers.findIndex((u) => String(u.userId) === String(currentUser.id))
+    return idx >= 0 ? idx + 1 : null
   }, [filteredUsers, currentUser])
 
   const handleSearchChange = useCallback((e) => {
@@ -143,7 +169,7 @@ export default function Leaderboard() {
           <div className="filter-group">
             <span className="filter-label">Time Period:</span>
             <div className="filter-tabs" role="tablist" aria-label="Time period">
-              {LEADERBOARD_FILTERS.TIME.map((filter) => (
+              {leaderboardData?.filters?.time.map((filter) => (
                 <button
                   key={filter.id}
                   role="tab"
@@ -160,7 +186,7 @@ export default function Leaderboard() {
           <div className="filter-group">
             <span className="filter-label">Scope:</span>
             <div className="filter-tabs" role="tablist" aria-label="Ranking scope">
-              {LEADERBOARD_FILTERS.SCOPE.map((filter) => (
+              {leaderboardData?.filters?.scope.map((filter) => (
                 <button
                   key={filter.id}
                   role="tab"
@@ -217,7 +243,7 @@ export default function Leaderboard() {
                 <i className="bx bx-film"></i> {currentUser.stats?.titlesWatched || 0} movies
               </span>
               <span>
-                <i className="bx bx-star"></i> {currentUser.stats?.rating || 0} avg rating
+                <i className="bx bx-star"></i> {Math.round(currentUser.stats?.score || 0)} avg rating
               </span>
             </div>
           </div>
@@ -253,7 +279,7 @@ export default function Leaderboard() {
                 key={user.id}
                 user={user}
                 rank={(page - 1) * itemsPerPage + index + 1}
-                isCurrentUser={currentUser?.id === user.id}
+                isCurrentUser={String(currentUser?.id) === String(user.id)}
               />
             ))}
           </div>

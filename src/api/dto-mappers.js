@@ -30,7 +30,6 @@ export function mapContentDTO(dto) {
     director: dto.Director ?? dto.director ?? '',
     cast: dto.Cast ?? dto.cast ?? [],
     duration: dto.Duration ?? dto.duration ?? '',
-    rating: dto.Rating ?? dto.rating ?? null,
     score: dto.Score ?? dto.score ?? null,
     rank: dto.Rank ?? dto.rank ?? null,
     trendPercentage: dto.TrendPercentage ?? dto.trendPercentage ?? '',
@@ -43,6 +42,7 @@ export function mapContentDTO(dto) {
     thumbnail: resolveMediaUrl(dto.Thumbnail ?? dto.thumbnail, 'image'),
     backdrop: resolveMediaUrl(dto.Backdrop ?? dto.backdrop, 'image'),
     videoSource: resolveMediaUrl(dto.VideoSource ?? dto.videoSource, 'video'),
+    videoSources: dto.VideoSources ?? dto.videoSources ?? null,
     isPrivate: dto.IsPrivate ?? dto.isPrivate ?? false,
   }
 }
@@ -119,6 +119,20 @@ export function mapContentCardDTO(dto) {
   }
 }
 
+/**
+ * Maps backend ContentDTO to lightweight search result format
+ */
+export function mapSearchResultDTO(dto) {
+  if (!dto) return null
+  return {
+    id: String(dto.Id ?? dto.id ?? ''),
+    title: dto.Title ?? dto.title ?? '',
+    year: dto.Year ?? dto.year ?? 0,
+    type: dto.Type ?? dto.type ?? '',
+    poster: dto.Poster ?? dto.poster ?? DEFAULT_POSTER,
+  }
+}
+
 // ─── Home Payload ────────────────────────────────────────────────────────────
 
 export function mapHomePayloadFull(payload) {
@@ -144,12 +158,42 @@ export function mapTrendingPayloadFull(payload) {
 
 // ─── Explore Payload ─────────────────────────────────────────────────────────
 
+function mapExploreCategoryDTO(dto) {
+  if (!dto) return null
+  return {
+    id: dto.Id ?? dto.id ?? '',
+    title: dto.Title ?? dto.title ?? '',
+    icon: dto.Icon ?? dto.icon ?? 'bx-category',
+    items: dto.Items ?? dto.items ?? [],
+  }
+}
+
+function mapCarouselItemDTO(dto) {
+  console.log('Mapping carousel item DTO:', dto)
+  if (!dto) return null
+  return {
+    id: dto.Id ?? dto.id ?? '',
+    title: dto.Title ?? dto.title ?? '',
+    meta: dto.Meta ?? dto.meta ?? '',
+    poster: resolveMediaUrl(dto.Poster ?? dto.poster, 'image'),
+  }
+}
+
+function mapCarouselRowDTO(dto) {
+  if (!dto) return null
+  return {
+    id: dto.Id ?? dto.id ?? '',
+    title: dto.Title ?? dto.title ?? '',
+    items: (dto.Items ?? dto.items ?? []).map(mapCarouselItemDTO).filter(Boolean),
+  }
+}
+
 export function mapExplorePayloadFull(payload) {
   if (!payload) return null
   return {
-    categories: payload.Categories ?? payload.categories ?? [],
+    categories: (payload.Categories ?? payload.categories ?? []).map(mapExploreCategoryDTO).filter(Boolean),
     movieDatabase: (payload.MovieDatabase ?? payload.movieDatabase ?? []).map(mapContentCardDTO),
-    carouselRows: payload.CarouselRows ?? payload.carouselRows ?? [],
+    carouselRows: (payload.CarouselRows ?? payload.carouselRows ?? []).map(mapCarouselRowDTO).filter(Boolean),
   }
 }
 
@@ -202,7 +246,7 @@ export function mapListDTO(dto) {
 export function mapUserStatsDTO(dto) {
   if (!dto) return {}
   return {
-    rating: dto.Rating ?? dto.rating ?? 0,
+    score: dto.Score ?? dto.score ?? 0,
     titlesWatched: dto.TitlesWatched ?? dto.titlesWatched ?? 0,
     comments: dto.Comments ?? dto.comments ?? 0,
     likesGiven: dto.LikesGiven ?? dto.likesGiven ?? 0,
@@ -239,6 +283,14 @@ export function mapWatchHistoryItemDTO(dto) {
     episode: dto.Episode ?? dto.episode ?? '',
     watchedAt: dto.WatchedAt ?? dto.watchedAt,
     progress: dto.Progress ?? dto.progress ?? '',
+  }
+}
+
+export function mapLikeStatusDTO(dto) {
+  if (!dto) return { likeCount: 0, isLikedByCurrentUser: false }
+  return {
+    likeCount: dto.LikeCount ?? dto.likeCount ?? 0,
+    isLikedByCurrentUser: dto.IsLikedByCurrentUser ?? dto.isLikedByCurrentUser ?? false,
   }
 }
 
@@ -295,11 +347,16 @@ export function mapReviewDTO(dto) {
   if (!dto) return null
   return {
     id: dto.Id ?? dto.id,
-    user: dto.User ?? dto.user ?? '',
-    title: dto.Title ?? dto.title ?? '',
+    userId: dto.UserId ?? dto.userId,
+    username: dto.Username ?? dto.username ?? '',
+    userAvatar: dto.UserAvatar ?? dto.userAvatar,
+    movieId: dto.MovieId ?? dto.movieId,
     rating: dto.Rating ?? dto.rating ?? 0,
     text: dto.Text ?? dto.text ?? '',
-    date: dto.Date ?? dto.date,
+    likesCount: dto.LikesCount ?? dto.likesCount ?? 0,
+    isLikedByCurrentUser: dto.IsLikedByCurrentUser ?? dto.isLikedByCurrentUser ?? false,
+    createdAt: dto.CreatedAt ?? dto.createdAt,
+    updatedAt: dto.UpdatedAt ?? dto.updatedAt,
   }
 }
 
@@ -420,7 +477,6 @@ export function mapMovieDataDTO(dto) {
     director: dto.Director ?? dto.director ?? '',
     cast: dto.Cast ?? dto.cast ?? '',
     duration: dto.Duration ?? dto.duration ?? '',
-    rating: dto.Rating ?? dto.rating ?? null,
     score: dto.Score ?? dto.score ?? null,
     rank: dto.Rank ?? dto.rank ?? null,
     trendPercentage: dto.TrendPercentage ?? dto.trendPercentage ?? '',
@@ -433,6 +489,7 @@ export function mapMovieDataDTO(dto) {
     thumbnail: resolveMediaUrl(dto.Thumbnail ?? dto.thumbnail, 'image'),
     backdrop: resolveMediaUrl(dto.Backdrop ?? dto.backdrop, 'image'),
     videoSource: resolveMediaUrl(dto.VideoSource ?? dto.videoSource, 'video'),
+    videoSources: dto.VideoSources ?? dto.videoSources ?? null,
     isPrivate: dto.IsPrivate ?? dto.isPrivate ?? false,
   }
 }

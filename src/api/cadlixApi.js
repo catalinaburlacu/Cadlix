@@ -21,18 +21,7 @@ function getAuthToken() {
   }
 }
 
-function getRefreshToken() {
-  try {
-    const auth = localStorage.getItem(AUTH_STORAGE_KEY)
-    if (!auth) return null
-    const parsed = JSON.parse(auth)
-    return parsed?.refreshToken || null
-  } catch {
-    return null
-  }
-}
-
-function storeTokens(token, refreshToken) {
+function storeTokens(token) {
   try {
     const existing = (() => {
       try {
@@ -40,7 +29,7 @@ function storeTokens(token, refreshToken) {
         return raw ? JSON.parse(raw) : {}
       } catch { return {} }
     })()
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ ...existing, token, refreshToken }))
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ ...existing, token }))
   } catch (error) {
     console.error('Failed to store tokens:', error)
   }
@@ -69,7 +58,22 @@ async function parseResponse(response) {
   return response.json()
 }
 
+// ── Token expiry check ─────────────────────────────────────────────
+function isTokenExpired(token) {
+  if (!token) return true
+  try {
+    const payload = token.split('.')[1]
+    if (!payload) return true
+    const decoded = JSON.parse(atob(payload))
+    // Refresh if expired or expires within 5 minutes
+    return decoded.exp * 1000 < Date.now() + 5 * 60 * 1000
+  } catch {
+    return true
+  }
+}
+
 // ── Refresh token logic ──────────────────────────────────────────────
+// Refresh token is stored in an HTTP-only cookie, not in localStorage.
 let isRefreshing = false
 let refreshPromise = null
 
@@ -78,16 +82,13 @@ async function attemptTokenRefresh() {
     return refreshPromise
   }
 
-  const refreshToken = getRefreshToken()
-  if (!refreshToken) return false
-
   isRefreshing = true
   refreshPromise = (async () => {
     try {
       const response = await fetch(resolveUrl('/api/Login/refresh'), {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken }),
       })
 
       if (!response.ok) {
@@ -97,7 +98,7 @@ async function attemptTokenRefresh() {
       }
 
       const data = await response.json()
-      storeTokens(data.token ?? data.Token, data.refreshToken ?? data.RefreshToken)
+      storeTokens(data.token ?? data.Token)
       return true
     } catch {
       clearTokens()
@@ -113,19 +114,26 @@ async function attemptTokenRefresh() {
 }
 
 async function request(path, options = {}) {
-  const token = getAuthToken()
+  let token = getAuthToken()
   const headers = {
     ...DEFAULT_HEADERS,
     ...options.headers,
   }
 
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`
+    if (isTokenExpired(token)) {
+      const refreshed = await attemptTokenRefresh()
+      token = refreshed ? getAuthToken() : null
+    }
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
   }
 
   let response = await fetch(resolveUrl(path), {
     ...options,
     headers,
+    credentials: 'include',
   })
 
   if (response.status === 401 && token) {
@@ -135,6 +143,7 @@ async function request(path, options = {}) {
       response = await fetch(resolveUrl(path), {
         ...options,
         headers,
+        credentials: 'include',
       })
     }
   }
@@ -151,6 +160,7 @@ function createUploadPromise(url, formData, onProgress) {
     if (token) headers['Authorization'] = `Bearer ${token}`
 
     const xhr = new XMLHttpRequest()
+    xhr.withCredentials = true
 
     if (onProgress) {
       xhr.upload.addEventListener('progress', (event) => {
@@ -179,6 +189,7 @@ function createUploadPromise(url, formData, onProgress) {
         if (refreshed) {
           const newToken = getAuthToken()
           const retryXhr = new XMLHttpRequest()
+          retryXhr.withCredentials = true
           if (onProgress) {
             retryXhr.upload.addEventListener('progress', (event) => {
               if (event.lengthComputable) {
@@ -225,7 +236,13 @@ export { storeTokens, clearTokens }
 
 export const cadlixApi = {
   getHome: signal => request('/api/content/home', { signal }),
-  getTrending: signal => request('/api/content/trending', { signal }),
+  getTrending: (period, filter, signal) => {
+    const params = new URLSearchParams()
+    if (period && period !== 'week') params.set('period', period)
+    if (filter && filter !== 'all') params.set('filter', filter)
+    const qs = params.toString()
+    return request(`/api/content/trending${qs ? '?' + qs : ''}`, { signal })
+  },
   getExplore: signal => request('/api/content/explore', { signal }),
   getLeaderboardPage: (count = 100, signal) => request(`/api/leaderboard/page?count=${count}`, { signal }),
   getLeaderboard: (count = 100, signal) => request(`/api/leaderboard?count=${count}`, { signal }),
@@ -237,6 +254,8 @@ export const cadlixApi = {
   deleteUser: id => request(`/api/User/${id}`, { method: 'DELETE' }),
   login: payload => request('/api/Login/login', { method: 'POST', body: JSON.stringify(payload) }),
   getProfile: (userId, signal) => request(`/api/profile/${userId}`, { signal }),
+  toggleLike: userId => request(`/api/profile/${userId}/like`, { method: 'POST' }),
+  getLikeStatus: (userId, signal) => request(`/api/profile/${userId}/like`, { signal }),
   getActiveSubscription: (userId, signal) => request(`/api/subscription/${userId}/active`, { signal }),
   createSubscription: (userId, payload) => request(`/api/subscription/${userId}/create`, { method: 'POST', body: JSON.stringify(payload) }),
   cancelSubscription: userId => request(`/api/subscription/${userId}/cancel`, { method: 'POST' }),
@@ -262,6 +281,7 @@ export const cadlixApi = {
   getContentById: (id, signal) => request(`/api/content/${id}`, { signal }),
   updateContent: (id, payload) => request(`/api/content/${id}`, { method: 'PUT', body: JSON.stringify(payload) }),
   deleteContent: id => request(`/api/content/${id}`, { method: 'DELETE' }),
+  getSeriesEpisodes: (seriesName, signal) => request(`/api/content/series/${encodeURIComponent(seriesName)}/episodes`, { signal }),
   searchContent: (query, signal) => request(`/api/content/search?query=${encodeURIComponent(query)}`, { signal }),
   searchHistory: (params = {}, signal) => {
     const qp = new URLSearchParams()
@@ -276,4 +296,13 @@ export const cadlixApi = {
   uploadMovie: (formData, onProgress) => createUploadPromise('/api/movie/upload', formData, onProgress),
   uploadContent: (formData, onProgress) => createUploadPromise('/api/content/upload', formData, onProgress),
   uploadMediaForContent: (id, formData, onProgress) => createUploadPromise(`/api/content/${id}/upload-media`, formData, onProgress),
+
+  // ── Review endpoints ──────────────────────────────────────────────
+  getMovieReviews: (movieId, signal) => request(`/api/review/movie/${movieId}`, { signal }),
+  getUserReviews: (userId, signal) => request(`/api/review/user/${userId}`, { signal }),
+  getReview: (id, signal) => request(`/api/review/${id}`, { signal }),
+  createReview: payload => request('/api/review', { method: 'POST', body: JSON.stringify(payload) }),
+  updateReview: (id, payload) => request(`/api/review/${id}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  deleteReview: id => request(`/api/review/${id}`, { method: 'DELETE' }),
+  toggleReviewLike: reviewId => request(`/api/review/${reviewId}/like`, { method: 'POST' }),
 }

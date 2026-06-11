@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useUser } from '../../../context/useUser.js'
 import { useToast } from '../../../hooks/useToast.js'
-import { MOCK_MEDIA_LIBRARY, MOCK_VIDEOS } from '../../../mocks/constants.js'
+import { useApiQuery } from '../../../hooks/useApiQuery.js'
+import { cadlixApi } from '../../../api/cadlixApi.js'
+import { mapContentDTO } from '../../../api/mappers.js'
 import './VideoPlayer.css'
 
 const LIST_OPTIONS = [
@@ -17,7 +19,7 @@ const QUALITY_OPTIONS = ['1080p', '720p', '480p', '360p', 'Auto']
 const SPEED_OPTIONS = ['0.5x', '0.75x', '1x', '1.25x', '1.5x', '2x']
 
 function formatClock(totalSeconds) {
-  const safe = Math.max(0, Math.floor(totalSeconds || 0))
+  const safe = Number.isFinite(totalSeconds) ? Math.max(0, Math.floor(totalSeconds)) : 0
   const h = Math.floor(safe / 3600)
   const m = Math.floor((safe % 3600) / 60)
   const s = safe % 60
@@ -29,11 +31,16 @@ function formatClock(totalSeconds) {
 export default function VideoPlayer() {
   const navigate = useNavigate()
   const { id } = useParams()
-  const { user, updateUser } = useUser()
+  const { user, updateUser, refreshUser } = useUser()
   const toast = useToast()
+  const { data: contentResponse, loading, error } = useApiQuery(
+    () => cadlixApi.getContentById(id),
+    [id],
+    null
+  )
+
   const videoRef = useRef(null)
   const containerRef = useRef(null)
-  const didToastRef = useRef(false)
   const [selectedListManual, setSelectedListManual] = useState('')
 
   const [isPlaying, setIsPlaying] = useState(false)
@@ -48,13 +55,60 @@ export default function VideoPlayer() {
   const [showSettings, setShowSettings] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showSaveMenu, setShowSaveMenu] = useState(false)
+  const [showNextPrompt, setShowNextPrompt] = useState(false)
 
   const controlsTimeoutRef = useRef(null)
+  const historyEntryIdRef = useRef(null)
+  const restoredRef = useRef(false)
+  const completedRef = useRef(false)
 
-  const videoItem = useMemo(() => MOCK_VIDEOS.find(item => item.id === id) || null, [id])
+  const videoItem = useMemo(() => {
+    if (!contentResponse) return null
+    const mapped = mapContentDTO(contentResponse)
+    if (!mapped) return null
+
+    const genreDisplay = Array.isArray(mapped.genres) ? mapped.genres.join(', ') : (mapped.genres || '')
+    const countryDisplay = Array.isArray(mapped.country) ? mapped.country.join(', ') : (mapped.country || '')
+
+    const sources = mapped.videoSources || null
+
+    return {
+      id: mapped.id,
+      title: mapped.title,
+      category: mapped.category || (mapped.type === 'tv' ? 'Series' : 'Movie'),
+      series: mapped.series || '-',
+      episode: mapped.episode || '-',
+      type: mapped.type || 'movie',
+      genre: genreDisplay,
+      country: countryDisplay,
+      durationSec: mapped.durationSeconds || 600,
+      src: mapped.videoSource || '',
+      sources,
+    }
+  }, [contentResponse])
+
+  const isSeries = videoItem && videoItem.series && videoItem.series !== '-'
+
+  const { data: episodes, loading: episodesLoading } = useApiQuery(
+    () => isSeries ? cadlixApi.getSeriesEpisodes(videoItem.series) : Promise.resolve([]),
+    [videoItem?.series],
+    []
+  )
+
+  const currentEpisodeIndex = useMemo(() => {
+    if (!isSeries || !episodes) return -1
+    return episodes.findIndex(e =>
+      String(e.Id ?? e.id) === String(videoItem.id)
+    )
+  }, [isSeries, episodes, videoItem])
+
+  const nextEpisode = useMemo(() => {
+    if (currentEpisodeIndex < 0 || currentEpisodeIndex >= (episodes?.length || 0) - 1) return null
+    return episodes[currentEpisodeIndex + 1]
+  }, [currentEpisodeIndex, episodes])
 
   const selectedList = useMemo(() => {
-    const existing = (user?.watchList || []).find(item => item.id === videoItem?.id)
+    const existing = (user?.watchList || []).find(item => String(item.id) === String(videoItem?.id))
     return selectedListManual || existing?.status || 'planned'
   }, [selectedListManual, user, videoItem])
 
@@ -78,7 +132,17 @@ export default function VideoPlayer() {
 
   const handleLoadedMetadata = useCallback(() => {
     if (videoRef.current) {
-      setDuration(videoRef.current.duration)
+      const d = videoRef.current.duration
+      setDuration(Number.isFinite(d) ? d : (videoItem?.durationSec || 0))
+    }
+  }, [videoItem])
+
+  const handleDurationChange = useCallback(() => {
+    if (videoRef.current) {
+      const d = videoRef.current.duration
+      if (Number.isFinite(d)) {
+        setDuration(d)
+      }
     }
   }, [])
 
@@ -87,12 +151,13 @@ export default function VideoPlayer() {
       if (videoRef.current) {
         const rect = e.currentTarget.getBoundingClientRect()
         const percent = (e.clientX - rect.left) / rect.width
-        const newTime = percent * duration
+        const dur = Number.isFinite(duration) ? duration : (videoItem?.durationSec || 0)
+        const newTime = percent * dur
         videoRef.current.currentTime = newTime
         setCurrentTime(newTime)
       }
     },
-    [duration]
+    [duration, videoItem]
   )
 
   const handleVolumeChange = useCallback(e => {
@@ -128,7 +193,14 @@ export default function VideoPlayer() {
   const handleQualityChange = useCallback(q => {
     setQuality(q)
     setShowSettings(false)
-  }, [])
+    if (videoRef.current && videoItem?.sources?.[q]) {
+      const wasPlaying = !videoRef.current.paused
+      const prevTime = videoRef.current.currentTime
+      videoRef.current.src = videoItem.sources[q]
+      videoRef.current.currentTime = prevTime
+      if (wasPlaying) videoRef.current.play()
+    }
+  }, [videoItem])
 
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
@@ -152,91 +224,109 @@ export default function VideoPlayer() {
     }, 3000)
   }, [isPlaying])
 
-  const persistHistory = useCallback(() => {
-    if (!videoItem || !user) return
+  const persistHistory = useCallback(async () => {
+    if (!videoItem || !user?.id) return
     const currentTimeSec = Math.floor(videoRef.current?.currentTime || 0)
     const progress = formatClock(currentTimeSec)
-    const dur = Math.max(1, Math.floor(videoRef.current?.duration || videoItem.durationSec || 1))
+    const rawDur = videoRef.current?.duration
+    const dur = Math.max(1, Math.floor(Number.isFinite(rawDur) ? rawDur : (videoItem.durationSec || 1)))
     const watchedRatio = currentTimeSec / dur
+    const progressPercentage = Math.round((currentTimeSec / dur) * 100)
+
+    const isCompleted = watchedRatio >= 0.95
+
     const historyEntry = {
-      id: `h-${videoItem.id}`,
-      mediaId: videoItem.id,
-      title: videoItem.title,
+      userId: user.id,
+      movieId: parseInt(videoItem.id) || 0,
+      movieTitle: videoItem.title,
       category: videoItem.category,
       series: videoItem.series || '-',
       episode: videoItem.episode || '-',
       watchedAt: new Date().toISOString(),
+      watchStatus: isCompleted ? 'completed' : currentTimeSec > 0 ? 'watching' : 'planned',
+      progressPercentage,
       progress,
     }
 
-    const previousHistory = user.watchHistory || []
-    const nextHistory = [
-      historyEntry,
-      ...previousHistory.filter(entry => entry.id !== historyEntry.id),
-    ].slice(0, 80)
-
-    const previousList = user.watchList || []
-    const existingItem = previousList.find(item => item.id === videoItem.id)
-    const preserveStatus =
-      existingItem?.status === 'favorites' || existingItem?.status === 'dropped'
-    const computedStatus =
-      watchedRatio >= 0.95 ? 'completed' : currentTimeSec > 0 ? 'watching' : 'planned'
-    const nextStatus = preserveStatus ? existingItem.status : computedStatus
-
-    const baseItem = existingItem || {
-      id: videoItem.id,
-      title: videoItem.title,
-      category: videoItem.category,
-      type: videoItem.type,
-      genre: videoItem.genre,
-      score: 0,
-      dateAdded: new Date().toISOString().slice(0, 10),
-      season: videoItem.series || '-',
-      episode: videoItem.episode || '-',
+    try {
+      if (historyEntryIdRef.current) {
+        await cadlixApi.updateHistory(historyEntryIdRef.current, historyEntry)
+      } else {
+        const created = await cadlixApi.createHistory(historyEntry)
+        if (created?.id) historyEntryIdRef.current = created.id
+      }
+    } catch (err) {
+      console.error('Failed to persist history:', err)
     }
 
-    const updatedItem = {
-      ...baseItem,
-      season: videoItem.series || baseItem.season || '-',
-      episode: videoItem.episode || baseItem.episode || '-',
-      progress,
-      status: nextStatus,
+    if (isCompleted && !completedRef.current) {
+      completedRef.current = true
+      try {
+        const lists = await cadlixApi.getLists(user.id)
+        const entry = lists?.find(l => String(l.FilmId ?? l.filmId) === String(videoItem.id))
+        if (entry && (entry.FilmStatus ?? entry.filmStatus) === 'watching') {
+          await cadlixApi.updateListStatus(entry.Id ?? entry.id, 'completed')
+          refreshUser()
+        }
+      } catch (err) {
+        console.error('Failed to update watch list on completion:', err)
+      }
     }
-
-    const nextWatchList = existingItem
-      ? previousList.map(item => (item.id === videoItem.id ? updatedItem : item))
-      : [updatedItem, ...previousList]
 
     const previousProgress = user.watchProgress || {}
     updateUser({
-      watchHistory: nextHistory,
-      watchList: nextWatchList,
       watchProgress: {
         ...previousProgress,
         [videoItem.id]: currentTimeSec,
       },
     })
-  }, [updateUser, user, videoItem])
+  }, [updateUser, refreshUser, user, videoItem])
+
+  const navigateToEpisode = useCallback(ep => {
+    const epId = ep.Id ?? ep.id
+    if (epId) navigate(`/watch/${epId}`)
+  }, [navigate])
+
+  const handleVideoEnded = useCallback(async () => {
+    if (!user?.id || !videoItem || completedRef.current) return
+    completedRef.current = true
+    try {
+      const lists = await cadlixApi.getLists(user.id)
+      const entry = lists?.find(l => String(l.FilmId ?? l.filmId) === String(videoItem.id))
+      if (entry && (entry.FilmStatus ?? entry.filmStatus) === 'watching') {
+        await cadlixApi.updateListStatus(entry.Id ?? entry.id, 'completed')
+        refreshUser()
+      }
+    } catch (err) {
+      console.error('Failed to update watch list on video end:', err)
+    }
+    if (nextEpisode) setShowNextPrompt(true)
+  }, [user, videoItem, refreshUser, nextEpisode])
 
   useEffect(() => {
-    if (!videoItem || !user) return undefined
+    if (!videoItem || !user || restoredRef.current) return
     const progressAtOpen = user.watchProgress?.[videoItem.id] || 0
     const videoEl = videoRef.current
-    if (videoEl && progressAtOpen > 0) {
-      const setSavedTime = () => {
-        videoEl.currentTime = progressAtOpen
-        setCurrentTime(progressAtOpen)
-      }
-      videoEl.addEventListener('loadedmetadata', setSavedTime, { once: true })
+    if (!videoEl || progressAtOpen <= 0) return
+
+    restoredRef.current = true
+
+    const setSavedTime = () => {
+      videoEl.currentTime = progressAtOpen
+      setCurrentTime(progressAtOpen)
     }
 
-    const onBeforeUnload = () => persistHistory()
-    window.addEventListener('beforeunload', onBeforeUnload)
-    return () => {
-      persistHistory()
-      window.removeEventListener('beforeunload', onBeforeUnload)
+    if (videoEl.readyState >= 1) {
+      setSavedTime()
+    } else {
+      videoEl.addEventListener('loadedmetadata', setSavedTime, { once: true })
     }
-  }, [persistHistory, user, videoItem])
+  }, [user, videoItem])
+
+  useEffect(() => {
+    const interval = setInterval(persistHistory, 5000)
+    return () => clearInterval(interval)
+  }, [persistHistory])
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -246,46 +336,46 @@ export default function VideoPlayer() {
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
   }, [])
 
-  const handleAssignList = useCallback(() => {
-    if (!videoItem || !user) return
-    const baseItem = (user.watchList || []).find(item => item.id === videoItem.id) ||
-      MOCK_MEDIA_LIBRARY.find(item => item.id === videoItem.id) || {
-        id: videoItem.id,
-        title: videoItem.title,
-        category: videoItem.category,
-        type: videoItem.type,
-        genre: videoItem.genre,
-        score: 0,
-        dateAdded: new Date().toISOString().slice(0, 10),
-        season: videoItem.series || '-',
-        episode: videoItem.episode || '-',
-        progress: formatClock(videoRef.current?.currentTime || 0),
-      }
+  const handleAssignList = useCallback(async (status) => {
+    if (!videoItem || !user?.id) return
 
-    const updatedItem = {
-      ...baseItem,
-      status: selectedList,
-      season: videoItem.series || baseItem.season || '-',
-      episode: videoItem.episode || baseItem.episode || '-',
-      progress: formatClock(videoRef.current?.currentTime || 0),
+    const listEntry = {
+      userId: user.id,
+      filmId: parseInt(videoItem.id) || 0,
+      filmTitle: videoItem.title,
+      type: videoItem.type,
+      category: videoItem.category,
+      genre: videoItem.genre,
+      episode: videoItem.episode || '-',
+      filmStatus: status,
+      filmRating: 0,
     }
 
-    const watchList = user.watchList || []
-    const nextWatchList = watchList.some(item => item.id === updatedItem.id)
-      ? watchList.map(item => (item.id === updatedItem.id ? updatedItem : item))
-      : [updatedItem, ...watchList]
-
-    updateUser({ watchList: nextWatchList })
-    if (!didToastRef.current) {
-      toast.success(`Added to ${selectedList}`)
-      didToastRef.current = true
-      setTimeout(() => {
-        didToastRef.current = false
-      }, 700)
+    try {
+      await cadlixApi.createList(listEntry)
+      await refreshUser()
+      toast.success(`Added to ${status}`)
+    } catch (err) {
+      console.error('Failed to add to list:', err)
+      toast.error('Failed to update list')
     }
-  }, [selectedList, toast, updateUser, user, videoItem])
+  }, [toast, refreshUser, user, videoItem])
 
-  if (!videoItem) {
+  if (loading) {
+    return (
+      <div className='video-player-page'>
+        <div className='video-player-shell'>
+          <button className='video-back-btn' type='button' onClick={() => navigate(-1)}>
+            <i className='bx bx-arrow-back'></i>
+            Back
+          </button>
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !videoItem) {
     return (
       <div className='video-player-page'>
         <div className='video-player-shell'>
@@ -299,7 +389,8 @@ export default function VideoPlayer() {
     )
   }
 
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0
+  const dur = Number.isFinite(duration) && duration > 0 ? duration : videoItem?.durationSec || 0
+  const progressPercent = dur > 0 ? Math.min((currentTime / dur) * 100, 100) : 0
 
   return (
     <div
@@ -308,64 +399,76 @@ export default function VideoPlayer() {
       onMouseMove={handleMouseMove}
       onMouseLeave={() => isPlaying && setShowControls(false)}
     >
-      <div className='video-player-shell'>
-        <button className='video-back-btn' type='button' onClick={() => navigate(-1)}>
-          <i className='bx bx-arrow-back'></i>
-          Back
-        </button>
+      <div className={`video-player-shell ${isFullscreen ? 'fullscreen' : ''}`}>
+        {!isFullscreen && (
+          <button className='video-back-btn' type='button' onClick={() => navigate(-1)}>
+            <i className='bx bx-arrow-back'></i>
+            Back
+          </button>
+        )}
 
-        <div className='video-header'>
-          <div className='video-header-top'>
-            <h1>{videoItem.title}</h1>
-            <div className='video-save-wrapper'>
-              <button
-                className='video-save-btn'
-                onClick={() => setShowSaveMenu(!showSaveMenu)}
-                aria-label='Save to list'
-              >
-                <i className='bx bx-bookmark-plus'></i>
-              </button>
-              {showSaveMenu && (
-                <div className='video-save-menu'>
-                  <div className='video-save-menu-header'>Save to list</div>
-                  {LIST_OPTIONS.map(option => (
-                    <button
-                      key={option.value}
-                      className={`video-save-option ${selectedList === option.value ? 'active' : ''}`}
-                      onClick={() => {
-                        setSelectedListManual(option.value)
-                        handleAssignList()
-                        setShowSaveMenu(false)
-                      }}
-                    >
-                      <i className={`bx ${selectedList === option.value ? 'bxs-bookmark' : 'bx-bookmark'}`}></i>
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              )}
+        {!isFullscreen && (
+          <div className='video-header'>
+            <div className='video-header-top'>
+              <h1>{videoItem.title}</h1>
+              <div className='video-save-wrapper'>
+                <button
+                  className='video-save-btn'
+                  onClick={() => setShowSaveMenu(!showSaveMenu)}
+                  aria-label='Save to list'
+                >
+                  <i className='bx bx-bookmark-plus'></i>
+                </button>
+                {showSaveMenu && (
+                  <div className='video-save-menu'>
+                    <div className='video-save-menu-header'>Save to list</div>
+                    {LIST_OPTIONS.map(option => (
+                      <button
+                        key={option.value}
+                        className={`video-save-option ${selectedList === option.value ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedListManual(option.value)
+                          handleAssignList(option.value)
+                          setShowSaveMenu(false)
+                        }}
+                      >
+                        <i className={`bx ${selectedList === option.value ? 'bxs-bookmark' : 'bx-bookmark'}`}></i>
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
+            <p>
+              {videoItem.category} | {videoItem.series}{' '}
+              {videoItem.episode !== '-' ? `| ${videoItem.episode}` : ''}
+            </p>
           </div>
-          <p>
-            {videoItem.category} | {videoItem.series}{' '}
-            {videoItem.episode !== '-' ? `| ${videoItem.episode}` : ''}
-          </p>
-        </div>
+        )}
 
-        <div className='video-stage' onClick={handlePlayPause}>
-          <video
-            ref={videoRef}
-            className='video-element'
-            src={videoItem.src}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onPauseInternal={persistHistory}
-            onEnded={persistHistory}
-          />
+        <div className={`video-stage ${isFullscreen ? 'fullscreen' : ''}`}>
+          {videoItem.src ? (
+            <video
+              ref={videoRef}
+              className='video-element'
+              src={videoItem.src}
+              onClick={handlePlayPause}
+              onTimeUpdate={handleTimeUpdate}
+              onLoadedMetadata={handleLoadedMetadata}
+              onDurationChange={handleDurationChange}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onEnded={handleVideoEnded}
+            />
+          ) : (
+            <div className='video-no-source'>
+              <i className='bx bx-error-circle'></i>
+              <p>Video source not available</p>
+            </div>
+          )}
 
-          <div className={`video-controls ${showControls ? 'visible' : ''}`}>
+          <div className={`video-controls ${showControls ? 'visible' : ''}`} onClick={e => e.stopPropagation()}>
             <div className='video-progress-container' onClick={handleSeek}>
               <div className='video-progress-bar'>
                 <div className='video-progress-fill' style={{ width: `${progressPercent}%` }} />
@@ -457,6 +560,41 @@ export default function VideoPlayer() {
             </div>
           </div>
         </div>
+
+        {showNextPrompt && nextEpisode && (
+          <div className='video-next-prompt'>
+            <p>Next episode ready</p>
+            <button onClick={() => navigateToEpisode(nextEpisode)}>
+              <i className='bx bx-skip-next'></i> {nextEpisode.Title ?? nextEpisode.title}
+            </button>
+            <button className='video-next-dismiss' onClick={() => setShowNextPrompt(false)}>
+              Dismiss
+            </button>
+          </div>
+        )}
+
+        {isSeries && episodes && episodes.length > 0 && (
+          <div className='video-episodes'>
+            <h2>Episodes</h2>
+            {episodes.map((ep, idx) => {
+              const epId = ep.Id ?? ep.id
+              const epTitle = ep.Title ?? ep.title
+              const epEpisode = ep.Episode ?? ep.episode
+              const isCurrent = String(epId) === String(videoItem.id)
+              return (
+                <div
+                  key={epId}
+                  className={`video-episode-row ${isCurrent ? 'current' : ''}`}
+                  onClick={() => !isCurrent && navigateToEpisode(ep)}
+                >
+                  <span className='video-episode-number'>{epEpisode || `Episode ${idx + 1}`}</span>
+                  <span className='video-episode-title'>{epTitle}</span>
+                  {isCurrent && <span className='video-episode-current'>Now playing</span>}
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

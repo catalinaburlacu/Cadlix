@@ -1,22 +1,21 @@
 import { useState } from 'react'
-import { ALL_USERS } from '../../../../mocks/admin.js'
 
-export default function AdminUsers({ onSelectUser }) {
+export default function AdminUsers({ users = [], onSelectUser }) {
   const [userSearch, setUserSearch] = useState('')
 
   const q = userSearch.trim().toLowerCase()
   const filtered = q
-    ? ALL_USERS.filter(u =>
+    ? users.filter(u =>
         u.username.toLowerCase().includes(q) ||
         u.email.toLowerCase().includes(q)
       )
-    : ALL_USERS
+    : users
 
   return (
     <div className="admin-section">
       <div className="admin-section-header">
         <h2 className="admin-section-title">Users</h2>
-        <span className="admin-section-count">{filtered.length} of {ALL_USERS.length}</span>
+        <span className="admin-section-count">{filtered.length} of {users.length}</span>
       </div>
 
       <div className="admin-search-bar">
@@ -60,7 +59,7 @@ export default function AdminUsers({ onSelectUser }) {
                   <td className="admin-table-id">{u.id}</td>
                   <td>
                     <div className="admin-user-cell">
-                      <img className="admin-user-avatar" src={u.avatar} alt={u.username} />
+                      <img className="admin-user-avatar" src={u.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(u.username)}`} alt={u.username} onError={(e) => { const seed = encodeURIComponent(u.username); e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`; }} />
                       <span className="admin-table-username">{u.username}</span>
                     </div>
                   </td>

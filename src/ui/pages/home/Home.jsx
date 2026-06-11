@@ -2,14 +2,18 @@ import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-do
 import Button from '../../../components/common/Button.jsx'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
 import { useUser } from '../../../context/useUser.js'
-import {
-  CATEGORY_NAV_ITEMS,
-  FEATURED,
-  TRENDING_ROW,
-  NEW_RELEASES,
-  TOP_RATED,
-} from '../../../mocks/home.js'
+import { useApiQuery } from '../../../hooks/useApiQuery.js'
+import { cadlixApi } from '../../../api/cadlixApi.js'
+import { mapHomePayload } from '../../../api/mappers.js'
 import './Home.css'
+
+const CATEGORY_NAV_ITEMS = [
+  { id: 'home', label: 'Home', to: '/home', filter: null },
+  { id: 'trending', label: 'Trending', to: '/trending', filter: 'all' },
+  { id: 'movies', label: 'Movies', to: '/trending?filter=movie', filter: 'movie' },
+  { id: 'series', label: 'Series', to: '/trending?filter=tv', filter: 'tv' },
+  { id: 'documentaries', label: 'Documentaries', to: '/trending?filter=documentary', filter: 'documentary' },
+]
 
 function TopNav() {
   const location = useLocation()
@@ -38,13 +42,11 @@ function TopNav() {
   )
 }
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
 function RowCard({ item }) {
   return (
     <Link to={`/movie/${item.id}`} className='row-card'>
       <div className='row-card-poster-wrap'>
-        <img className='row-card-poster' src={item.poster} alt={item.title} loading='lazy' />
+        <img className='row-card-poster' src={item.poster || '/api/media/image/defaults/default-poster.png'} alt={item.title} loading='lazy' onError={e => { e.target.src = '/api/media/image/defaults/default-poster.png' }} />
         <div className='row-card-overlay' aria-hidden='true'>
           <span className='row-card-play-btn'>
             <i className='bx bx-play'></i>
@@ -71,7 +73,7 @@ function ContinueCard({ item }) {
   return (
     <Link to={`/movie/${item.id}`} className='continue-card'>
       <div className='continue-card-thumb-wrap'>
-        <img className='continue-card-thumb' src={item.poster} alt={item.title} loading='lazy' />
+        <img className='continue-card-thumb' src={item.poster || '/api/media/image/defaults/default-thumbnail.png'} alt={item.title} loading='lazy' onError={e => { e.target.src = '/api/media/image/defaults/default-thumbnail.png' }} />
         <div className='continue-card-overlay' aria-hidden='true'>
           <span className='continue-card-play-btn'>
             <i className='bx bx-play'></i>
@@ -115,58 +117,68 @@ function ContentRow({ title, icon, items, link, CardComponent = RowCard }) {
   )
 }
 
-// ─── Page ────────────────────────────────────────────────────────────────────
-
 export default function Home() {
   const navigate = useNavigate()
   const { user, isAuthenticated } = useUser()
+  const { data: homeResponse } = useApiQuery(() => cadlixApi.getHome(), [], null)
+
+  const homeData = mapHomePayload(homeResponse)
 
   const continueWatching = user?.watchList?.filter(i => i.status === 'watching') ?? []
+
+  const featured = homeData?.featured || null
+  const featuredWithId = featured
+    ? { ...featured, id: homeData?.trendingRow?.[0]?.id || homeData?.newReleases?.[0]?.id || null }
+    : null
+
+  const trendingRow = homeData?.trendingRow || []
+  const newReleases = homeData?.newReleases || []
+  const topRated = homeData?.topRated || []
 
   return (
     <SidebarLayout navbarContent={<TopNav />}>
       <div className='home-dashboard'>
-        {/* ── Featured Banner ── */}
-        <section className='featured-banner' aria-label='Featured content'>
-          <img className='featured-backdrop' src={FEATURED.poster} alt='' aria-hidden='true' />
-          <div className='featured-gradient' aria-hidden='true' />
-          <div className='featured-info'>
-            <div className='featured-badges'>
-              <span className='featured-badge featured-badge--type'>
-                {FEATURED.type === 'tv' ? 'Series' : 'Movie'}
-              </span>
-              <span className='featured-badge featured-badge--meta'>{FEATURED.genre}</span>
-              <span className='featured-badge featured-badge--meta'>{FEATURED.year}</span>
+        {featuredWithId && (
+          <section className='featured-banner' aria-label='Featured content'>
+            <img className='featured-backdrop' src={featuredWithId.poster || '/api/media/image/defaults/default-backdrop.png'} alt='' aria-hidden='true' onError={e => { e.target.src = '/api/media/image/defaults/default-backdrop.png' }} />
+            <div className='featured-gradient' aria-hidden='true' />
+            <div className='featured-info'>
+              <div className='featured-badges'>
+                <span className='featured-badge featured-badge--type'>
+                  {featuredWithId.type === 'tv' ? 'Series' : 'Movie'}
+                </span>
+                <span className='featured-badge featured-badge--meta'>{featuredWithId.genre}</span>
+                <span className='featured-badge featured-badge--meta'>{featuredWithId.year}</span>
+              </div>
+              <h1 className='featured-title'>
+                <Link to={`/movie/${featuredWithId.id}`}>{featuredWithId.title}</Link>
+              </h1>
+              <p className='featured-desc'>{featuredWithId.description}</p>
+              <div className='featured-stats'>
+                <span className='featured-stat featured-stat--score'>
+                  <i className='bx bxs-star' aria-hidden='true'></i>
+                  {featuredWithId.score}
+                </span>
+                <span className='featured-stat featured-stat--views'>
+                  <i className='bx bx-show' aria-hidden='true'></i>
+                  {featuredWithId.views} views
+                </span>
+              </div>
+              <div className='featured-actions'>
+                <Button variant='primary' size='large'>
+                  <i className='bx bx-play' aria-hidden='true'></i>
+                  Watch Now
+                </Button>
+                <Button variant='ghost' size='large'>
+                  <i className='bx bx-plus' aria-hidden='true'></i>
+                  Add to List
+                </Button>
+              </div>
             </div>
-            <h1 className='featured-title'>
-              <Link to='/movie/tr-1'>{FEATURED.title}</Link>
-            </h1>
-            <p className='featured-desc'>{FEATURED.description}</p>
-            <div className='featured-stats'>
-              <span className='featured-stat featured-stat--score'>
-                <i className='bx bxs-star' aria-hidden='true'></i>
-                {FEATURED.score}
-              </span>
-              <span className='featured-stat featured-stat--views'>
-                <i className='bx bx-show' aria-hidden='true'></i>
-                {FEATURED.views} views
-              </span>
-            </div>
-            <div className='featured-actions'>
-              <Button variant='primary' size='large'>
-                <i className='bx bx-play' aria-hidden='true'></i>
-                Watch Now
-              </Button>
-              <Button variant='ghost' size='large'>
-                <i className='bx bx-plus' aria-hidden='true'></i>
-                Add to List
-              </Button>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <div className='home-rows'>
-          {/* ── Continue Watching ── */}
           {isAuthenticated && continueWatching.length > 0 && (
             <ContentRow
               title='Continue Watching'
@@ -177,26 +189,22 @@ export default function Home() {
             />
           )}
 
-          {/* ── Trending Now ── */}
           <ContentRow
             title='Trending Now'
             icon='bx-trending-up'
-            items={TRENDING_ROW}
+            items={trendingRow}
             link='/trending'
           />
 
-          {/* ── New Releases ── */}
           <ContentRow
             title='New Releases'
             icon='bx-star'
-            items={NEW_RELEASES}
+            items={newReleases}
             link='/trending?filter=all'
           />
 
-          {/* ── Top Rated ── */}
-          <ContentRow title='Top Rated' icon='bx-award' items={TOP_RATED} />
+          <ContentRow title='Top Rated' icon='bx-award' items={topRated} />
 
-          {/* ── Guest CTA ── */}
           {!isAuthenticated && (
             <section className='home-cta'>
               <div className='home-cta-inner'>

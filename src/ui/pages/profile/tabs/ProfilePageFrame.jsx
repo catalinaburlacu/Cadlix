@@ -1,8 +1,10 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useState, useCallback, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useUser } from "../../../../context/useUser.js";
 import { useToast } from "../../../../hooks/useToast.js";
+import { cadlixApi } from "../../../../api/cadlixApi.js";
+import { mapLikeStatusDTO } from "../../../../api/mappers.js";
 import Button from "../../../../components/common/Button.jsx";
 import { SkeletonAvatar, SkeletonStats } from "../../../../components/common/Skeleton.jsx";
 
@@ -39,6 +41,8 @@ export default function ProfilePageFrame({ children, isEditPage, avatarOverride 
   const toast = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = React.useState(false);
+  const [likeStatus, setLikeStatus] = useState(null);
+  const [likeLoading, setLikeLoading] = useState(false);
 
   const profileAbout = user?.profileSettings?.about || "";
   const DEFAULT_AVATAR = `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.username || 'default'}`;
@@ -48,7 +52,7 @@ export default function ProfilePageFrame({ children, isEditPage, avatarOverride 
   const statsData = useMemo(() => {
     if (!user) return [];
     return [
-      { value: user.stats?.rating || "0", label: "Rating", icon: "bx-star", highlight: true },
+      { value: user.stats?.score || "0", label: "Score", icon: "bx-star", highlight: true },
       { value: user.stats?.titlesWatched || 0, label: "Titles Watched", icon: "bx-tv" },
       { value: user.stats?.comments || 0, label: "Comments", icon: "bx-comment" },
       { value: user.stats?.likesGiven || 0, label: "Likes Given", icon: "bx-heart" },
@@ -99,6 +103,31 @@ export default function ProfilePageFrame({ children, isEditPage, avatarOverride 
       setIsDeleteLoading(false);
     }
   }, [isDeleteLoading, logout, navigate, toast]);
+
+  const profileUserId = Number(user?.id);
+  const isOwnProfile = true;
+
+  useEffect(() => {
+    if (!profileUserId) return;
+    let cancelled = false;
+    setLikeLoading(true);
+    cadlixApi.getLikeStatus(profileUserId)
+      .then(mapLikeStatusDTO)
+      .then(data => { if (!cancelled) setLikeStatus(data); })
+      .catch(() => { if (!cancelled) setLikeStatus({ likeCount: 0, isLikedByCurrentUser: false }); })
+      .finally(() => { if (!cancelled) setLikeLoading(false); });
+    return () => { cancelled = true; };
+  }, [profileUserId]);
+
+  const handleToggleLike = useCallback(async () => {
+    if (!profileUserId || isOwnProfile) return;
+    setLikeLoading(true);
+    try {
+      const data = mapLikeStatusDTO(await cadlixApi.toggleLike(profileUserId));
+      setLikeStatus(data);
+    } catch { /* ignore */ }
+    setLikeLoading(false);
+  }, [profileUserId, isOwnProfile]);
 
   if (!user) {
     return (
@@ -186,6 +215,23 @@ export default function ProfilePageFrame({ children, isEditPage, avatarOverride 
                 >
                   {user.plan || "Basic"}
                 </button>
+                {likeStatus ? (
+                  <button
+                    className={`like-badge ${likeStatus.isLikedByCurrentUser ? "liked" : ""}`}
+                    onClick={handleToggleLike}
+                    disabled={isOwnProfile || likeLoading}
+                    title={
+                      isOwnProfile
+                        ? `You have ${likeStatus.likeCount} likes`
+                        : likeStatus.isLikedByCurrentUser
+                          ? "Unlike this user"
+                          : "Like this user"
+                    }
+                  >
+                    <i className={`bx ${likeStatus.isLikedByCurrentUser ? "bxs-heart" : "bx-heart"}`} aria-hidden="true"></i>
+                    <span>{likeStatus.likeCount}</span>
+                  </button>
+                ) : null}
               </div>
               <p className="user-email">{user.email}</p>
               {profileAbout ? (

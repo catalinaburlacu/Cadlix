@@ -78,9 +78,8 @@ export default function Login() {
       }
 
       const tokenValue = authResponse.token;
-      const refreshTokenValue = rawResponse.RefreshToken ?? rawResponse.refreshToken;
 
-      storeTokens(tokenValue, refreshTokenValue);
+      storeTokens(tokenValue);
 
       const profile = mapProfilePayload(await cadlixApi.getProfile(authResponse.user.id));
 
@@ -94,7 +93,7 @@ export default function Login() {
         plan: 'Free',
         status: 'Online',
         stats: {
-          rating: 0,
+          score: 0,
           titlesWatched: 0,
           comments: 0,
           likesGiven: 0,
@@ -156,10 +155,9 @@ export default function Login() {
 
       const userId = authResponse.user.id;
       const tokenValue = authResponse.token;
-      const refreshTokenValue = rawResponse.RefreshToken ?? rawResponse.refreshToken;
 
       if (tokenValue) {
-        storeTokens(tokenValue, refreshTokenValue);
+        storeTokens(tokenValue);
       }
 
       let profile = null;
@@ -179,7 +177,7 @@ export default function Login() {
         plan: 'Free',
         status: 'Online',
         stats: {
-          rating: 0,
+          score: 0,
           titlesWatched: 0,
           comments: 0,
           likesGiven: 0,

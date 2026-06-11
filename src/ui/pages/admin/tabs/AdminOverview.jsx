@@ -1,12 +1,11 @@
-import { ALL_USERS } from '../../../../mocks/admin.js'
 import StatCards from '../components/StatCards.jsx'
 
-export default function AdminOverview({ contentList, reports, onNavigateToTab, onSelectUser }) {
-  const activeUsers = ALL_USERS.filter(u => u.status === 'Active').length
+export default function AdminOverview({ contentList, reports, users = [], onNavigateToTab, onSelectUser }) {
+  const activeUsers = users.filter(u => (u.status || '').toLowerCase() === 'active').length
   const pendingReports = reports.filter(r => r.status === 'Pending').length
 
   const statCards = [
-    { label: 'Total Users',     value: ALL_USERS.length,   icon: 'bx-group',  color: 'blue' },
+    { label: 'Total Users',     value: users.length,       icon: 'bx-group',  color: 'blue' },
     { label: 'Active Users',    value: activeUsers,        icon: 'bx-pulse',  color: 'green' },
     { label: 'Content Titles',  value: contentList.length, icon: 'bx-film',   color: 'purple' },
     { label: 'Reports Pending', value: pendingReports,     icon: 'bx-flag',   color: 'red' },
@@ -30,7 +29,7 @@ export default function AdminOverview({ contentList, reports, onNavigateToTab, o
               </tr>
             </thead>
             <tbody>
-              {ALL_USERS.map(u => (
+              {users.map(u => (
                 <tr key={u.id} className="admin-table-row--clickable" onClick={() => onSelectUser(u)}>
                   <td className="admin-table-id">{u.id}</td>
                   <td className="admin-table-username">{u.username}</td>

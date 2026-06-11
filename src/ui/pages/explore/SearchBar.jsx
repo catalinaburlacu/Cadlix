@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { searchMovies } from '../../../mocks/explore.js'
+import { cadlixApi } from '../../../api/cadlixApi.js'
+import { mapSearchResultDTO } from '../../../api/mappers.js'
 import './SearchBar.css'
 
 const DEBOUNCE_DELAY = 350
@@ -20,6 +21,7 @@ export default function SearchBar() {
   const [query, setQuery] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
+  const [results, setResults] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const inputRef = useRef(null)
   const resultsRef = useRef(null)
@@ -27,12 +29,29 @@ export default function SearchBar() {
 
   const debouncedQuery = useDebounce(query, DEBOUNCE_DELAY)
 
-  const results = useMemo(() => {
-    if (!debouncedQuery || debouncedQuery.trim().length < 2) return []
+  useEffect(() => {
+    if (!debouncedQuery || debouncedQuery.trim().length < 2) {
+      setResults([])
+      return
+    }
+
+    const controller = new AbortController()
     setIsLoading(true)
-    const searchResults = searchMovies(debouncedQuery)
-    setIsLoading(false)
-    return searchResults
+
+    cadlixApi.searchContent(debouncedQuery.trim(), controller.signal)
+      .then(data => {
+        setResults((data || []).map(mapSearchResultDTO).filter(Boolean))
+      })
+      .catch(err => {
+        if (err?.name !== 'AbortError') {
+          setResults([])
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+
+    return () => controller.abort()
   }, [debouncedQuery])
 
   const handleClear = useCallback(() => {
@@ -149,12 +168,12 @@ export default function SearchBar() {
                 aria-selected={index === highlightedIndex}
               >
                 <img
-                  src={item.poster}
+                  src={item.poster || '/api/media/image/defaults/default-thumbnail.png'}
                   alt=""
                   className="search-bar-result-poster"
                   loading="lazy"
                   onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/60x85?text=No+Img'
+                    e.target.src = '/api/media/image/defaults/default-thumbnail.png'
                   }}
                 />
                 <div className="search-bar-result-info">
@@ -162,12 +181,6 @@ export default function SearchBar() {
                   <div className="search-bar-result-meta">
                     <span className="search-bar-result-year">{item.year}</span>
                     <span className="search-bar-result-type">{item.type}</span>
-                    {item.rating && (
-                      <span className="search-bar-result-rating">
-                        <i className="bx bxs-star" aria-hidden="true"></i>
-                        {item.rating}
-                      </span>
-                    )}
                   </div>
                 </div>
               </div>

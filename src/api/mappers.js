@@ -12,6 +12,7 @@ export {
   mapListDTO,
   mapContentDTO,
   mapContentCardDTO,
+  mapSearchResultDTO,
   mapFeaturedContentDTO,
   mapTrendingItemDTO,
   mapWatchListItemDTO,
@@ -24,6 +25,7 @@ export {
   mapSubscriptionDTO,
   mapMovieDataDTO,
   mapMovieUploadResponseDTO,
+  mapLikeStatusDTO,
   URole,
   UserRoleLabel,
 } from './dto-mappers.js'

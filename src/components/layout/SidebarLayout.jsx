@@ -56,7 +56,7 @@ export default function SidebarLayout({ children, pageClass = '', navbarContent 
 
   const [sidebarOpen, setSidebarOpen] = useState(() => {
     try {
-      const saved = localStorage.getItem(DEFAULT_SIDEBAR_STORAGE_KEY)
+      const saved = localStorage.getItem(sidebarStorageKey)
       return saved ? JSON.parse(saved) : false
     } catch {
       return false

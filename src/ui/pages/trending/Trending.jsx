@@ -1,26 +1,35 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import SidebarLayout from '../../../components/layout/SidebarLayout.jsx'
 import Button from '../../../components/common/Button.jsx'
-import { PERIODS, FILTERS, TRENDING_DATA } from '../../../mocks/trending.js'
+import { useApiQuery } from '../../../hooks/useApiQuery.js'
+import { cadlixApi } from '../../../api/cadlixApi.js'
+import { mapTrendingPayload } from '../../../api/mappers.js'
 import './Trending.css'
 
 export default function Trending() {
-  const [period, setPeriod] = useState('today')
+  const [period, setPeriod] = useState('week')
   const [searchParams, setSearchParams] = useSearchParams()
   const filter = searchParams.get('filter') || 'all'
 
-  function setFilter(value) {
-    setSearchParams(value === 'all' ? {} : { filter: value })
-  }
+  const periodSuffix = { today: 'today', week: 'this week', month: 'this month' }
 
-  const hero = TRENDING_DATA[0]
+  const fetchTrending = useCallback(
+    signal => cadlixApi.getTrending(period, filter, signal),
+    [period, filter]
+  )
+  const { data: trendingResponse } = useApiQuery(fetchTrending, [period, filter], null)
+  const trendingData = mapTrendingPayload(trendingResponse) || { periods: [], filters: [], data: [] }
+
+  const setFilter = useCallback(value => {
+    setSearchParams(value === 'all' ? {} : { filter: value })
+  }, [setSearchParams])
+
+  const hero = trendingData.data[0] || null
 
   const filtered = useMemo(() => {
-    const rest = TRENDING_DATA.slice(1)
-    if (filter === 'all') return rest
-    return rest.filter(item => item.type === filter)
-  }, [filter])
+    return trendingData.data.slice(1)
+  }, [trendingData.data])
 
   return (
     <SidebarLayout>
@@ -32,7 +41,7 @@ export default function Trending() {
             <h1 className='trending-page-title'>Trending</h1>
           </div>
           <div className='period-tabs' role='tablist' aria-label='Trending period'>
-            {PERIODS.map(p => (
+            {trendingData.periods.map(p => (
               <button
                 key={p.id}
                 role='tab'
@@ -47,50 +56,52 @@ export default function Trending() {
         </div>
 
         {/* Hero — #1 */}
-        <div className='trending-hero'>
-          <div className='hero-watermark'>#1</div>
-          <div className='hero-thumb-wrap'>
-            <img className='hero-thumb' src={hero.thumb} alt={hero.title} />
+        {hero && (
+          <div className='trending-hero'>
+            <div className='hero-watermark'>#1</div>
+            <div className='hero-thumb-wrap'>
+              <img className='hero-thumb' src={hero.thumb || '/api/media/image/defaults/default-poster.png'} alt={hero.title} onError={e => { e.target.src = '/api/media/image/defaults/default-poster.png' }} />
+            </div>
+            <div className='hero-info'>
+              <div className='hero-badges'>
+                <span className='hero-type-badge'>{hero.type === 'tv' ? 'Series' : 'Movie'}</span>
+                <span className='hero-genre-badge'>{hero.genre}</span>
+                <span className='hero-year-badge'>{hero.year}</span>
+              </div>
+              <h2 className='hero-name'>{hero.title}</h2>
+              <p className='hero-desc'>{hero.description}</p>
+              <div className='hero-stats'>
+                <span className='hero-stat hero-score'>
+                  <i className='bx bxs-star' aria-hidden='true'></i>
+                  {hero.score}
+                </span>
+                <span className='hero-stat hero-views'>
+                  <i className='bx bx-show' aria-hidden='true'></i>
+                  {hero.views} views
+                </span>
+                <span className='hero-stat hero-trend'>
+                  <i className='bx bx-trending-up' aria-hidden='true'></i>
+                  {hero.trendPct} {periodSuffix[period] || 'this week'}
+                </span>
+              </div>
+              <div className='hero-actions'>
+                <Button variant='primary'>
+                  <i className='bx bx-play' aria-hidden='true'></i>
+                  Watch Now
+                </Button>
+                <Button variant='ghost'>
+                  <i className='bx bx-plus' aria-hidden='true'></i>
+                  Add to List
+                </Button>
+              </div>
+            </div>
           </div>
-          <div className='hero-info'>
-            <div className='hero-badges'>
-              <span className='hero-type-badge'>{hero.type === 'tv' ? 'Series' : 'Movie'}</span>
-              <span className='hero-genre-badge'>{hero.genre}</span>
-              <span className='hero-year-badge'>{hero.year}</span>
-            </div>
-            <h2 className='hero-name'>{hero.title}</h2>
-            <p className='hero-desc'>{hero.description}</p>
-            <div className='hero-stats'>
-              <span className='hero-stat hero-score'>
-                <i className='bx bxs-star' aria-hidden='true'></i>
-                {hero.score}
-              </span>
-              <span className='hero-stat hero-views'>
-                <i className='bx bx-show' aria-hidden='true'></i>
-                {hero.views} views
-              </span>
-              <span className='hero-stat hero-trend'>
-                <i className='bx bx-trending-up' aria-hidden='true'></i>
-                {hero.trendPct} this week
-              </span>
-            </div>
-            <div className='hero-actions'>
-              <Button variant='primary'>
-                <i className='bx bx-play' aria-hidden='true'></i>
-                Watch Now
-              </Button>
-              <Button variant='ghost'>
-                <i className='bx bx-plus' aria-hidden='true'></i>
-                Add to List
-              </Button>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Filter bar */}
         <div className='trending-filter-bar'>
           <div className='filter-tabs' role='tablist' aria-label='Content type filter'>
-            {FILTERS.map(f => (
+            {trendingData.filters.map(f => (
               <button
                 key={f.id}
                 role='tab'
@@ -120,9 +131,10 @@ export default function Trending() {
                 <div className='trending-card-poster-wrap'>
                   <img
                     className='trending-card-poster'
-                    src={item.thumb}
+                    src={item.thumb || '/api/media/image/defaults/default-poster.png'}
                     alt={item.title}
                     loading='lazy'
+                    onError={e => { e.target.src = '/api/media/image/defaults/default-poster.png' }}
                   />
                   <span className='trending-card-rank'>#{item.rank}</span>
                   <span className='trending-card-trend'>

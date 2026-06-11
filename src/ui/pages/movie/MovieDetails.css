@@ -216,6 +216,225 @@
   margin-bottom: 8px;
 }
 
+/* ── Reviews Section ──────────────────────────────── */
+
+.movie-details-reviews {
+  max-width: 1200px;
+  margin: 48px auto 0;
+  padding: 0 24px;
+}
+
+.movie-details-reviews h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--color-text-primary);
+}
+
+.review-form {
+  background: var(--color-bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.review-form-rating {
+  margin-bottom: 16px;
+}
+
+.review-form-rating label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+}
+
+.star-rating-input {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  font-size: 1.25rem;
+  color: var(--color-text-tertiary);
+  transition: color 0.15s ease;
+}
+
+.star-btn:hover,
+.star-btn.active {
+  color: #fbbf24;
+}
+
+.rating-value {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.review-form-text {
+  margin-bottom: 16px;
+}
+
+.review-form-text label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+}
+
+.review-form-text textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.review-form-text textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-primary);
+}
+
+.reviews-loading,
+.reviews-empty {
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 32px;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-card {
+  background: var(--color-bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.review-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.review-card-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.9rem;
+}
+
+.review-card-rating i {
+  color: var(--color-text-tertiary);
+  font-size: 1rem;
+}
+
+.review-card-rating i.active {
+  color: #fbbf24;
+}
+
+.review-card-rating span {
+  margin-left: 6px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.review-card-text {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.review-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-like-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.review-like-btn:hover {
+  color: #f43f5e;
+  background: rgba(244, 63, 94, 0.1);
+}
+
+.review-like-btn.liked {
+  color: #f43f5e;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+}
+
+.review-delete-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.review-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
 @media (max-width: 768px) {
   .movie-details-content {
     grid-template-columns: 1fr;
@@ -242,5 +461,10 @@
 
   .movie-details-rating {
     margin: 0 auto 24px;
+  }
+
+  .review-card-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
